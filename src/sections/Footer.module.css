@@ -1,0 +1,106 @@
+.footer {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+  padding: 96px 32px 0;
+  overflow: hidden;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.credits {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+/* Index + Socials */
+.lists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(48px, 10vw, 200px);
+}
+
+.listTitle {
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: none;
+}
+
+/* Divider with back-to-top button */
+.divider {
+  position: relative;
+  margin: 64px 0 24px;
+}
+
+.line {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.backToTop {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Giant name marquee */
+.marquee {
+  margin: 0 -32px -0.04em;
+  overflow: hidden;
+  font-size: clamp(96px, 19.5vw, 330px);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.045em;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  padding-top: 0.2em;
+  animation: footer-marquee 32s linear infinite;
+}
+
+@keyframes footer-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.name {
+  white-space: nowrap;
+  padding-right: 0.35em;
+}

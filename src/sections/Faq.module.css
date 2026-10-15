@@ -1,0 +1,103 @@
+.faq {
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: 120px 0;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  gap: 64px;
+  align-items: start;
+}
+
+/* Left column */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(40px, 4.4vw, 64px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.text {
+  margin: 0;
+  max-width: 420px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.button {
+  padding: 15px 22px;
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  color: var(--color-bg);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Accordion */
+.list {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.item {
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-align: left;
+}
+
+.icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  transition: transform 0.2s ease;
+  transform: rotate(0deg);
+}
+
+.iconOpen {
+  transform: rotate(45deg);
+}
+
+.answer {
+  margin: 0 0 24px;
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}

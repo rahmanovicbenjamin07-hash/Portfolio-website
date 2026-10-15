@@ -1,0 +1,150 @@
+.cta {
+  background: var(--color-bg);
+  padding: 120px 32px 0;
+}
+
+.box {
+  position: relative;
+  max-width: 1280px;
+  height: 620px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: #101012;
+  border: 1px solid var(--color-border);
+  color: #ffffff;
+}
+
+.heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24px;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(88px, 14vw, 210px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  color: var(--color-cta);
+  white-space: nowrap;
+}
+
+/* Blue horizon and its soft glow */
+.glow {
+  position: absolute;
+  left: 50%;
+  bottom: -560px;
+  width: 1500px;
+  height: 760px;
+  margin-left: -750px;
+  border-radius: 50%;
+  background: var(--color-cta);
+  filter: blur(90px);
+  opacity: 0.55;
+}
+
+.horizon {
+  position: absolute;
+  left: 50%;
+  bottom: -600px;
+  width: 1300px;
+  height: 760px;
+  margin-left: -650px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.9;
+}
+
+/* Floating </> tile */
+.object {
+  position: absolute;
+  left: 50%;
+  top: 236px;
+  width: 184px;
+  height: 184px;
+  margin-left: -92px;
+  animation: cta-float 7s ease-in-out infinite;
+}
+
+@keyframes cta-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+
+.edge {
+  position: absolute;
+  inset: 0;
+  transform: translate(7px, 11px) rotate(-16deg);
+  border-radius: 46px;
+  background: #bfc2c9;
+}
+
+.tile {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-16deg);
+  border-radius: 46px;
+  background: #f1f1ef;
+  border: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dots {
+  position: absolute;
+  left: 27px;
+  top: 23px;
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c9cbd0;
+}
+
+/* Button + note */
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.button {
+  padding: 18px 30px;
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  color: var(--color-bg);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.25s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.note {
+  margin: 0;
+  max-width: 380px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
