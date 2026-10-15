@@ -1,0 +1,292 @@
+.work {
+  position: relative;
+  font-family: var(--font-work);
+  background: var(--color-bg);
+  color: #edebe6;
+  padding: 120px 32px 140px;
+  overflow: hidden;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* Heading row */
+.head {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: rgba(237, 235, 230, 0.55);
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(36px, 3.6vw, 52px);
+  line-height: 1.05;
+}
+
+.hint {
+  margin: 0;
+  max-width: 300px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(237, 235, 230, 0.55);
+}
+
+/* Accordion stage */
+.stage {
+  position: relative;
+  height: 560px;
+  margin-top: 48px;
+}
+
+.ghost {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 220px;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(237, 235, 230, 0.035);
+  letter-spacing: -0.04em;
+}
+
+.peek {
+  position: absolute;
+  top: 50%;
+  width: 130px;
+  height: 300px;
+  transform: translateY(-50%);
+  object-fit: cover;
+  opacity: 0.45;
+}
+
+.peekLeft {
+  left: -32px;
+  object-position: right top;
+}
+
+.peekRight {
+  right: -32px;
+  object-position: left top;
+}
+
+.frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 900px;
+  max-width: calc(100% - 40px);
+  height: 440px;
+  transform: translate(-50%, -50%);
+}
+
+.tabs {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.acc {
+  position: relative;
+  flex: none;
+  width: 130px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid rgba(237, 235, 230, 0.12);
+  background: #121214;
+  color: #edebe6;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: inherit;
+  transition: width 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.acc:first-child {
+  border-left: 0;
+}
+
+.on {
+  width: 640px;
+}
+
+.accImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.on .accImg {
+  opacity: 1;
+}
+
+.acc:not(.on):hover .accImg {
+  opacity: 0.3;
+}
+
+.accLabel {
+  position: absolute;
+  inset: 22px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.4s ease;
+}
+
+.on .accLabel {
+  opacity: 0;
+}
+
+.vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.accName {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.accNum {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+.big {
+  position: absolute;
+  left: -70px;
+  bottom: -78px;
+  font-size: 168px;
+  line-height: 1;
+  font-style: italic;
+  font-weight: 300;
+  color: #edebe6;
+  pointer-events: none;
+}
+
+@keyframes wk-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeIn {
+  animation: wk-in 0.7s ease both;
+}
+
+/* Description row */
+.descWrap {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 48px auto 0;
+}
+
+.desc {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 40px;
+  align-items: start;
+  padding-top: 28px;
+  border-top: 1px solid rgba(237, 235, 230, 0.14);
+}
+
+.descTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.descName {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.descMeta {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(237, 235, 230, 0.55);
+}
+
+.descBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.descText {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(237, 235, 230, 0.75);
+}
+
+.descLink {
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(237, 235, 230, 0.4);
+}
+
+@media (max-width: 1000px) {
+  .peek {
+    display: none;
+  }
+
+  .desc {
+    grid-template-columns: 1fr;
+  }
+
+  .big {
+    font-size: 96px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn {
+    animation: none;
+  }
+
+  .acc,
+  .accImg,
+  .accLabel {
+    transition: none;
+  }
+}

@@ -34,7 +34,7 @@ async function capture(url, w, h) {
       return {
         tag: e.tagName.toLowerCase(), text,
         box: [r.x - r0.x, r.y - r0.y, r.width, r.height].map((v) => Math.round(v * 10) / 10),
-        font: `${cs.fontFamily.split(',')[0]} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ls:${cs.letterSpacing}`,
+        font: `${cs.fontFamily.split(',')[0].replace(' Variable', '').replaceAll('"', '')} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ls:${cs.letterSpacing}`,
         color: cs.color, bg: cs.backgroundColor,
       }
     })
