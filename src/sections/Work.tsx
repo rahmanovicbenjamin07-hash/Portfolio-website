@@ -26,7 +26,6 @@ const pad = (k: number) => (k < 10 ? '0' : '') + k
 
 export default function Work() {
   const [active, setActive] = useState(1)
-  const n = PROJECTS.length
   const current = PROJECTS[active]
 
   return (
@@ -36,36 +35,38 @@ export default function Work() {
           <div className={styles.eyebrow}>Selected work (03)</div>
           <h2 id="work-heading" className={`${styles.serif} ${styles.heading}`}>A few projects I'm proud of.</h2>
         </div>
-        <p className={styles.hint}>Click a project to open it.</p>
       </div>
 
       <div className={styles.stage}>
         <div aria-hidden="true" className={`${styles.serif} ${styles.ghost}`}>Selected work</div>
-        <img className={`${styles.peek} ${styles.peekLeft}`} src={PROJECTS[(active + n - 1) % n].src} alt="" />
-        <img className={`${styles.peek} ${styles.peekRight}`} src={PROJECTS[(active + 1) % n].src} alt="" />
 
-        <div className={styles.frame}>
-          <div role="tablist" aria-label="Projects" className={styles.tabs}>
-            {PROJECTS.map((p, k) => (
-              <button
-                key={p.name}
-                type="button"
-                role="tab"
-                aria-selected={k === active}
-                aria-label={p.name}
-                className={`${styles.acc} ${k === active ? styles.on : ''}`}
-                onClick={() => setActive(k)}
-              >
-                <img className={styles.accImg} src={p.src} alt="" />
-                <span className={styles.accLabel}>
-                  <span className={`${styles.vertical} ${styles.serif} ${styles.accName}`}>{p.name}</span>
-                  <span className={`${styles.vertical} ${styles.accNum}`}>{`${pad(k + 1)}”`}</span>
-                </span>
-              </button>
-            ))}
+        <div className={styles.row}>
+          <div className={styles.numCol}>
+            <div key={active} aria-hidden="true" className={`${styles.serif} ${styles.fadeIn} ${styles.big}`}>
+              {`${pad(active + 1)}”`}
+            </div>
           </div>
-          <div key={active} aria-hidden="true" className={`${styles.serif} ${styles.fadeIn} ${styles.big}`}>
-            {`${pad(active + 1)}”`}
+
+          <div className={styles.frame}>
+            <div role="tablist" aria-label="Projects" className={styles.tabs}>
+              {PROJECTS.map((p, k) => (
+                <button
+                  key={p.name}
+                  type="button"
+                  role="tab"
+                  aria-selected={k === active}
+                  aria-label={p.name}
+                  className={`${styles.acc} ${k === active ? styles.on : ''}`}
+                  onClick={() => setActive(k)}
+                >
+                  <img className={styles.accImg} src={p.src} alt="" />
+                  <span className={styles.accLabel}>
+                    <span className={`${styles.vertical} ${styles.serif} ${styles.accName}`}>{p.name}</span>
+                    <span className={`${styles.vertical} ${styles.accNum}`}>{`${pad(k + 1)}”`}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
