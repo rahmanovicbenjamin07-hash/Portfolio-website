@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Benjamin R. · Webflow developer (Final mix v3)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,300;1,6..72,400&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{opacity:.85}
+@keyframes dc-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes dc-marquee-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes dc-scroll-up{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.bento{grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:110px}
+@media (max-width:1000px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto}.bento>*{grid-column:span 2 !important;grid-row:auto !important;min-height:220px;box-sizing:border-box}.bento>.b-half{grid-column:span 1 !important}.bento>.b-photo{min-height:560px}.bento>.b-slim{min-height:110px}}
+@media (max-width:560px){.bento>.b-half{grid-column:span 2 !important}}
+.tool-track{animation:dc-marquee 34s linear infinite}.tool-track.rev{animation-name:dc-marquee-rev}.tools:hover .tool-track{animation-play-state:paused}
+@keyframes dc-pulse{0%{box-shadow:0 0 0 0 currentColor}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.pulse{animation:dc-pulse 2s ease-out infinite}
+.svc .svc-desc{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .4s ease,opacity .3s ease}
+.svc:hover .svc-desc,.svc:focus-within .svc-desc{grid-template-rows:1fr;opacity:1}
+.svc h3{transition:transform .3s ease}
+.svc:hover h3{transform:translateX(8px)}
+@media (hover:none){.svc .svc-desc{grid-template-rows:1fr;opacity:1}}
+.pw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(4,240px);gap:16px}
+.pw-a{grid-column:1 / span 4;grid-row:1}.pw-b{grid-column:5 / span 2;grid-row:1 / span 3}.pw-d{grid-column:1 / span 2;grid-row:2 / span 3}.pw-i{grid-column:3 / span 2;grid-row:2 / span 2}.pw-c{grid-column:3 / span 4;grid-row:4}
+.pw-card{transition:transform .35s ease}.pw-card:hover{transform:translateY(-4px)}
+@keyframes pw-flow{from{transform:translateX(-24px)}to{transform:translateX(70px)}}.pw-flow{animation:pw-flow 1.6s linear infinite}
+@keyframes pw-cycle{0%,28%{transform:translateY(0) scale(1);opacity:1;z-index:3}33%,61%{transform:translateY(-28px) scale(.94);opacity:.8;z-index:2}66%,92%{transform:translateY(-56px) scale(.88);opacity:.55;z-index:1}96%{transform:translateY(30px) scale(1);opacity:0;z-index:4}100%{transform:translateY(0) scale(1);opacity:1;z-index:3}}
+.pw-stack{animation:pw-cycle 9s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes pw-up{from{transform:translateY(0)}to{transform:translateY(-50%)}}.pw-scroll{animation:pw-up 22s linear infinite}
+@keyframes pw-ring{0%{stroke-dashoffset:88}55%,100%{stroke-dashoffset:0}}.pw-ring{stroke-dasharray:88;animation:pw-ring 4s cubic-bezier(.2,.8,.2,1) infinite}
+.tm-track{animation:dc-marquee 55s linear infinite}.tm-rev{animation-name:dc-marquee-rev}.tm-row:hover .tm-track{animation-play-state:paused}
+@keyframes cta-ripple{0%{transform:scale(.75);opacity:.9}100%{transform:scale(1.5);opacity:0}}.cta-ripple{animation:cta-ripple 3s ease-out infinite}
+@keyframes cta-dot{0%{box-shadow:0 0 0 0 rgba(61,220,132,.7)}70%{box-shadow:0 0 0 8px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}.cta-dot{animation:cta-dot 2s ease-out infinite}
+.cta-btn{transition:transform .25s ease}.cta-btn:hover{transform:translateY(-2px)}
+.tq-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:stretch}
+@keyframes tq-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.tq-quote{animation:tq-in .6s ease both}
+@keyframes cta-wave{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cta-wave{animation:cta-wave 16s linear infinite}.cta-wave-rev{animation-direction:reverse}
+@keyframes cta-twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+.cta-star{position:absolute;border-radius:50%;background:#FFFFFF;animation:cta-twinkle 3s ease-in-out infinite}
+@media (max-width:900px){.tq-grid{grid-template-columns:1fr;gap:40px}}
+@media (max-width:1000px){.pw{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:auto}.pw>*{grid-column:span 2 !important;grid-row:auto !important}.pw-i{min-height:520px}.pw-a,.pw-c{grid-template-columns:1fr !important}}
+.hr-left{animation:dc-marquee 110s linear infinite}.hr-right{animation:dc-marquee-rev 110s linear infinite}
+.wk-serif{font-family:'Newsreader',serif;font-weight:400;letter-spacing:-0.02em}
+.acc{position:relative;flex:none;height:100%;padding:0;border:0;border-left:1px solid rgba(237,235,230,0.12);background:#121214;color:#EDEBE6;cursor:pointer;overflow:hidden;font-family:inherit;transition:width .9s cubic-bezier(.7,0,.2,1)}
+.acc:first-child{border-left:0}
+.acc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;transition:opacity .6s ease}
+.acc:not(.on):hover .acc-img{opacity:.3 !important}
+.acc-label{position:absolute;inset:22px 0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;transition:opacity .4s ease}
+.acc-v{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+@keyframes wk-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.wk-in{animation:wk-in .7s ease both}
+.wk-desc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:start}
+@media (max-width:1000px){.wk-peek{display:none}.wk-desc{grid-template-columns:1fr}.wk-big{font-size:96px !important}}
+@keyframes cta-float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+.cta-obj{animation:cta-float 7s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div id="top" style="font-family: 'Plus Jakarta Sans', sans-serif; background: #0B0B0C; color: #FFFFFF; min-width: 0">
+
+<section style="position: relative; min-height: 900px; background: #0B0B0C; color: #FFFFFF; overflow: hidden; display: flex; flex-direction: column">
+<div aria-hidden="true" style="position: absolute; inset: 0; perspective: 1800px; overflow: hidden">
+<div style="position: absolute; left: 50%; top: 44%; display: flex; flex-direction: column; gap: 28px; transform: translate(-50%, -50%) rotateX(36deg) rotateZ(-12deg) scale(1.2); filter: blur(1.2px) brightness(0.72)">
+<sc-for list="{{heroRows}}" as="row" hint-placeholder-count="5">
+<div class="{{row.cls}}" style="display: flex; gap: 28px; width: max-content">
+<sc-for list="{{row.shots}}" as="c" hint-placeholder-count="18"><img src="{{c}}" alt="" style="flex: none; width: 340px; height: 206px; object-fit: cover; object-position: top; border-radius: 8px; display: block"></sc-for>
+</div>
+</sc-for>
+</div>
+</div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse 52% 50% at 50% 52%, rgba(11,11,12,0.9) 0%, rgba(11,11,12,0.6) 60%, rgba(11,11,12,0.25) 100%)"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 45%; background: linear-gradient(to bottom, rgba(11,11,12,0) 0%, #0B0B0C 85%)"></div>
+
+<header style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 32px">
+<a href="#top" style="padding: 12px 22px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(12px); color: #FFFFFF; text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: -0.02em">Benjamin R.</a>
+<button aria-label="Open menu" style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(12px); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 9h14"></path><path d="M5 15h14"></path></svg>
+</button>
+<a href="#contact" style="padding: 13px 22px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(12px); color: #FFFFFF; text-decoration: none; font-size: 15px; font-weight: 600">Book a call</a>
+</header>
+
+<div style="position: relative; z-index: 2; flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 24px 80px">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 22px; max-width: 980px">
+<div style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); font-size: 14px; font-weight: 500; color: #FFFFFF"><span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span>Your idea. My execution.</div>
+<h1 style="margin: 0; font-size: clamp(44px, 6.6vw, 104px); font-weight: 600; line-height: 1.02; letter-spacing: -0.045em; color: #FFFFFF">
+<span style="display: block">Hand me the design.</span>
+<span style="display: block"><img src="../public/images/webflow-logo.png" alt="Webflow" style="display: inline-block; vertical-align: middle; width: 0.86em; height: 0.86em; margin-right: 0.22em; border-radius: 0.18em; position: relative; top: -0.06em; object-fit: cover">Get back a</span>
+<span style="display: block">finished <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" style="width: 0.78em; height: 0.78em; vertical-align: -0.06em; margin: 0 0.06em"><circle cx="12" cy="12" r="11" fill="{{accent}}"></circle><path d="M7 12.5l3.2 3.2L17 9" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg> website.</span>
+</h1>
+<p style="align-self: flex-start; margin: 0; max-width: 460px; font-size: 17px; line-height: 1.55; color: rgba(255,255,255,0.74)">Expert Webflow developer for agencies and teams. Everything your website needs, handled.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 6px">
+<a href="#contact" style="padding: 16px 26px; border-radius: 999px; background: #FFFFFF; color: #0B0B0C; text-decoration: none; font-size: 16px; font-weight: 600">Book a 15-min call</a>
+<a href="#work" style="padding: 16px 26px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 600">See the work</a>
+</div>
+</div>
+</div>
+
+<div style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 0 32px 32px; font-size: 14px">
+<div style="color: rgba(255,255,255,0.72)"><strong style="color: #FFFFFF; font-weight: 600">{{time}}</strong> ({{zone}})</div>
+<p style="margin: 0; text-align: left; max-width: 380px; line-height: 1.5; color: rgba(255,255,255,0.72)"><strong style="color: #FFFFFF; font-weight: 600">Benjamin</strong> builds Webflow websites for agencies and teams, from first design to launch.</p>
+<div style="display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.72)"><span style="writing-mode: vertical-rl; transform: rotate(180deg); font-size: 13px">Scroll for more</span><span aria-hidden="true" style="width: 1px; height: 72px; background: rgba(255,255,255,0.6)"></span></div>
+</div>
+</section>
+
+<section aria-label="What I do" style="background: #0B0B0C; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.08)">
+<div aria-hidden="true" style="height: 112px; background: #141416; display: flex; align-items: center; overflow: hidden">
+<div style="display: flex; width: max-content; animation: dc-marquee 40s linear infinite">
+<span style="white-space: nowrap; padding-right: 48px; font-size: 64px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.04em">Design — Development — CMS — SEO — Launch — Design — Development — CMS — SEO — Launch —</span>
+<span style="white-space: nowrap; padding-right: 48px; font-size: 64px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.04em">Design — Development — CMS — SEO — Launch — Design — Development — CMS — SEO — Launch —</span>
+</div>
+</div>
+<div aria-hidden="true" style="height: 60px; background: {{accent}}; display: flex; align-items: center; overflow: hidden">
+<div style="display: flex; width: max-content; animation: dc-marquee-rev 45s linear infinite">
+<span style="white-space: nowrap; padding-right: 32px; font-size: 24px; font-weight: 600; color: #FFFFFF; letter-spacing: -0.01em">Responsive · Custom code · Integrations · Speed · Accessibility · Maintenance · Responsive · Custom code · Integrations · Speed · Accessibility · Maintenance ·</span>
+<span style="white-space: nowrap; padding-right: 32px; font-size: 24px; font-weight: 600; color: #FFFFFF; letter-spacing: -0.01em">Responsive · Custom code · Integrations · Speed · Accessibility · Maintenance · Responsive · Custom code · Integrations · Speed · Accessibility · Maintenance ·</span>
+</div>
+</div>
+</section>
+
+<section id="work" aria-labelledby="work-heading" style="position: relative; font-family: 'Instrument Sans', sans-serif; background: #0B0B0C; color: #EDEBE6; padding: 120px 32px 140px; overflow: hidden">
+
+<div style="position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 13px; letter-spacing: 0.02em; color: rgba(237,235,230,0.55)">Selected work (03)</div>
+<h2 id="work-heading" class="wk-serif" style="margin: 0; font-size: clamp(36px, 3.6vw, 52px); line-height: 1.05">A few projects I'm proud of.</h2>
+</div>
+<p style="margin: 0; max-width: 300px; font-size: 14px; line-height: 1.6; color: rgba(237,235,230,0.55)">Click a project to open it.</p>
+</div>
+
+<div style="position: relative; height: 560px; margin-top: 48px">
+<div aria-hidden="true" class="wk-serif" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 220px; line-height: 1; white-space: nowrap; color: rgba(237,235,230,0.035); letter-spacing: -0.04em">Selected work</div>
+<img class="wk-peek" src="{{wk.peekL}}" alt="" style="position: absolute; left: -32px; top: 50%; width: 130px; height: 300px; transform: translateY(-50%); object-fit: cover; object-position: right top; opacity: 0.45">
+<img class="wk-peek" src="{{wk.peekR}}" alt="" style="position: absolute; right: -32px; top: 50%; width: 130px; height: 300px; transform: translateY(-50%); object-fit: cover; object-position: left top; opacity: 0.45">
+
+<div style="position: absolute; left: 50%; top: 50%; width: 900px; max-width: calc(100% - 40px); height: 440px; transform: translate(-50%, -50%)">
+<div role="tablist" aria-label="Projects" style="display: flex; width: 100%; height: 100%; overflow: hidden; border-radius: 4px">
+<sc-for list="{{wk.panels}}" as="a" hint-placeholder-count="3">
+<button role="tab" aria-selected="{{a.selected}}" aria-label="{{a.name}}" class="{{a.cls}}" onClick="{{a.pick}}" style="{{a.style}}">
+<img class="acc-img" src="{{a.src}}" alt="" style="{{a.imgStyle}}">
+<span class="acc-label" style="{{a.labelStyle}}">
+<span class="acc-v wk-serif" style="font-size: 44px; line-height: 1">{{a.name}}</span>
+<span class="acc-v" style="font-size: 15px; letter-spacing: 0.02em">{{a.num}}”</span>
+</span>
+</button>
+</sc-for>
+</div>
+<sc-for list="{{wk.big}}" as="b" hint-placeholder-count="1"><div class="wk-big wk-serif wk-in" aria-hidden="true" style="position: absolute; left: -70px; bottom: -78px; font-size: 168px; line-height: 1; font-style: italic; font-weight: 300; color: #EDEBE6; pointer-events: none">{{b}}”</div></sc-for>
+</div>
+</div>
+
+<div style="position: relative; z-index: 2; max-width: 900px; margin: 48px auto 0">
+<sc-for list="{{wk.desc}}" as="d" hint-placeholder-count="1">
+<div class="wk-desc wk-in" style="padding-top: 28px; border-top: 1px solid rgba(237,235,230,0.14)">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="wk-serif" style="font-size: 32px; line-height: 1.1">{{d.name}}</span>
+<span style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(237,235,230,0.55)">{{d.meta}}</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 18px">
+<p style="margin: 0; font-size: 17px; line-height: 1.65; color: rgba(237,235,230,0.75)">{{d.text}}</p>
+<a href="#work" style="font-size: 14px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(237,235,230,0.4)">View project</a>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="services" aria-labelledby="services-heading" style="background: #0B0B0C; color: #F2F2F0; padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.08)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 32px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 48px">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-size: 14px; font-weight: 600">[ Services ]</div>
+<h2 id="services-heading" style="margin: 0; max-width: 760px; font-size: clamp(40px, 4.4vw, 64px); font-weight: 600; line-height: 1.04; letter-spacing: -0.045em">Everything your website needs. Nothing left to do after me.</h2>
+</div>
+<p style="margin: 0; max-width: 360px; font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.62)">One developer for the whole build, from the first design to launch and beyond.</p>
+</div>
+
+<div style="position: relative">
+<div class="pw" style="position: relative">
+
+<div class="pw-card pw-a" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%); border: 1px solid rgba(255,255,255,0.12); border-top-color: rgba(255,255,255,0.28); border-radius: 8px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; overflow: hidden">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px"><span style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.62)">01</span><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; font-size: 13px; font-weight: 600"><li style="padding: 7px 12px; border-radius: 6px; background: rgba(255,255,255,0.07)">Figma</li><li style="padding: 7px 12px; border-radius: 6px; background: rgba(255,255,255,0.07)">Responsive</li><li style="padding: 7px 12px; border-radius: 6px; background: rgba(255,255,255,0.07)">Client-First</li></ul></div>
+<div><h3 style="margin: 0; font-size: 34px; font-weight: 600; letter-spacing: -0.035em">Web design &amp; Webflow development</h3><p style="margin: 10px 0 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.62)">Modern designs, built pixel-perfect and responsive on every device.</p></div>
+</div>
+
+<div class="pw-card pw-b" style="position: relative; background: #141416; border: 1px solid rgba(255,255,255,0.08); color: #FFFFFF; border-radius: 8px; overflow: hidden">
+<video src="../public/video/animation-demo.mp4" autoplay="" muted="" loop="" playsinline="" aria-label="Screen recording of a website animating on load, on hover and on scroll" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center"></video>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,0) 50%, rgba(11,11,12,0.6) 70%, rgba(11,11,12,0.95) 100%)"></div>
+<div style="position: absolute; left: 28px; right: 28px; bottom: 28px">
+<h3 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.03em">Interactions &amp; animation</h3>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.78)">Load, hover and scroll effects that make a site feel alive, without slowing it down.</p>
+</div>
+</div>
+
+<div class="pw-card pw-d" style="position: relative; background: #FBFAF7; color: #FFFFFF; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08)">
+<img src="../public/images/cms-demo.jpg" alt="A blog page built on Webflow CMS, filtered by category" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,0) 50%, rgba(11,11,12,0.6) 70%, rgba(11,11,12,0.95) 100%)"></div>
+<div style="position: absolute; left: 28px; right: 28px; bottom: 28px">
+<h3 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.03em">CMS setup</h3>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.8)">Collections, templates and filters your client can edit without breaking anything.</p>
+</div>
+</div>
+
+<div class="pw-card pw-i" style="position: relative; border-radius: 8px; overflow: hidden; background: #D9D9D6">
+<img src="../public/images/benjamin.jpg" alt="Benjamin Rahmanović" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%">
+</div>
+
+<div class="pw-card pw-c" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%); border: 1px solid rgba(255,255,255,0.12); border-top-color: rgba(255,255,255,0.28); border-radius: 8px; padding: 28px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: stretch; overflow: hidden">
+<div style="display: flex; flex-direction: column; justify-content: space-between; gap: 16px">
+<div><h3 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.03em">SEO, speed &amp; integrations</h3><p style="margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.62)">Technical SEO, fast loading, custom code, React, HubSpot and analytics.</p></div>
+<div style="font-size: 13px; color: rgba(255,255,255,0.62)"><strong style="color: #F2F2F0">Also:</strong> Ecommerce · Migrations · Maintenance &amp; care</div>
+</div>
+<div aria-hidden="true" style="border-radius: 8px; background: rgba(255,255,255,0.04); padding: 20px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-content: center">
+<sc-for list="{{checks}}" as="ck" hint-placeholder-count="4"><div style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08)"><svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="14" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="4"></circle><circle class="pw-ring" cx="17" cy="17" r="14" fill="none" stroke="{{accent}}" stroke-width="4" stroke-linecap="round" transform="rotate(-90 17 17)" style="{{ck.delay}}"></circle></svg><span style="font-size: 13px; font-weight: 600">{{ck.label}}</span></div></sc-for>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="t-heading" style="position: relative; overflow: hidden; background: #0B0B0C; color: #EEEEEC; padding: 140px 32px">
+<div class="tq-grid" style="position: relative; max-width: 1280px; margin: 0 auto">
+<div style="display: flex; flex-direction: column; justify-content: space-between; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.6)">[ TESTIMONIALS ]</div>
+<h2 id="t-heading" style="margin: 0; font-size: clamp(64px, 8.4vw, 132px); font-weight: 800; line-height: 0.86; letter-spacing: -0.03em; text-transform: uppercase; color: #EEEEEC"><span style="display: block">Results</span><span style="display: block">speak</span><span style="display: block; color: {{accent}}">louder</span></h2>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; font-size: 15px; color: rgba(255,255,255,0.72)"><span aria-label="5 stars" style="font-size: 18px; letter-spacing: 3px; color: #FFFFFF">★★★★★</span>4+ five-star reviews on Upwork</div>
+</div>
+<figure style="margin: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 480px; box-sizing: border-box; padding: 48px; border-radius: 8px; background: rgba(255,255,255,0.05); backdrop-filter: blur(24px) saturate(170%); -webkit-backdrop-filter: blur(24px) saturate(170%); border: 1px solid rgba(255,255,255,0.12); border-top-color: rgba(255,255,255,0.28);">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+<svg aria-hidden="true" width="56" height="44" viewBox="0 0 56 44" fill="{{accent}}"><path d="M0 44V26C0 11 7 2 22 0l2 7c-8 2-12 7-12 14h10v23H0zm32 0V26c0-15 7-24 22-26l2 7c-8 2-12 7-12 14h10v23H32z"></path></svg>
+<span style="font-size: 14px; color: rgba(255,255,255,0.55)">{{tq.pos}}</span>
+</div>
+<blockquote class="tq-quote" style="margin: 0; font-size: clamp(24px, 2.4vw, 34px); font-weight: 500; line-height: 1.35; letter-spacing: -0.02em; color: #FFFFFF">{{tq.quote}}</blockquote>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px">
+<figcaption style="display: flex; align-items: center; gap: 14px"><span aria-hidden="true" style="width: 52px; height: 52px; border-radius: 14px; background: {{accent}}; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #FFFFFF">{{tq.initials}}</span><span><strong style="display: block; font-size: 17px; color: #FFFFFF">{{tq.name}}</strong><span style="font-size: 14px; color: rgba(255,255,255,0.6)">{{tq.role}}</span></span></figcaption>
+<div style="display: flex; align-items: center; gap: 10px">
+<div role="tablist" aria-label="Reviews" style="display: flex; gap: 6px; margin-right: 6px">
+<sc-for list="{{tqDots}}" as="d" hint-placeholder-count="3"><button role="tab" aria-selected="{{d.selected}}" aria-label="{{d.label}}" onClick="{{d.pick}}" style="{{d.style}}"></button></sc-for>
+</div>
+<button onClick="{{tqPrev}}" aria-label="Previous review" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); background: transparent; color: #FFFFFF; font-size: 18px; cursor: pointer">←</button>
+<button onClick="{{tqNext}}" aria-label="Next review" style="width: 48px; height: 48px; border-radius: 50%; border: 0; background: #FFFFFF; color: #0B0B0C; font-size: 18px; cursor: pointer">→</button>
+</div>
+</div>
+</figure>
+</div>
+</section>
+
+<section id="contact" aria-labelledby="cta-heading" style="background: #0B0B0C; padding: 120px 32px 0">
+<div style="position: relative; max-width: 1280px; height: 620px; margin: 0 auto; overflow: hidden; border-radius: 8px; background: #101012; border: 1px solid rgba(255,255,255,0.08); color: #FFFFFF">
+<h2 id="cta-heading" style="position: absolute; left: 0; right: 0; top: 24px; margin: 0; text-align: center; font-size: clamp(88px, 14vw, 210px); font-weight: 600; line-height: 1; letter-spacing: -0.055em; color: #2F5BFF; white-space: nowrap">Let's build it</h2>
+<div aria-hidden="true" style="position: absolute; left: 50%; bottom: -560px; width: 1500px; height: 760px; margin-left: -750px; border-radius: 50%; background: #2F5BFF; filter: blur(90px); opacity: 0.55"></div>
+<div aria-hidden="true" style="position: absolute; left: 50%; bottom: -600px; width: 1300px; height: 760px; margin-left: -650px; border-radius: 50%; background: #1E3BF0; opacity: 0.9"></div>
+<div aria-hidden="true" class="cta-obj" style="position: absolute; left: 50%; top: 236px; width: 184px; height: 184px; margin-left: -92px">
+<div style="position: absolute; inset: 0; transform: translate(7px, 11px) rotate(-16deg); border-radius: 46px; background: #BFC2C9"></div>
+<div style="position: absolute; inset: 0; transform: rotate(-16deg); border-radius: 46px; background: #F1F1EF; border: 1px solid #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#1E3BF0" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5"></path><path d="M16 7l5 5-5 5"></path><path d="M13.5 4.5l-3 15"></path></svg>
+<span style="position: absolute; left: 27px; top: 23px; display: flex; gap: 4px"><span style="width: 5px; height: 5px; border-radius: 50%; background: #C9CBD0"></span><span style="width: 5px; height: 5px; border-radius: 50%; background: #C9CBD0"></span><span style="width: 5px; height: 5px; border-radius: 50%; background: #C9CBD0"></span></span>
+</div>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 56px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; padding: 0 24px">
+<a class="cta-btn" href="#contact" style="padding: 18px 30px; border-radius: 999px; background: #FFFFFF; color: #0B0B0C; text-decoration: none; font-size: 16px; font-weight: 600">Book a 15-min call</a>
+<p style="margin: 0; max-width: 380px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.85)">Send me the design or the idea. I'll reply with how I'd build it, and when.</p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="faq-heading" style="background: #0B0B0C; color: #F2F2F0; padding: 120px 0">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 64px; align-items: start">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px">
+<div style="font-size: 14px; font-weight: 600">[ FAQ ]</div>
+<h2 id="faq-heading" style="margin: 0; font-size: clamp(40px, 4.4vw, 64px); font-weight: 600; line-height: 1.04; letter-spacing: -0.045em">Questions agencies ask first.</h2>
+<p style="margin: 0; max-width: 420px; font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.62)">Anything else? Ask me on a quick call.</p>
+<a href="#contact" style="padding: 15px 22px; border-radius: 999px; background: #FFFFFF; color: #0B0B0C; text-decoration: none; font-size: 15px; font-weight: 600">Book a 15-min call</a>
+</div>
+<div style="display: flex; flex-direction: column; border-bottom: 1px solid rgba(255,255,255,0.14)">
+<sc-for list="{{faqs}}" as="f" hint-placeholder-count="6">
+<div style="border-top: 1px solid rgba(255,255,255,0.14)">
+<button onClick="{{f.toggle}}" aria-expanded="{{f.expanded}}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 0; background: none; border: 0; cursor: pointer; font-family: inherit; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: #F2F2F0; text-align: left"><span>{{f.q}}</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="{{f.iconStyle}}"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{false}}"><p style="margin: 0 0 24px; max-width: 560px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.62)">{{f.a}}</p></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<footer style="background: #0B0B0C; color: #F2F2F0; border-top: 1px solid rgba(255,255,255,0.08); padding: 96px 32px 0; overflow: hidden">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px">
+<div style="font-size: 14px; font-weight: 500; line-height: 1.7"><div>Designed &amp; built by Benjamin Rahmanović</div><div>Built in Webflow</div><div>© 2026</div></div>
+<div style="display: flex; flex-wrap: wrap; gap: clamp(48px, 10vw, 200px)">
+<nav aria-label="Index"><div style="margin-bottom: 16px; font-size: 13px; font-weight: 600">Index</div><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 24px; font-weight: 500"><li><a href="#top" style="text-decoration: none">Home</a></li><li><a href="#work" style="text-decoration: none">Work</a></li><li><a href="#services" style="text-decoration: none">Services</a></li><li><a href="#about" style="text-decoration: none">About</a></li><li><a href="#contact" style="text-decoration: none">Contact</a></li></ul></nav>
+<nav aria-label="Socials"><div style="margin-bottom: 16px; font-size: 13px; font-weight: 600">Socials</div><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 24px; font-weight: 500"><li><a href="#contact" style="text-decoration: none">LinkedIn</a></li><li><a href="#contact" style="text-decoration: none">Upwork</a></li><li><a href="#contact" style="text-decoration: none">Contra</a></li><li><a href="#contact" style="text-decoration: none">Email</a></li></ul></nav>
+</div>
+</div>
+<div style="position: relative; margin: 64px 0 24px">
+<div style="height: 1px; background: rgba(255,255,255,0.16)"></div>
+<a href="#top" aria-label="Back to top" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: #1C1C1F; border: 1px solid rgba(255,255,255,0.14); color: #F2F2F0; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg></a>
+</div>
+<div style="margin: 0 -32px -0.04em; overflow: hidden; font-size: clamp(96px, 19.5vw, 330px); font-weight: 700; line-height: 0.8; letter-spacing: -0.045em">
+<div style="display: flex; width: max-content; padding-top: 0.2em; animation: dc-marquee 32s linear infinite">
+<span style="white-space: nowrap; padding-right: 0.35em">BENJAMIN RAHMANOVIĆ ·</span>
+<span aria-hidden="true" style="white-space: nowrap; padding-right: 0.35em">BENJAMIN RAHMANOVIĆ ·</span>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#1E3BF0","options":["#1E3BF0","#146EF5","#FF5A1F","#111111"]},"$preview":{"width":1440,"height":6640}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { proj: 0, t: 0, open: 0, wi: 1, now: Date.now() };
+  }
+  componentDidMount() {
+    this._timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
+  }
+  componentWillUnmount() {
+    clearInterval(this._timer);
+  }
+  pal(kind) {
+    const A = this.props.accent ?? '#1E3BF0';
+    const P = {
+      light: { bg: '#EEEEEC', fg: '#111111', mute: 'rgba(0,0,0,0.14)', acc: A },
+      dark: { bg: '#1A1A1C', fg: '#FFFFFF', mute: 'rgba(255,255,255,0.16)', acc: A },
+      blue: { bg: A, fg: '#FFFFFF', mute: 'rgba(255,255,255,0.32)', acc: '#FFFFFF' },
+      cream: { bg: '#FFFFFF', fg: '#111111', mute: 'rgba(0,0,0,0.12)', acc: '#111111' },
+      graphite: { bg: '#111111', fg: '#EEEEEC', mute: 'rgba(255,255,255,0.14)', acc: '#EEEEEC' },
+      orange: { bg: '#D9D9D6', fg: '#111111', mute: 'rgba(0,0,0,0.16)', acc: A }
+    };
+    return P[kind] || P.light;
+  }
+  card(kind, title, caption, big) {
+    const c = this.pal(kind);
+    const k = big ? 1.6 : 1;
+    return {
+      title: title,
+      caption: caption,
+      cardStyle: big
+        ? 'width:100%;height:420px;margin-bottom:56px;border-radius:16px;background:' + c.bg + ';padding:26px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;overflow:hidden'
+        : 'width:340px;height:220px;border-radius:14px;background:' + c.bg + ';padding:16px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,0.5)',
+      logoStyle: 'width:' + 44 * k + 'px;height:' + 10 * k + 'px;border-radius:' + 5 * k + 'px;background:' + c.fg,
+      dotStyle: 'width:' + 26 * k + 'px;height:' + 6 * k + 'px;border-radius:' + 3 * k + 'px;background:' + c.mute,
+      btnStyle: 'width:' + 52 * k + 'px;height:' + 18 * k + 'px;border-radius:' + 9 * k + 'px;background:' + c.acc,
+      titleStyle: 'color:' + c.fg + ';font-size:' + (big ? 48 : 24) + 'px;font-weight:700;letter-spacing:-0.035em;line-height:1.05;max-width:85%',
+      lineStyle: 'height:' + 8 * k + 'px;width:55%;border-radius:' + 4 * k + 'px;background:' + c.mute,
+      blockStyle: 'flex:1;border-radius:' + 10 * k + 'px;background:' + c.acc + ';display:flex;align-items:center;justify-content:center',
+      capStyle: 'font-size:15px;font-weight:600;color:' + c.bg
+    };
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#1E3BF0';
+
+    let time = '--:--';
+    let zone = 'GMT+2';
+    try {
+      const d = new Date(this.state.now);
+      time = d.toLocaleTimeString('en-GB', { timeZone: 'Europe/Sarajevo', hour: '2-digit', minute: '2-digit' });
+      const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Sarajevo', timeZoneName: 'shortOffset' }).formatToParts(d);
+      const z = parts.find((x) => x.type === 'timeZoneName');
+      if (z) zone = z.value;
+    } catch (e) {}
+
+    const shotList = ['../public/images/topone-trader.jpg', '../public/images/wealthventures.jpg', '../public/images/spayc.jpg', '../public/images/veracious.jpg', '../public/images/wayne-nugent.jpg', '../public/images/view-from-the-edge.jpg', '../public/images/prism-sabila.jpg', '../public/images/topone-launchpad.jpg', '../public/images/benjamin-old.jpg'];
+    const heroShots = [];
+    for (let i = 0; i < 20; i++) heroShots.push(shotList[(2 * (i % 5) + 5 * Math.floor(i / 5)) % shotList.length]);
+    const heroRows = [0, 1, 2, 3, 4].map((r) => {
+      const row = shotList.map((x, k) => shotList[(r * 4 + k) % shotList.length]);
+      return { cls: r % 2 ? 'hr-right' : 'hr-left', shots: row.concat(row) };
+    });
+
+    const projects = [
+      { name: 'Top One Trader', industry: 'Prop trading firm', shots: [['../public/images/topone-trader.jpg', 'Home page']] },
+      { name: 'Top One Launchpad', industry: 'Product launch page', shots: [['../public/images/topone-launchpad.jpg', 'Launchpad page']] },
+      { name: 'WealthVentures', industry: 'Luxury travel club', shots: [['../public/images/wealthventures.jpg', 'Home page']] },
+      { name: 'Veracious', industry: 'Holding company', shots: [['../public/images/veracious.jpg', 'Home page']] },
+      { name: 'Wayne Nugent', industry: 'Founder & speaker', shots: [['../public/images/wayne-nugent.jpg', 'Home page']] },
+      { name: 'Spayc', industry: 'Travel AI platform', shots: [['../public/images/spayc.jpg', 'Home page']] },
+      { name: 'Prism by Sabila Labs', industry: 'Skincare tech', shots: [['../public/images/prism-sabila.jpg', 'Home page']] },
+      { name: 'A View From The Edge', industry: 'Event landing page', shots: [['../public/images/view-from-the-edge.jpg', 'Landing page']] }
+    ];
+    const pi = Math.min(this.state.proj, projects.length - 1);
+    const pr = projects[pi];
+    const frame = 'position:absolute;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(0,0,0,0.5);';
+    const shotPos = pr.shots.length > 1
+      ? ['right:5%;width:78%;top:48px;', 'left:5%;width:70%;bottom:150px;z-index:1;']
+      : ['left:6%;right:6%;top:50%;transform:translateY(-62%);'];
+    const pad = (n) => (n < 10 ? '0' : '') + n;
+    const p = {
+      num: pad(pi + 1), total: pad(projects.length), name: pr.name, industry: pr.industry,
+      delivered: '[Design · Build · CMS · SEO]', stack: 'Webflow · [tools you used]',
+      desc: '[Two lines on what the client needed and what you delivered.]',
+      shots: pr.shots.map((sh, i) => ({ src: sh[0], label: pr.name + ' · ' + sh[1], alt: pr.name + ' website, ' + sh[1].toLowerCase(), frameStyle: frame + shotPos[i] })),
+      src: pr.shots[0][0], alt: pr.name + ' website shown on a desktop monitor',
+      captionLines: [pr.name + ' —', pr.industry, 'Webflow build']
+    };
+    const tabBase = 'padding:10px 16px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;';
+    const tabs = projects.map((x, i) => ({
+      label: pad(i + 1) + ' ' + x.name,
+      selected: i === pi ? 'true' : 'false',
+      pick: () => this.setState({ proj: i }),
+      style: tabBase + (i === pi ? 'background:#FFFFFF;color:#0B0B0C;border:1px solid #FFFFFF' : 'background:transparent;color:#F2F2F0;border:1px solid rgba(255,255,255,0.25)')
+    }));
+
+    const checklist = [
+      'Pixel-perfect on desktop, tablet and mobile',
+      'CMS set up so clients edit safely',
+      'SEO: titles, meta, sitemap, redirects',
+      'Fast loading: optimized images and scripts',
+      'Forms, analytics and integrations tested',
+      'Accessibility basics: alt text, contrast',
+      'Cross-browser QA before launch',
+      'Handoff video showing how to edit'
+    ];
+    const capabilities = [
+      { num: '01', title: 'Web design', tag: '', items: 'Website design and redesigns that follow current trends, plus design systems your team can reuse.' },
+      { num: '02', title: 'Webflow development', tag: '', items: 'Pixel-perfect builds from Figma or my own design, responsive on every device, with interactions and animations.' },
+      { num: '03', title: 'CMS setup', tag: '', items: 'Collections, templates and filters structured so your client can edit content without breaking anything.' },
+      { num: '04', title: 'SEO & speed optimization', tag: '', items: 'Technical SEO done right (titles, meta, sitemap, redirects, schema), plus optimized images, scripts and fonts for fast loading.' },
+      { num: '05', title: 'Custom code development', tag: 'Beyond Webflow', items: 'Custom code and React, HubSpot, forms and analytics (GA4, GTM), connected and tested.' },
+      { num: '06', title: 'Ecommerce websites', tag: '', items: 'Online stores built in Webflow Ecommerce, or a custom checkout and payment integration when Webflow alone is not enough.' },
+      { num: '07', title: 'Maintenance & care', tag: '', items: 'Updates, fixes, new pages and monthly support after launch.' },
+      { num: '08', title: 'Migrations', tag: '', items: 'Moving sites from WordPress, Wix or Framer to Webflow while keeping your URLs and SEO.' }
+    ];
+
+    const reviews = [
+      { quote: '[Paste your strongest Upwork review here. Keep it to 2–3 sentences.]', name: '[Client name]', role: '[Role, Company]', initials: 'C1' },
+      { quote: '[Second review: ideally one about speed or communication.]', name: '[Client name]', role: '[Role, Company]', initials: 'C2' },
+      { quote: '[Third review: ideally one from an agency or a repeat client.]', name: '[Client name]', role: '[Role, Company]', initials: 'C3' }
+    ];
+    const reviewCards = reviews.map((r, i) => Object.assign({}, r, {
+      num: String(i + 1),
+      style: 'position:sticky;top:' + (240 + i * 28) + 'px;margin:0;width:min(500px,100%);box-sizing:border-box;padding:36px;border-radius:22px;background:rgba(26,26,28,0.78);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 -10px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:28px'
+    }));
+
+    const faqList = [
+      { q: 'How fast can you start?', a: 'Usually within 48 hours of getting the design and access. [Adjust to your real availability.]' },
+      { q: 'Do you work white-label and under NDA?', a: "Yes. I work behind your agency's brand, sign your NDA, and never contact your client unless you ask me to." },
+      { q: 'What time zone are you in?', a: 'Central European Time. I overlap with European teams all day, and with US teams in my afternoon.' },
+      { q: 'How do you price?', a: 'Hourly or per project, depending on the scope. [Your rate or starting price.]' },
+      { q: 'Who owns the website?', a: 'You and your client do. The site and all files are handed over at the end, with a short video showing how to edit it.' },
+      { q: 'What do you need to get started?', a: "A Figma file (or a brief, if I'm designing), access to the Webflow workspace, and a deadline." }
+    ];
+    const open = this.state.open;
+    const faqs = faqList.map((f, i) => ({
+      q: f.q,
+      a: f.a,
+      open: open === i,
+      expanded: open === i ? 'true' : 'false',
+      toggle: () => this.setState({ open: this.state.open === i ? -1 : i }),
+      iconStyle: 'flex:none;width:22px;height:22px;transition:transform .2s ease;transform:rotate(' + (open === i ? 45 : 0) + 'deg)'
+    }));
+
+    const cmsBase = [['Designing for trust', 'Design'], ['Webflow interactions 101', 'Dev'], ['Launch SEO checklist', 'SEO'], ['Scaling CMS collections', 'Dev'], ['Fonts for premium brands', 'Design'], ['Core Web Vitals, simply', 'SEO']];
+    const cmsRows = cmsBase.concat(cmsBase).map((r) => ({ t: r[0], c: r[1] }));
+    const checks = ['Performance', 'Accessibility', 'Best practices', 'SEO'].map((l, i) => ({ label: l, delay: 'animation-delay:' + (i * 0.2) + 's' }));
+    const tmCard = 'flex:none;margin:0;width:380px;box-sizing:border-box;padding:24px;border-radius:22px;background:rgba(22,22,26,0.62);border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 60px rgba(0,0,0,0.45)';
+    const tmBase = reviews.map((r) => Object.assign({}, r, { style: tmCard }));
+    const ti = this.state.t % reviews.length;
+    const tq = Object.assign({ pos: '0' + (ti + 1) + ' / 0' + reviews.length }, reviews[ti]);
+    const tqDots = reviews.map((r, i) => ({ label: 'Review ' + (i + 1), selected: i === ti ? 'true' : 'false', pick: () => this.setState({ t: i }),
+      style: 'width:' + (i === ti ? 28 : 10) + 'px;height:10px;border-radius:999px;border:0;padding:0;cursor:pointer;transition:width .3s ease;background:' + (i === ti ? '#FFFFFF' : 'rgba(255,255,255,0.3)') }));
+    const stars = [];
+    for (let i = 0; i < 44; i++) {
+      const x = (i * 37 + 11) % 100, y = (i * 53 + 7) % 62, sz = 1 + (i % 3);
+      stars.push('left:' + x + '%;top:' + y + '%;width:' + sz + 'px;height:' + sz + 'px;animation-delay:' + ((i * 0.37) % 3).toFixed(2) + 's;animation-duration:' + (2.4 + (i % 5) * 0.5) + 's');
+    }
+    const tmRow1 = tmBase.concat(tmBase, tmBase, tmBase);
+    const tmRow2 = [tmBase[2], tmBase[0], tmBase[1]].concat([tmBase[2], tmBase[0], tmBase[1]], [tmBase[2], tmBase[0], tmBase[1]], [tmBase[2], tmBase[0], tmBase[1]]);
+
+    const WK = [
+      { name: 'Top One Launchpad', meta: 'Product launch page · [Role] · [2025]', src: '../public/images/topone-launchpad.jpg',
+        text: 'A space-themed launch page for limited trading accounts, with a limited-spots counter and bold, cinematic visuals.' },
+      { name: 'Veracious', meta: 'Holding company · [Role] · [2025]', src: '../public/images/veracious.jpg',
+        text: 'A dark, cinematic brand site for a holding company, with gold details and a classic serif voice.' },
+      { name: 'WealthVentures', meta: 'Luxury travel club · [Role] · [2024]', src: '../public/images/wealthventures.jpg',
+        text: 'A luxury travel club site built around full-bleed photography and an elegant, editorial layout.' }
+    ];
+    const wn = WK.length, wi = this.state.wi;
+    const wpad = (k) => (k < 10 ? '0' : '') + k;
+    const wk = {
+      peekL: WK[(wi + wn - 1) % wn].src, peekR: WK[(wi + 1) % wn].src,
+      panels: WK.map((p, k) => ({ name: p.name, num: wpad(k + 1), src: p.src, selected: k === wi ? 'true' : 'false',
+        cls: 'acc' + (k === wi ? ' on' : ''), style: 'width:' + (k === wi ? 640 : 130) + 'px',
+        imgStyle: 'opacity:' + (k === wi ? 1 : 0), labelStyle: 'opacity:' + (k === wi ? 0 : 1),
+        pick: () => this.setState({ wi: k }) })),
+      big: [wpad(wi + 1)],
+      desc: [{ name: WK[wi].name, meta: WK[wi].meta, text: WK[wi].text }]
+    };
+
+    return {
+      accent: accent,
+      wk: wk,
+      cmsRows: cmsRows, checks: checks, tq: tq, tqDots: tqDots, stars: stars,
+      tqPrev: () => this.setState({ t: (this.state.t + reviews.length - 1) % reviews.length }),
+      tqNext: () => this.setState({ t: (this.state.t + 1) % reviews.length }),
+      time: time,
+      zone: zone,
+      heroShots: heroShots,
+      heroRows: heroRows,
+      tabs: tabs,
+      p: p,
+      checklist: checklist,
+      capabilities: capabilities,
+      reviewCards: reviewCards,
+      faqs: faqs,
+      stack: ['Webflow', 'Figma', 'React', 'JavaScript', 'Client-First', 'HubSpot', 'GA4', 'GTM'],
+      stack2: ['Webflow', 'Figma', 'React', 'JavaScript', 'Client-First', 'HubSpot', 'GA4', 'GTM', 'Webflow', 'Figma', 'React', 'JavaScript', 'Client-First', 'HubSpot', 'GA4', 'GTM'],
+      stack2r: ['GTM', 'GA4', 'HubSpot', 'Client-First', 'JavaScript', 'React', 'Figma', 'Webflow', 'GTM', 'GA4', 'HubSpot', 'Client-First', 'JavaScript', 'React', 'Figma', 'Webflow']
+    };
+  }
+}
+</script>
+</body>
+</html>

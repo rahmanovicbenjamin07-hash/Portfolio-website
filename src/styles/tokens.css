@@ -1,0 +1,22 @@
+:root {
+  /* Colors */
+  --color-bg: #0b0b0c;
+  --color-surface: #141416;
+  --color-surface-2: #1c1c1f;
+  --color-text: #f2f2f0;
+  --color-text-muted: rgba(255, 255, 255, 0.62);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-accent: #1e3bf0;
+  --color-cta: #2f5bff;
+
+  /* Fonts */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Newsreader Variable', serif;
+  --font-work: 'Instrument Sans', sans-serif;
+
+  /* Radii */
+  --radius-card: 8px;
+  --radius-tag: 6px;
+  --radius-pill: 999px;
+}

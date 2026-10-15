@@ -1,0 +1,23 @@
+@import './tokens.css';
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: #ffffff;
+  font-family: var(--font-sans);
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
