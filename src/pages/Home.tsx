@@ -43,8 +43,8 @@ export default function Home() {
         jsonLd={JSON_LD}
       />
       <div id="top">
+        <Hero />
         <main>
-          <Hero />
           <Banner />
           <Work />
           <Services />

@@ -64,6 +64,12 @@
   border-top: 1px solid var(--color-border-strong);
 }
 
+/* h3 around each question button, for the heading outline only: no look of its own. */
+.questionHeading {
+  margin: 0;
+  font: inherit;
+}
+
 .question {
   width: 100%;
   display: flex;

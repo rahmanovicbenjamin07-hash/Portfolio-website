@@ -48,7 +48,8 @@ export default function Hero() {
   const { time, zone } = sarajevoTime(now)
 
   return (
-    <section className={styles.hero}>
+    // The page header (banner landmark, outside <main>): holds the nav and the page's only h1.
+    <header className={styles.hero}>
       <div aria-hidden="true" className={styles.wallViewport}>
         <div className={styles.wall}>
           {ROWS.map((row, r) => (
@@ -63,18 +64,16 @@ export default function Hero() {
       <div aria-hidden="true" className={styles.vignette} />
       <div aria-hidden="true" className={styles.bottomFade} />
 
-      <header>
-        <nav aria-label="Main" className={styles.nav}>
-          <a href="#top" className={`${styles.glass} ${styles.logo}`}>Benjamin R.</a>
-          <button type="button" aria-label="Open menu" className={`${styles.glass} ${styles.menu}`}>
-            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-              <path d="M5 9h14" />
-              <path d="M5 15h14" />
-            </svg>
-          </button>
-          <a href="#contact" className={`${styles.glass} ${styles.navCta}`}>Book a call</a>
-        </nav>
-      </header>
+      <nav aria-label="Main" className={styles.nav}>
+        <a href="#top" className={`${styles.glass} ${styles.logo}`}>Benjamin R.</a>
+        <button type="button" aria-label="Open menu" className={`${styles.glass} ${styles.menu}`}>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+            <path d="M5 9h14" />
+            <path d="M5 15h14" />
+          </svg>
+        </button>
+        <a href="#contact" className={`${styles.glass} ${styles.navCta}`}>Book a call</a>
+      </nav>
 
       <div className={styles.main}>
         <div className={styles.content}>
@@ -87,7 +86,8 @@ export default function Hero() {
             <span className="sr-only">Webflow Expert Developer: </span>
             <span className={styles.line}>Hand me the design.</span>
             <span className={styles.line}>
-              <img src="/images/webflow-logo.png" alt="Webflow" width={186} height={187} className={styles.webflow} />
+              {/* Decorative: the h1 text already says "Webflow", an alt would only repeat it. */}
+              <img src="/images/webflow-logo.png" alt="" width={186} height={187} className={styles.webflow} />
               Get back a
             </span>
             <span className={styles.line}>
@@ -119,6 +119,6 @@ export default function Hero() {
           <span aria-hidden="true" className={styles.scrollLine} />
         </div>
       </div>
-    </section>
+    </header>
   )
 }

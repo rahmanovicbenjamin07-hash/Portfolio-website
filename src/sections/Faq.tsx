@@ -31,21 +31,23 @@ export default function Faq() {
         <div className={styles.list}>
           {FAQS.map((f, i) => (
             <div key={f.q} className={styles.item}>
-              <button aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)} className={styles.question}>
-                <span>{f.q}</span>
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className={`${styles.icon} ${open === i ? styles.iconOpen : ''}`}
-                >
-                  <path d="M12 5v14" />
-                  <path d="M5 12h14" />
-                </svg>
-              </button>
+              <h3 className={styles.questionHeading}>
+                <button aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)} className={styles.question}>
+                  <span>{f.q}</span>
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className={`${styles.icon} ${open === i ? styles.iconOpen : ''}`}
+                  >
+                    <path d="M12 5v14" />
+                    <path d="M5 12h14" />
+                  </svg>
+                </button>
+              </h3>
               {open === i && <p className={styles.answer}>{f.a}</p>}
             </div>
           ))}
