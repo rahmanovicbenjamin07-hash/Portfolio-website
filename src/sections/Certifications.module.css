@@ -38,7 +38,7 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(40px, 4.6vw, 64px);
+  font-size: clamp(var(--heading-min), 4.6vw, var(--heading-max));
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -52,7 +52,7 @@
 .lead {
   margin: 0;
   max-width: 360px;
-  font-size: 16px;
+  font-size: var(--text-body);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.62);
 }
@@ -117,7 +117,7 @@
 .desc {
   margin: 0;
   max-width: 460px;
-  font-size: 16px;
+  font-size: var(--text-body);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.62);
 }

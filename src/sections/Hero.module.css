@@ -180,7 +180,7 @@
 
 .title {
   margin: 0;
-  font-size: clamp(44px, 6.6vw, 104px);
+  font-size: clamp(var(--heading-min), 6.6vw, var(--heading-max));
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.045em;
@@ -214,7 +214,7 @@
   align-self: flex-start;
   margin: 0;
   max-width: 460px;
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.74);
 }
@@ -272,6 +272,7 @@
   margin: 0;
   text-align: left;
   max-width: 380px;
+  font-size: var(--text-body);
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.72);
 }
@@ -378,6 +379,15 @@
 
   .bottom {
     padding: 0 var(--gutter) var(--gutter);
+  }
+}
+
+/* Mobile (landscape and portrait): nav links at 16px */
+@media (max-width: 767px) {
+  .logo,
+  .navCta,
+  .menuLink {
+    font-size: 1rem;
   }
 }
 

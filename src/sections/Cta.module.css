@@ -145,7 +145,7 @@
 .note {
   margin: 0;
   max-width: 380px;
-  font-size: 14px;
+  font-size: var(--text-body);
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.85);
 }
