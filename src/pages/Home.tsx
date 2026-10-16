@@ -39,7 +39,7 @@ export default function Home() {
     <>
       <Seo
         title="Best Webflow Expert Developer for Your Website"
-        description="Custom Webflow websites for companies that need more than a template: strategic design, flawless development and pages built to turn visitors into clients."
+        description="Benjamin Rahmanović is your expert Webflow developer, turning your ideas into the best possible website experience."
         path="/"
         jsonLd={JSON_LD}
       />
