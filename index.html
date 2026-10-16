@@ -3,31 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Per-page title, description, canonical and robots: src/seo/Seo.tsx, written in here at build time by scripts/prerender.mjs. -->
+    <!-- Per-page title, description, canonical, robots and Open Graph / Twitter share tags: src/seo/Seo.tsx,
+         written in here at build time by scripts/prerender.mjs. -->
     <!--app-head-->
 
-    <!--
-      ==================== TODO: OPEN GRAPH / TWITTER IMAGE (add later) ====================
-      Make a 1200 x 630 share image, put it in public/images/, then add here:
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Benjamin Rahmanović" />
-        <meta property="og:image" content="https://benjaminrahmanovic.com/images/og-image.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="[Describe the image]" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://benjaminrahmanovic.com/images/og-image.jpg" />
-      Per-page og:title, og:description and og:url belong in src/seo/Seo.tsx (same values as title, description, canonical).
-      =======================================================================================
-
-      ==================== TODO: FAVICON (add later) ====================
-      Put the files in public/, then add here:
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#0B0B0C" />
-      ===================================================================
-    -->
+    <!-- Favicon matching the browser theme: white-fav (white circle, dark BR) in light mode, dark-fav
+         (black circle, white BR) in dark mode. Files in public/images are cached for a year (_headers):
+         give a replaced icon a new file name. -->
+    <link rel="icon" href="/images/white-fav.png" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/images/dark-fav.png" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0B0B0C" />
   </head>
   <body>
     <div id="root"><!--app-html--></div>
