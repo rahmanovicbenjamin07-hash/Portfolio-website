@@ -152,7 +152,7 @@
 
 /* Tablet and phone: one compact centered column instead of absolute positions;
    the heading scales with the card width (cqi) so it never gets clipped */
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .box {
     container-type: inline-size;
     height: auto;
@@ -187,7 +187,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .box {
     gap: 28px;
     padding: 32px 16px 40px;

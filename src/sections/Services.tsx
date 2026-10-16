@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import styles from './Services.module.css'
 
-// Tool logos in card A: 3 columns (rows under 1000px), each scrolling in a loop.
+// Tool logos in card A: 3 columns (rows at 1024px and below), each scrolling in a loop.
 const LOGO_COLUMNS = [
   [['figma', 'Figma'], ['make', 'Make'], ['finsweet', 'Finsweet'], ['hubspot', 'HubSpot']],
   [['stripe', 'Stripe'], ['zapier', 'Zapier'], ['lottie', 'Lottie'], ['gsap', 'GSAP']],

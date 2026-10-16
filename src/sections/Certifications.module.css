@@ -178,7 +178,7 @@
 }
 
 /* Phone: tighter cards, credential ID on its own row */
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .grid {
     gap: 16px;
   }
