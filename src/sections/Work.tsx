@@ -98,7 +98,7 @@ export default function Work() {
             <img
               className={styles.projectImg}
               src={p.src}
-              alt={`Screenshot of the ${p.name} website`}
+              alt={p.alt}
               width={1600}
               height={971}
               loading="lazy"
