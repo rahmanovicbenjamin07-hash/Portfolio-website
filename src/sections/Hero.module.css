@@ -27,10 +27,13 @@
   filter: blur(1.2px) brightness(0.72);
 }
 
+/* End padding = gap, so each half is exactly 9 x (340 + 28)px and the -50% loop has no 14px jump at the seam */
 .row {
   display: flex;
   gap: 28px;
+  padding-right: 28px;
   width: max-content;
+  will-change: transform;
 }
 
 .rowLeft {

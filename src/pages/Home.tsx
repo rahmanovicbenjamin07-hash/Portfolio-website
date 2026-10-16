@@ -1,10 +1,11 @@
 import Seo from '../seo/Seo'
-import { GITHUB, JOB_TITLE, LINKEDIN, NAME, SITE_URL } from '../seo/site'
+import { GITHUB, JOB_TITLE, LINKEDIN, NAME, SITE_URL, UPWORK } from '../seo/site'
 import Hero from '../sections/Hero'
 import Banner from '../sections/Banner'
 import Work from '../sections/Work'
 import Services from '../sections/Services'
 import Testimonials from '../sections/Testimonials'
+import Certifications from '../sections/Certifications'
 import Cta from '../sections/Cta'
 import Faq from '../sections/Faq'
 import Footer from '../sections/Footer'
@@ -20,7 +21,7 @@ const JSON_LD = {
       jobTitle: JOB_TITLE,
       image: `${SITE_URL}/images/benjamin.jpg`,
       knowsAbout: ['Webflow', 'Webflow development', 'Web design', 'Webflow CMS', 'Technical SEO'],
-      sameAs: [GITHUB, LINKEDIN],
+      sameAs: [GITHUB, LINKEDIN, UPWORK],
     },
     {
       '@type': 'WebSite',
@@ -49,6 +50,7 @@ export default function Home() {
           <Work />
           <Services />
           <Testimonials />
+          <Certifications />
           <Cta />
           <Faq />
         </main>

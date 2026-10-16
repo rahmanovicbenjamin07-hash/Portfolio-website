@@ -1,17 +1,19 @@
 import { useState } from 'react'
+import { TESTIMONIALS } from '../data/testimonials'
 import styles from './Testimonials.module.css'
 
-// Placeholders until Benjamin sends the real Upwork reviews.
-const REVIEWS = [
-  { quote: '[Paste your strongest Upwork review here. Keep it to 2–3 sentences.]', name: '[Client name]', role: '[Role, Company]', initials: 'C1' },
-  { quote: '[Second review: ideally one about speed or communication.]', name: '[Client name]', role: '[Role, Company]', initials: 'C2' },
-  { quote: '[Third review: ideally one from an agency or a repeat client.]', name: '[Client name]', role: '[Role, Company]', initials: 'C3' },
-]
+// Up arrow; rotated -90deg for Previous and 90deg for Next.
+function ArrowIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 17V7M12 7L8 11M12 7L16 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 export default function Testimonials() {
   const [t, setT] = useState(0)
-  const n = REVIEWS.length
-  const review = REVIEWS[t]
+  const n = TESTIMONIALS.length
 
   return (
     <section aria-labelledby="t-heading" className={styles.testimonials}>
@@ -29,7 +31,7 @@ export default function Testimonials() {
             <span aria-label="5 stars" className={styles.stars}>
               ★★★★★
             </span>
-            4+ five-star reviews on Upwork
+            Only 5 star reviews with 100% JSS on Upwork
           </div>
         </div>
 
@@ -42,22 +44,32 @@ export default function Testimonials() {
               0{t + 1} / 0{n}
             </span>
           </div>
-          <blockquote key={t} className={styles.quote}>
-            {review.quote}
-          </blockquote>
+          {/* All reviews share one grid cell (only the active one is visible), so the card
+              is always as tall as the longest review and never jumps when switching. */}
+          <div className={styles.stack}>
+            {TESTIMONIALS.map((r, i) => (
+              <blockquote key={i} className={`${styles.quote} ${i === t ? styles.active : ''}`}>
+                {r.quote}
+              </blockquote>
+            ))}
+          </div>
           <div className={styles.cardBottom}>
-            <figcaption className={styles.client}>
-              <span aria-hidden="true" className={styles.avatar}>
-                {review.initials}
-              </span>
-              <span>
-                <strong className={styles.name}>{review.name}</strong>
-                <span className={styles.role}>{review.role}</span>
-              </span>
+            <figcaption className={styles.stack}>
+              {TESTIMONIALS.map((r, i) => (
+                <span key={i} className={`${styles.client} ${i === t ? styles.active : ''}`}>
+                  <span aria-hidden="true" className={styles.avatar}>
+                    {r.initials}
+                  </span>
+                  <span>
+                    <strong className={styles.name}>{r.name}</strong>
+                    <span className={styles.role}>{r.role}</span>
+                  </span>
+                </span>
+              ))}
             </figcaption>
             <div className={styles.controls}>
               <div role="tablist" aria-label="Reviews" className={styles.dots}>
-                {REVIEWS.map((_, i) => (
+                {TESTIMONIALS.map((_, i) => (
                   <button
                     key={i}
                     role="tab"
@@ -69,10 +81,10 @@ export default function Testimonials() {
                 ))}
               </div>
               <button aria-label="Previous review" onClick={() => setT((t + n - 1) % n)} className={styles.prev}>
-                ←
+                <ArrowIcon className={styles.iconPrev} />
               </button>
               <button aria-label="Next review" onClick={() => setT((t + 1) % n)} className={styles.next}>
-                →
+                <ArrowIcon className={styles.iconNext} />
               </button>
             </div>
           </div>

@@ -80,14 +80,17 @@
   border-top-color: rgba(255, 255, 255, 0.28);
 }
 
+/* Text column on the left, logo block (sized by its content) on the right */
 .web {
   grid-column: 1 / span 4;
   grid-row: 1;
   padding: 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: space-between;
+  column-gap: 24px;
+  row-gap: 20px;
 }
 
 .motion {
@@ -122,35 +125,137 @@
 }
 
 /* Web design card */
-.webTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-}
-
 .number {
+  grid-column: 1;
+  grid-row: 1;
   font-size: 13px;
   font-weight: 600;
   color: var(--color-text-muted);
 }
 
-.tags {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
+.webBody {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
 }
 
-.tag {
-  padding: 7px 12px;
-  border-radius: var(--radius-tag);
-  background: rgba(255, 255, 255, 0.07);
+/* Tool logos: 3 columns scrolling vertically, top-right corner.
+   184px tall in a 166px content box (240 - 2 x 1px border - 2 x 36px padding),
+   so it bleeds 9px into the padding top and bottom: 28px from both card edges. */
+.logos {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  height: 184px;
+  margin: -9px 0;
+  display: flex;
+  gap: 4px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+}
+
+.logoCol {
+  flex: none;
+}
+
+/* gap + matching end padding: every copy is exactly its 4 slots + 4 x 8px, so a one-copy step loops seamlessly */
+.logoTrack {
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  will-change: transform;
+}
+
+.logoTrackFwd {
+  animation: logo-up 20s linear infinite;
+}
+
+.logoTrackRev {
+  animation: logo-down 24s linear infinite;
+}
+
+/* Columns: the list shown twice (copies 3-6 are hidden above 1000px), so one copy = -50% */
+@media (min-width: 1001px) {
+  .logoTrack > li:nth-child(n + 9) {
+    display: none;
+  }
+}
+
+@keyframes logo-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes logo-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Rows (under 1000px) need all 6 copies (LOGO_COPIES in Services.tsx) to fill a wide card: one copy = 100% / 6 */
+@keyframes logo-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% / 6));
+  }
+}
+
+@keyframes logo-right {
+  from {
+    transform: translateX(calc(-100% / 6));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.logoSlot {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Finsweet is a wide wordmark (109 x 22): a 40 x 96 slot with the logo turned to read bottom-to-top */
+.logoSlotWordmark {
+  position: relative;
+  width: 40px;
+  height: 96px;
+}
+
+.logo,
+.logoWordmark {
+  display: block;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.logoWordmark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 96px;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-90deg);
 }
 
 .webTitle {
@@ -317,6 +422,46 @@
   .seo {
     grid-template-columns: 1fr;
   }
+
+  /* Logos turn sideways: 3 rows under the number, scrolling horizontally */
+  .logos {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: auto;
+    height: auto;
+    margin: 0;
+    flex-direction: column;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+  }
+
+  .logoTrack {
+    width: max-content;
+    padding: 0 8px 0 0;
+    flex-direction: row;
+  }
+
+  .logoTrackFwd {
+    animation-name: logo-left;
+  }
+
+  .logoTrackRev {
+    animation-name: logo-right;
+  }
+
+  /* In a horizontal row the wordmark reads normally: the slot turns 96 x 40 */
+  .logoSlotWordmark {
+    width: 96px;
+    height: 40px;
+  }
+
+  .logoWordmark {
+    transform: translate(-50%, -50%);
+  }
+
+  .webBody {
+    grid-row: 3;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -324,5 +469,9 @@
   .ring {
     animation: none;
     transition: none;
+  }
+
+  .logoTrack {
+    animation-play-state: paused;
   }
 }
