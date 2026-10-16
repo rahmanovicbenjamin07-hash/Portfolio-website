@@ -6,22 +6,25 @@ const PROJECTS = [
     name: 'Top One Launchpad',
     meta: 'Product launch page · Web Developer · 2026',
     src: '/images/topone-launchpad.jpg',
+    url: 'https://www.toponetrader.com/launchpad',
     alt: 'Top One Launchpad website built in Webflow: a space-themed launch page for Top One Trader with planets, stars and the headline "Experimental accounts. Limited launch."',
     text: 'A space-themed launch page for limited trading accounts, with a limited-spots counter and bold, cinematic visuals.',
   },
   {
-    name: 'Veracious',
-    meta: 'Holding company · Web Developer · 2026',
-    src: '/images/veracious.jpg',
-    alt: 'Veracious website built in Webflow: a dark holding company home page with a gold fleur-de-lis emblem between shadowed columns',
-    text: 'A dark, cinematic brand site for a holding company, with gold details and a classic serif voice.',
+    name: 'Top One Trader',
+    meta: 'Prop trading firm · Web Developer · 2026',
+    src: '/images/topone-trader.jpg',
+    url: 'https://www.toponetrader.com/',
+    alt: 'Top One Trader website built in Webflow: a dark prop trading firm home page with the headline "Experience Top One 2.0", funding stats and a promo video',
+    text: 'The main site of a futures prop trading firm: a dark, high-contrast home page built around funded-account offers, a video hero and live promo banners.',
   },
   {
-    name: 'WealthVentures',
-    meta: 'Luxury travel club · Web Developer · 2026',
-    src: '/images/wealthventures.jpg',
-    alt: 'WealthVentures website built in Webflow: a luxury travel club home page with a gold winged crest over a coastal sunset photo',
-    text: 'A luxury travel club site built around full-bleed photography and an elegant, editorial layout.',
+    name: 'Sabila Labs',
+    meta: 'Skincare AI software · Web Developer · 2026',
+    src: '/images/prism-sabila.jpg',
+    url: 'https://www.sabilalabs.ai/',
+    alt: 'Sabila Labs website built in Webflow: a light home page for Prism with the headline "Skin intelligence infrastructure for Shopify skincare brands" beside a rainbow light wave',
+    text: 'A product site for Prism, skin intelligence for Shopify skincare brands, with an editorial serif voice and a soft, spectrum-light hero.',
   },
 ]
 
@@ -86,7 +89,15 @@ export default function Work() {
           </div>
           <div className={styles.descBody}>
             <p className={styles.descText}>{current.text}</p>
-            <a href="#work" className={styles.descLink}>View project</a>
+            <a
+              href={current.url}
+              target="_blank"
+              rel="noopener"
+              aria-label={`View project: ${current.name} (opens in new tab)`}
+              className={styles.descLink}
+            >
+              View project
+            </a>
           </div>
         </div>
       </div>
@@ -110,7 +121,15 @@ export default function Work() {
               </div>
               <span className={styles.descMeta}>{p.meta}</span>
               <p className={styles.descText}>{p.text}</p>
-              <a href="#work" className={styles.descLink}>View project</a>
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener"
+                aria-label={`View project: ${p.name} (opens in new tab)`}
+                className={styles.descLink}
+              >
+                View project
+              </a>
             </div>
           </li>
         ))}
