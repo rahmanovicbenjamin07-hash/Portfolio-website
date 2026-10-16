@@ -90,6 +90,31 @@ export default function Work() {
           </div>
         </div>
       </div>
+
+      {/* Tablet and phone: every project as its own card, stacked (the accordion above is hidden there) */}
+      <ul className={styles.list}>
+        {PROJECTS.map((p, k) => (
+          <li key={p.name} className={styles.project}>
+            <img
+              className={styles.projectImg}
+              src={p.src}
+              alt={`Screenshot of the ${p.name} website`}
+              width={1600}
+              height={971}
+              loading="lazy"
+            />
+            <div className={styles.projectBody}>
+              <div className={styles.projectHead}>
+                <h3 className={`${styles.serif} ${styles.descName} ${styles.projectName}`}>{p.name}</h3>
+                <span aria-hidden="true" className={`${styles.serif} ${styles.projectNum}`}>{`${pad(k + 1)}”`}</span>
+              </div>
+              <span className={styles.descMeta}>{p.meta}</span>
+              <p className={styles.descText}>{p.text}</p>
+              <a href="#work" className={styles.descLink}>View project</a>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }
