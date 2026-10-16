@@ -59,3 +59,43 @@
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+
+/* Tablet and mobile: smaller bands. The marquee keeps running (same loop as desktop). */
+@media (max-width: 1024px) {
+  .bandDark {
+    height: 88px;
+  }
+
+  .bigText {
+    padding-right: 36px;
+    font-size: 48px;
+  }
+
+  .bandBlue {
+    height: 52px;
+  }
+
+  .smallText {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bandDark {
+    height: 60px;
+  }
+
+  .bigText {
+    padding-right: 24px;
+    font-size: 30px;
+    letter-spacing: -0.03em;
+  }
+
+  .bandBlue {
+    height: 40px;
+  }
+
+  .smallText {
+    font-size: 15px;
+  }
+}

@@ -96,7 +96,7 @@
 /* Glass nav */
 .nav {
   position: relative;
-  z-index: 2;
+  z-index: 3; /* above .main, so the open menu covers the headline */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -293,6 +293,160 @@
   width: 1px;
   height: 72px;
   background: rgba(255, 255, 255, 0.6);
+}
+
+/* Menu: the two-line icon turns into an X while open */
+.menu path {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.menu[aria-expanded='true'] path:first-child {
+  transform: translateY(3px) rotate(45deg);
+}
+
+.menu[aria-expanded='true'] path:last-child {
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+/* Dropdown under the menu button */
+.menuPanel {
+  position: absolute;
+  top: calc(100% - 16px);
+  left: 50%;
+  width: 280px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  animation: menu-in 0.2s ease;
+}
+
+.menuPanel[hidden] {
+  display: none;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    margin-top: -6px;
+  }
+}
+
+.menuList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuLink {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 6px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.menuLink:hover,
+.menuLink:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 1;
+}
+
+/* Primary CTA inside the menu: only on mobile, where the header button is hidden */
+.menuCta {
+  display: none;
+}
+
+/* Tablet: shared spacing tokens; the layout stays as on desktop */
+@media (max-width: 1024px) {
+  .nav {
+    padding: var(--gutter);
+  }
+
+  .main {
+    padding: 40px var(--gutter) 80px;
+  }
+
+  .bottom {
+    padding: 0 var(--gutter) var(--gutter);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .nav {
+    padding: 20px var(--gutter);
+  }
+
+  .logo {
+    white-space: nowrap;
+  }
+
+  .navCta {
+    display: none;
+  }
+
+  .menuPanel {
+    top: 100%;
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
+    transform: none;
+  }
+
+  .menuCta {
+    display: block;
+    padding: 16px 24px;
+    border-radius: var(--radius-pill);
+    background: #ffffff;
+    color: var(--color-bg);
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .main {
+    padding: 24px var(--gutter) var(--section-space);
+  }
+
+  .content {
+    gap: var(--gap-md);
+  }
+
+  /* Buttons: full width, stacked */
+  .buttons {
+    align-self: stretch;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    text-align: center;
+  }
+
+  .btnSecondary {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .bottom {
+    gap: var(--gap-md);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
