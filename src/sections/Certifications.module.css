@@ -136,7 +136,8 @@
 .link {
   color: #ffffff;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* Status pills */

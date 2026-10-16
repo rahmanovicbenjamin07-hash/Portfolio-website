@@ -4,7 +4,11 @@ const BIG = 'Design — Development — CMS — SEO — Launch — Design — De
 const SMALL =
   'Responsive · Custom code · Integrations · Speed · Accessibility · Maintenance · Responsive · Custom code · Integrations · Speed · Accessibility · Maintenance ·'
 
-// Static bands (design change: no marquee).
+// Copies of SMALL in the blue marquee; the track moves by half of them per loop (keep in sync with Banner.module.css).
+// 4 so each half (~3600px) is wider than any screen and the loop never shows an empty edge.
+const SMALL_COPIES = 4
+
+// The dark band is static (design change); the blue band is an infinite marquee.
 export default function Banner() {
   return (
     <section aria-label="What I do" className={styles.banner}>
@@ -14,8 +18,12 @@ export default function Banner() {
         </div>
       </div>
       <div aria-hidden="true" className={`${styles.band} ${styles.bandBlue}`}>
-        <div className={styles.track}>
-          <span className={styles.smallText}>{SMALL}</span>
+        <div className={`${styles.track} ${styles.marquee}`}>
+          {Array.from({ length: SMALL_COPIES }, (_, i) => (
+            <span key={i} className={styles.smallText}>
+              {`${SMALL} `}
+            </span>
+          ))}
         </div>
       </div>
     </section>
