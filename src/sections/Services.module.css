@@ -319,6 +319,41 @@
   }
 }
 
+/* Video and CMS cards: their media and caption are absolutely positioned, so without the desktop rows
+   they need a height of their own (otherwise they collapse to their borders). Same proportions as on
+   desktop (416 x 752), so the caption lands on the same faded part of the media. Side by side on tablet. */
+@media (max-width: 1000px) {
+  .grid > .motion,
+  .grid > .cms {
+    grid-column: span 1;
+    aspect-ratio: 416 / 752;
+  }
+}
+
+/* Phone: one column, 20px card padding */
+@media (max-width: 767px) {
+  .grid > .motion,
+  .grid > .cms {
+    grid-column: span 2;
+  }
+
+  .web,
+  .seo {
+    padding: 20px;
+  }
+
+  .caption {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .checks {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card,
   .ring {
