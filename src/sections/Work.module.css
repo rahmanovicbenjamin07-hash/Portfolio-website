@@ -263,9 +263,10 @@
   right: 0;
 }
 
-/* Too narrow for number column + full accordion (1158px + 64px padding, plus room for a scrollbar):
-   the number moves to the top-right corner so all three projects stay visible */
-@media (max-width: 1240px) and (min-width: 1001px) {
+/* Small desktops (desktop-only exception to the tokens.css breakpoints): too narrow for number column
+   + full accordion (1158px + 64px padding, plus room for a scrollbar), so the number moves to the
+   top-right corner and all three projects stay visible */
+@media (min-width: 1025px) and (max-width: 1240px) {
   .numCol {
     display: none;
   }
@@ -281,28 +282,6 @@
   .descWrap {
     max-width: 900px;
     padding-left: 0;
-  }
-}
-
-@media (max-width: 1000px) {
-  .numCol {
-    display: none;
-  }
-
-  .row {
-    width: 100%;
-  }
-
-  .frame {
-    flex: 1 1 auto;
-  }
-
-  .descWrap {
-    padding-left: 0;
-  }
-
-  .desc {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -366,7 +345,7 @@
   font-weight: 300;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .stage,
   .descWrap {
     display: none;

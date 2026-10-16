@@ -178,8 +178,8 @@
   animation: logo-down 24s linear infinite;
 }
 
-/* Columns: the list shown twice (copies 3-6 are hidden above 1000px), so one copy = -50% */
-@media (min-width: 1001px) {
+/* Columns: the list shown twice (copies 3-6 are hidden on desktop, above 1024px), so one copy = -50% */
+@media (min-width: 1025px) {
   .logoTrack > li:nth-child(n + 9) {
     display: none;
   }
@@ -203,7 +203,7 @@
   }
 }
 
-/* Rows (under 1000px) need all 6 copies (LOGO_COPIES in Services.tsx) to fill a wide card: one copy = 100% / 6 */
+/* Rows (tablet and below, 1024px and under) need all 6 copies (LOGO_COPIES in Services.tsx) to fill a wide card: one copy = 100% / 6 */
 @keyframes logo-left {
   from {
     transform: translateX(0);
@@ -425,7 +425,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479px) {
   .web,
   .seo {
     padding: var(--gap-lg);
@@ -434,7 +434,7 @@
 }
 
 /* Tablet and phone: everything stacks */
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: none;
@@ -499,7 +499,7 @@
 /* Video and CMS cards: their media and caption are absolutely positioned, so without the desktop rows
    they need a height of their own (otherwise they collapse to their borders). Same proportions as on
    desktop (416 x 752), so the caption lands on the same faded part of the media. Side by side on tablet. */
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .grid > .motion,
   .grid > .cms {
     grid-column: span 1;

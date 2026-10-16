@@ -108,7 +108,7 @@
 }
 
 /* Tablet: tighter spacing, 44px tap targets on the links */
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .footer {
     padding-top: 80px;
   }
@@ -133,7 +133,7 @@
 }
 
 /* Phone */
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .footer {
     padding-top: 64px;
   }

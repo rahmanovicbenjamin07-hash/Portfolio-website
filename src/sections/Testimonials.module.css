@@ -242,7 +242,7 @@
 }
 
 /* Tablet and mobile spacing: shared tokens (tokens.css). The grid gap uses a stronger
-   selector so the 900px stacking rule below doesn't override it. */
+   selector so the 820px stacking rule below doesn't override it. */
 @media (max-width: 1024px) {
   .testimonials {
     padding: var(--section-space) var(--gutter);
@@ -266,14 +266,14 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 820px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .quote {
     font-size: 20px;
     line-height: 1.4;
