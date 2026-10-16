@@ -1,0 +1,11 @@
+// Cloudflare Worker that serves the static build (no Worker script).
+// Build: `npm run build` -> dist/. Deploy: `npx wrangler deploy`.
+{
+  "name": "portfolio-website",
+  "compatibility_date": "2026-10-12",
+  "assets": {
+    "directory": "./dist",
+    // Unknown paths get dist/404.html with a real 404 status (not the SPA fallback)
+    "not_found_handling": "404-page"
+  }
+}
