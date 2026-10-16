@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { CALENDLY } from '../seo/site'
 import styles from './Hero.module.css'
 
 const MENU_LINKS = [
@@ -129,11 +130,26 @@ export default function Hero() {
             ))}
           </ul>
           {/* Same link as the header button, which is hidden on mobile */}
-          <a href="#contact" onClick={closeMenu} className={styles.menuCta}>
+          <a
+            href={CALENDLY}
+            target="_blank"
+            rel="noopener"
+            aria-label="Book a call (opens in new tab)"
+            onClick={closeMenu}
+            className={styles.menuCta}
+          >
             Book a call
           </a>
         </div>
-        <a href="#contact" className={`${styles.glass} ${styles.navCta}`}>Book a call</a>
+        <a
+          href={CALENDLY}
+          target="_blank"
+          rel="noopener"
+          aria-label="Book a call (opens in new tab)"
+          className={`${styles.glass} ${styles.navCta}`}
+        >
+          Book a call
+        </a>
       </nav>
 
       <div className={styles.main}>
@@ -162,7 +178,9 @@ export default function Hero() {
           </h1>
           <p className={styles.subline}>Expert Webflow developer for agencies and teams. Everything your website needs, handled.</p>
           <div className={styles.buttons}>
-            <a href="#contact" className={styles.btnPrimary}>Book a 15-min call</a>
+            <a href={CALENDLY} target="_blank" rel="noopener" aria-label="Book a 15-min call (opens in new tab)" className={styles.btnPrimary}>
+              Book a 15-min call
+            </a>
             <a href="#work" className={styles.btnSecondary}>See the work</a>
           </div>
         </div>

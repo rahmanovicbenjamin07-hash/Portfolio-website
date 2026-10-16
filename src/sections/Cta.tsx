@@ -1,3 +1,4 @@
+import { CALENDLY } from '../seo/site'
 import styles from './Cta.module.css'
 
 export default function Cta() {
@@ -28,7 +29,7 @@ export default function Cta() {
         </div>
 
         <div className={styles.actions}>
-          <a href="#contact" className={styles.button}>
+          <a href={CALENDLY} target="_blank" rel="noopener" aria-label="Book a 15-min call (opens in new tab)" className={styles.button}>
             Book a 15-min call
           </a>
           <p className={styles.note}>Send me the design or the idea. I'll reply with how I'd build it, and when.</p>

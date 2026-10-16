@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CALENDLY } from '../seo/site'
 import styles from './Faq.module.css'
 
 const FAQS = [
@@ -22,7 +23,7 @@ export default function Faq() {
             Questions agencies ask first.
           </h2>
           <p className={styles.text}>Anything else? Ask me on a quick call.</p>
-          <a href="#contact" className={styles.button}>
+          <a href={CALENDLY} target="_blank" rel="noopener" aria-label="Book a 15-min call (opens in new tab)" className={styles.button}>
             Book a 15-min call
           </a>
         </div>
