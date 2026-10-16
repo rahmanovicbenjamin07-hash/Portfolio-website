@@ -151,6 +151,11 @@
     margin-bottom: 8px;
   }
 
+  /* Links at 16px; each row keeps its 44px tap height (tablet rule above) */
+  .list {
+    font-size: 1rem;
+  }
+
   .divider {
     margin: 40px 0 16px;
   }

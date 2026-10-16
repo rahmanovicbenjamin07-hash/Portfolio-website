@@ -29,6 +29,14 @@
   --gap-lg: 40px; /* between groups inside a block */
   --gap-md: 24px; /* between elements */
   --gap-sm: 16px; /* between tight elements (buttons, list rows) */
+
+  /* Type. Body: paragraph copy (not labels, tags, meta lines or buttons).
+     Headings: section titles use clamp(var(--heading-min), <vw>, var(--heading-max)), so they are at most
+     4rem on desktop, scale down on tablet, and are exactly 2.5rem on mobile (where max = min).
+     Exceptions, kept as oversized display type: the CTA's "Let's build it" and "Results speak louder". */
+  --text-body: 1.125rem; /* 18px */
+  --heading-min: 2.5rem; /* 40px */
+  --heading-max: 4rem; /* 64px */
 }
 
 /* Breakpoints (desktop-first). CSS can't read variables inside @media, so use these exact queries,
@@ -38,7 +46,7 @@
      small tablet       768 - 820px       @media (max-width: 820px)
      mobile landscape   480 - 767px       @media (max-width: 767px)
      mobile portrait    479px and below   @media (max-width: 479px)
-   Spacing tokens change at tablet and mobile portrait only. */
+   Spacing tokens change at tablet and mobile portrait, type tokens at mobile landscape. */
 @media (max-width: 1024px) {
   :root {
     --gutter: 24px;
@@ -47,6 +55,14 @@
     --gap-lg: 32px;
     --gap-md: 20px;
     --gap-sm: 14px;
+  }
+}
+
+/* Mobile (landscape and portrait): 16px body copy, 40px headings */
+@media (max-width: 767px) {
+  :root {
+    --text-body: 1rem;
+    --heading-max: 2.5rem;
   }
 }
 

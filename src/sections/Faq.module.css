@@ -29,7 +29,7 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(40px, 4.4vw, 64px);
+  font-size: clamp(var(--heading-min), 4.4vw, var(--heading-max));
   font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.045em;
@@ -38,7 +38,7 @@
 .text {
   margin: 0;
   max-width: 420px;
-  font-size: 18px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
 }
@@ -103,7 +103,7 @@
 .answer {
   margin: 0 0 24px;
   max-width: 560px;
-  font-size: 16px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
 }

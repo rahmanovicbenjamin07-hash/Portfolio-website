@@ -35,7 +35,7 @@
 .heading {
   margin: 0;
   max-width: 760px;
-  font-size: clamp(40px, 4.4vw, 64px);
+  font-size: clamp(var(--heading-min), 4.4vw, var(--heading-max));
   font-weight: 600;
   line-height: 1.04;
   letter-spacing: -0.045em;
@@ -44,7 +44,7 @@
 .intro {
   margin: 0;
   max-width: 360px;
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
 }
@@ -268,7 +268,7 @@
 .webText {
   margin: 10px 0 0;
   max-width: 560px;
-  font-size: 16px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
 }
@@ -310,7 +310,7 @@
 
 .captionText {
   margin: 8px 0 0;
-  font-size: 15px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.78);
 }
@@ -346,7 +346,7 @@
 
 .seoBody {
   margin: 10px 0 0;
-  font-size: 15px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
 }

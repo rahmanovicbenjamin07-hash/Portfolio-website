@@ -243,7 +243,7 @@
 
 .descText {
   margin: 0;
-  font-size: 17px;
+  font-size: var(--text-body);
   line-height: 1.65;
   color: rgba(237, 235, 230, 0.75);
 }
@@ -357,6 +357,11 @@
 }
 
 @media (max-width: 767px) {
+  /* Same mobile heading size as the other sections (desktop keeps its smaller 52px max) */
+  .heading {
+    font-size: var(--heading-max);
+  }
+
   .list {
     margin-top: 32px;
   }
