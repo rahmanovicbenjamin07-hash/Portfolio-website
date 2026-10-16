@@ -1,19 +1,21 @@
+import { LINKEDIN } from '../seo/site'
 import styles from './Footer.module.css'
 
+// Absolute paths, so the links also work from the 404 page.
 const INDEX = [
-  { label: 'Home', href: '#top' },
-  { label: 'Work', href: '#work' },
-  { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Services', href: '/#services' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
-// Social links point to #contact until Benjamin provides the real URLs.
+// The other social links point to #contact until Benjamin provides the real URLs.
 const SOCIALS = [
-  { label: 'LinkedIn', href: '#contact' },
-  { label: 'Upwork', href: '#contact' },
-  { label: 'Contra', href: '#contact' },
-  { label: 'Email', href: '#contact' },
+  { label: 'LinkedIn', href: LINKEDIN },
+  { label: 'Upwork', href: '/#contact' },
+  { label: 'Contra', href: '/#contact' },
+  { label: 'Email', href: '/#contact' },
 ]
 
 function LinkList({ title, links }: { title: string; links: { label: string; href: string }[] }) {

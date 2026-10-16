@@ -19,9 +19,10 @@ const ROWS = [0, 1, 2, 3, 4].map((r) => {
   return { left: r % 2 === 0, shots: row.concat(row) }
 })
 
-function sarajevoTime(now: number) {
+function sarajevoTime(now: number | null) {
   let time = '--:--'
   let zone = 'GMT+2'
+  if (now === null) return { time, zone }
   try {
     const d = new Date(now)
     time = d.toLocaleTimeString('en-GB', { timeZone: 'Europe/Sarajevo', hour: '2-digit', minute: '2-digit' })
@@ -35,9 +36,11 @@ function sarajevoTime(now: number) {
 }
 
 export default function Hero() {
-  const [now, setNow] = useState(() => Date.now())
+  // No time in the prerendered HTML (it would be the build time): it is set as soon as the page hydrates.
+  const [now, setNow] = useState<number | null>(null)
 
   useEffect(() => {
+    setNow(Date.now())
     const timer = setInterval(() => setNow(Date.now()), 30000)
     return () => clearInterval(timer)
   }, [])
@@ -51,7 +54,7 @@ export default function Hero() {
           {ROWS.map((row, r) => (
             <div key={r} className={`${styles.row} ${row.left ? styles.rowLeft : styles.rowRight}`}>
               {row.shots.map((src, i) => (
-                <img key={i} src={src} alt="" className={styles.shot} decoding="async" />
+                <img key={i} src={src} alt="" width={1600} height={971} className={styles.shot} decoding="async" />
               ))}
             </div>
           ))}
@@ -60,15 +63,17 @@ export default function Hero() {
       <div aria-hidden="true" className={styles.vignette} />
       <div aria-hidden="true" className={styles.bottomFade} />
 
-      <header className={styles.nav}>
-        <a href="#top" className={`${styles.glass} ${styles.logo}`}>Benjamin R.</a>
-        <button type="button" aria-label="Open menu" className={`${styles.glass} ${styles.menu}`}>
-          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-            <path d="M5 9h14" />
-            <path d="M5 15h14" />
-          </svg>
-        </button>
-        <a href="#contact" className={`${styles.glass} ${styles.navCta}`}>Book a call</a>
+      <header>
+        <nav aria-label="Main" className={styles.nav}>
+          <a href="#top" className={`${styles.glass} ${styles.logo}`}>Benjamin R.</a>
+          <button type="button" aria-label="Open menu" className={`${styles.glass} ${styles.menu}`}>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M5 9h14" />
+              <path d="M5 15h14" />
+            </svg>
+          </button>
+          <a href="#contact" className={`${styles.glass} ${styles.navCta}`}>Book a call</a>
+        </nav>
       </header>
 
       <div className={styles.main}>
@@ -78,9 +83,11 @@ export default function Hero() {
             Your idea. My execution.
           </div>
           <h1 className={styles.title}>
+            {/* Not shown (the design's headline stays as is), but part of the h1 for crawlers and screen readers. */}
+            <span className="sr-only">Webflow Expert Developer: </span>
             <span className={styles.line}>Hand me the design.</span>
             <span className={styles.line}>
-              <img src="/images/webflow-logo.png" alt="Webflow" className={styles.webflow} />
+              <img src="/images/webflow-logo.png" alt="Webflow" width={186} height={187} className={styles.webflow} />
               Get back a
             </span>
             <span className={styles.line}>

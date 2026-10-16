@@ -59,6 +59,8 @@ export default function Services() {
                 muted
                 loop
                 playsInline
+                width={840}
+                height={1600}
                 aria-label="Screen recording of a website animating on load, on hover and on scroll"
                 className={styles.cover}
               />
@@ -75,6 +77,8 @@ export default function Services() {
               <img
                 src="/images/cms-demo.jpg"
                 alt="A blog page built on Webflow CMS, filtered by category"
+                width={840}
+                height={1600}
                 className={styles.cover}
               />
               <div aria-hidden="true" className={styles.fade} />
@@ -87,7 +91,13 @@ export default function Services() {
             </div>
 
             <div className={`${styles.card} ${styles.photo}`}>
-              <img src="/images/benjamin.jpg" alt="Benjamin Rahmanović" className={styles.photoImg} />
+              <img
+                src="/images/benjamin.jpg"
+                alt="Portrait of Benjamin Rahmanović, Webflow developer"
+                width={688}
+                height={1568}
+                className={styles.photoImg}
+              />
             </div>
 
             <div className={`${styles.card} ${styles.glass} ${styles.seo}`}>

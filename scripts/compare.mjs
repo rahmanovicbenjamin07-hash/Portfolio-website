@@ -23,7 +23,7 @@ async function capture(url, w, h) {
   await page.clock.setFixedTime(FIXED)
   await page.goto(url, { waitUntil: 'networkidle' })
   await page.evaluate(() => document.fonts.ready)
-  const el = page.locator('#top > *').nth(idx)
+  const el = page.locator('#top > :not(main), #top > main > *').nth(idx)
   await el.scrollIntoViewIfNeeded()
   const shot = await el.screenshot({ animations: 'disabled' })
   const info = await el.evaluate((root) => {

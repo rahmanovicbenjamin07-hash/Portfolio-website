@@ -59,7 +59,7 @@ export default function Work() {
                   className={`${styles.acc} ${k === active ? styles.on : ''}`}
                   onClick={() => setActive(k)}
                 >
-                  <img className={styles.accImg} src={p.src} alt="" />
+                  <img className={styles.accImg} src={p.src} alt={`Screenshot of the ${p.name} website`} width={1600} height={971} />
                   <span className={styles.accLabel}>
                     <span className={`${styles.vertical} ${styles.serif} ${styles.accName}`}>{p.name}</span>
                     <span className={`${styles.vertical} ${styles.accNum}`}>{`${pad(k + 1)}”`}</span>
