@@ -156,7 +156,12 @@
     font-size: 1rem;
   }
 
+  /* Line edge to edge: cancel the footer's 32px side padding; the button stays on the content edge */
   .divider {
-    margin: 40px 0 16px;
+    margin: 40px -32px 16px;
+  }
+
+  .backToTop {
+    right: 32px;
   }
 }
