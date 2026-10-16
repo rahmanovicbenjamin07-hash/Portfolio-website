@@ -3,6 +3,7 @@ import Banner from './sections/Banner'
 import Work from './sections/Work'
 import Services from './sections/Services'
 import Testimonials from './sections/Testimonials'
+import Certifications from './sections/Certifications'
 import Cta from './sections/Cta'
 import Faq from './sections/Faq'
 import Footer from './sections/Footer'
@@ -15,6 +16,7 @@ export default function App() {
       <Work />
       <Services />
       <Testimonials />
+      <Certifications />
       <Cta />
       <Faq />
       <Footer />

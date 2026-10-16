@@ -99,6 +99,20 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+/* Stacked slides: every item sits in the same cell, only .active is shown */
+.stack {
+  display: grid;
+}
+
+.stack > * {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.stack > .active {
+  visibility: visible;
+}
+
 .quote {
   margin: 0;
   font-size: clamp(24px, 2.4vw, 34px);
@@ -106,6 +120,9 @@
   line-height: 1.35;
   letter-spacing: -0.02em;
   color: #ffffff;
+}
+
+.quote.active {
   animation: testimonials-in 0.6s ease both;
 }
 
@@ -128,6 +145,11 @@
   gap: 20px;
 }
 
+/* Long roles wrap inside the client block instead of pushing the controls to a new row */
+.cardBottom > .stack {
+  flex: 1 1 240px;
+}
+
 .client {
   display: flex;
   align-items: center;
@@ -135,6 +157,7 @@
 }
 
 .avatar {
+  flex-shrink: 0;
   width: 52px;
   height: 52px;
   border-radius: 14px;
@@ -192,8 +215,18 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  font-size: 18px;
+  display: grid;
+  place-items: center;
+  padding: 0;
   cursor: pointer;
+}
+
+.iconPrev {
+  transform: rotate(-90deg);
+}
+
+.iconNext {
+  transform: rotate(90deg);
 }
 
 .prev {
@@ -212,5 +245,12 @@
   .grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .quote {
+    font-size: 20px;
+    line-height: 1.4;
   }
 }
