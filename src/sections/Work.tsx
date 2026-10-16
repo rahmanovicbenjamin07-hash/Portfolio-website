@@ -6,18 +6,21 @@ const PROJECTS = [
     name: 'Top One Launchpad',
     meta: 'Product launch page · Web Developer · 2026',
     src: '/images/topone-launchpad.jpg',
+    alt: 'Top One Launchpad website built in Webflow: a space-themed launch page for Top One Trader with planets, stars and the headline "Experimental accounts. Limited launch."',
     text: 'A space-themed launch page for limited trading accounts, with a limited-spots counter and bold, cinematic visuals.',
   },
   {
     name: 'Veracious',
     meta: 'Holding company · Web Developer · 2026',
     src: '/images/veracious.jpg',
+    alt: 'Veracious website built in Webflow: a dark holding company home page with a gold fleur-de-lis emblem between shadowed columns',
     text: 'A dark, cinematic brand site for a holding company, with gold details and a classic serif voice.',
   },
   {
     name: 'WealthVentures',
     meta: 'Luxury travel club · Web Developer · 2026',
     src: '/images/wealthventures.jpg',
+    alt: 'WealthVentures website built in Webflow: a luxury travel club home page with a gold winged crest over a coastal sunset photo',
     text: 'A luxury travel club site built around full-bleed photography and an elegant, editorial layout.',
   },
 ]
@@ -63,7 +66,7 @@ export default function Work() {
                   className={`${styles.acc} ${k === active ? styles.on : ''}`}
                   onClick={() => setActive(k)}
                 >
-                  <img className={styles.accImg} src={p.src} alt={`Screenshot of the ${p.name} website`} width={1600} height={971} />
+                  <img className={styles.accImg} src={p.src} alt={p.alt} width={1600} height={971} loading="lazy" />
                   <span className={styles.accLabel}>
                     <span className={`${styles.vertical} ${styles.serif} ${styles.accName}`}>{p.name}</span>
                     <span className={`${styles.vertical} ${styles.accNum}`}>{`${pad(k + 1)}”`}</span>

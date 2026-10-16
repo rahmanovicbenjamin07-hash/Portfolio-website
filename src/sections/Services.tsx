@@ -98,9 +98,10 @@ export default function Services() {
             <div className={`${styles.card} ${styles.media} ${styles.cms}`}>
               <img
                 src="/images/cms-demo.jpg"
-                alt="A blog page built on Webflow CMS, filtered by category"
+                alt="Journal page built on Webflow CMS: article search, category filters with Webflow selected, and a list of CMS articles"
                 width={840}
                 height={1600}
+                loading="lazy"
                 className={styles.cover}
               />
               <div aria-hidden="true" className={styles.fade} />
@@ -115,9 +116,10 @@ export default function Services() {
             <div className={`${styles.card} ${styles.photo}`}>
               <img
                 src="/images/benjamin.jpg"
-                alt="Portrait of Benjamin Rahmanović, Webflow developer"
+                alt="Portrait of Benjamin Rahmanović, Webflow expert developer, smiling in a navy waistcoat and pink tie"
                 width={688}
                 height={1568}
+                loading="lazy"
                 className={styles.photoImg}
               />
             </div>
