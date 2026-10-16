@@ -176,3 +176,35 @@
 .progress .dot {
   border: 1px solid rgba(255, 255, 255, 0.7);
 }
+
+/* Phone: tighter cards, credential ID on its own row */
+@media (max-width: 600px) {
+  .grid {
+    gap: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .footer {
+    align-items: flex-start;
+  }
+
+  .meta {
+    min-width: 0;
+  }
+
+  .credId {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+
+  .sep {
+    display: none;
+  }
+
+  .link {
+    flex: none;
+  }
+}

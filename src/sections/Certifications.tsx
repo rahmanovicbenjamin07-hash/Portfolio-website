@@ -57,7 +57,15 @@ export default function Certifications() {
                 <p className={styles.desc}>{c.description}</p>
               </div>
               <div className={styles.footer}>
-                <span>{c.footerLeft}</span>
+                <span className={styles.meta}>
+                  {c.footerLeft}
+                  {/* Inline on desktop; its own row on phones (see Certifications.module.css) */}
+                  {c.credentialId && (
+                    <span className={styles.credId}>
+                      <span className={styles.sep}> · </span>ID {c.credentialId}
+                    </span>
+                  )}
+                </span>
                 {c.link ? (
                   <a href={c.link.href} target="_blank" rel="noopener" aria-label={c.link.label} className={styles.link}>
                     {c.link.text}

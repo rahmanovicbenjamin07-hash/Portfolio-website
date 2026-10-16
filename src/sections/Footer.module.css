@@ -106,3 +106,52 @@
   white-space: nowrap;
   padding-right: 0.35em;
 }
+
+/* Tablet: tighter spacing, 44px tap targets on the links */
+@media (max-width: 1000px) {
+  .footer {
+    padding-top: 80px;
+  }
+
+  .top {
+    gap: 40px;
+  }
+
+  .list {
+    gap: 0;
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .divider {
+    margin: 48px 0 20px;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+  .footer {
+    padding-top: 64px;
+  }
+
+  .top {
+    padding: 0;
+    gap: 32px;
+  }
+
+  .credits > div {
+    text-wrap: balance;
+  }
+
+  .listTitle {
+    margin-bottom: 8px;
+  }
+
+  .divider {
+    margin: 40px 0 16px;
+  }
+}
