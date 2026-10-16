@@ -65,6 +65,7 @@
   height: 184px;
   margin-left: -92px;
   animation: cta-float 7s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes cta-float {

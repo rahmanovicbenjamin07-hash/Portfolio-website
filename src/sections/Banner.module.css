@@ -25,6 +25,21 @@
   width: max-content;
 }
 
+/* Moves right by half the track (2 of 4 copies) per loop: 90s keeps the reference speed of 45s per copy */
+.marquee {
+  animation: banner-marquee-rev 90s linear infinite;
+  will-change: transform;
+}
+
+@keyframes banner-marquee-rev {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 .bigText,
 .smallText {
   white-space: nowrap;
@@ -38,8 +53,8 @@
   letter-spacing: -0.04em;
 }
 
+/* No padding: each copy ends in a non-breaking space (Banner.tsx), so the seam looks like every other " · " */
 .smallText {
-  padding-right: 32px;
   font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.01em;

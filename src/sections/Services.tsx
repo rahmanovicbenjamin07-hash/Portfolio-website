@@ -1,7 +1,15 @@
 import { useEffect, useRef } from 'react'
 import styles from './Services.module.css'
 
-const TAGS = ['Figma', 'Responsive', 'Client-First']
+// Tool logos in card A: 3 columns (rows under 1000px), each scrolling in a loop.
+const LOGO_COLUMNS = [
+  [['figma', 'Figma'], ['make', 'Make'], ['finsweet', 'Finsweet'], ['hubspot', 'HubSpot']],
+  [['stripe', 'Stripe'], ['zapier', 'Zapier'], ['lottie', 'Lottie'], ['gsap', 'GSAP']],
+  [['memberstack', 'Memberstack'], ['airtable', 'Airtable'], ['google-analytics', 'Google Analytics'], ['calendly', 'Calendly']],
+]
+// Copies of each list; the track moves by exactly one copy per loop (keep in sync with Services.module.css).
+// 6 so a horizontal row on a ~1000px-wide card never runs out of logos; the vertical columns show only 2.
+const LOGO_COPIES = 6
 
 const CHECKS = [
   { label: 'Performance', delay: '0s' },
@@ -35,17 +43,31 @@ export default function Services() {
         <div className={styles.gridWrap}>
           <div className={styles.grid}>
             <div className={`${styles.card} ${styles.glass} ${styles.web}`}>
-              <div className={styles.webTop}>
-                <span className={styles.number}>01</span>
-                <ul className={styles.tags}>
-                  {TAGS.map((tag) => (
-                    <li key={tag} className={styles.tag}>
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
+              <span className={styles.number}>01</span>
+              <div className={styles.logos}>
+                {LOGO_COLUMNS.map((col, i) => (
+                  <div key={i} className={styles.logoCol}>
+                    <ul className={`${styles.logoTrack} ${i === 1 ? styles.logoTrackRev : styles.logoTrackFwd}`}>
+                      {Array.from({ length: LOGO_COPIES }, (_, copy) =>
+                        col.map(([file, name]) => (
+                          <li
+                            key={`${copy}-${file}`}
+                            aria-hidden={copy > 0 || undefined}
+                            className={`${styles.logoSlot} ${file === 'finsweet' ? styles.logoSlotWordmark : ''}`}
+                          >
+                            <img
+                              src={`/portfolio-logos/${file}.svg`}
+                              alt={name}
+                              className={file === 'finsweet' ? styles.logoWordmark : styles.logo}
+                            />
+                          </li>
+                        )),
+                      )}
+                    </ul>
+                  </div>
+                ))}
               </div>
-              <div>
+              <div className={styles.webBody}>
                 <h3 className={styles.webTitle}>Web design &amp; Webflow development</h3>
                 <p className={styles.webText}>Modern designs, built pixel-perfect and responsive on every device.</p>
               </div>

@@ -1,31 +1,33 @@
-import { LINKEDIN } from '../seo/site'
+import { LINKEDIN, UPWORK } from '../seo/site'
 import styles from './Footer.module.css'
 
+type FooterLink = { label: string; href: string; external?: boolean }
+
 // Absolute paths, so the links also work from the 404 page.
-const INDEX = [
-  { label: 'Home', href: '/' },
+const INDEX: FooterLink[] = [
+  { label: 'Home', href: '/#top' },
   { label: 'Work', href: '/#work' },
   { label: 'Services', href: '/#services' },
-  { label: 'About', href: '/#about' },
   { label: 'Contact', href: '/#contact' },
 ]
 
-// The other social links point to #contact until Benjamin provides the real URLs.
-const SOCIALS = [
-  { label: 'LinkedIn', href: LINKEDIN },
-  { label: 'Upwork', href: '/#contact' },
-  { label: 'Contra', href: '/#contact' },
-  { label: 'Email', href: '/#contact' },
+const SOCIALS: FooterLink[] = [
+  { label: 'LinkedIn', href: LINKEDIN, external: true },
+  { label: 'Upwork', href: UPWORK, external: true },
 ]
 
-function LinkList({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+function LinkList({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <nav aria-label={title}>
       <div className={styles.listTitle}>{title}</div>
       <ul className={styles.list}>
         {links.map((l) => (
           <li key={l.label}>
-            <a href={l.href} className={styles.link}>
+            <a
+              href={l.href}
+              className={styles.link}
+              {...(l.external && { target: '_blank', rel: 'noopener', 'aria-label': `${l.label} (opens in new tab)` })}
+            >
               {l.label}
             </a>
           </li>

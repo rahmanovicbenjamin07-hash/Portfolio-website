@@ -4,19 +4,19 @@ import styles from './Work.module.css'
 const PROJECTS = [
   {
     name: 'Top One Launchpad',
-    meta: 'Product launch page · [Role] · [2025]',
+    meta: 'Product launch page · Web Developer · 2026',
     src: '/images/topone-launchpad.jpg',
     text: 'A space-themed launch page for limited trading accounts, with a limited-spots counter and bold, cinematic visuals.',
   },
   {
     name: 'Veracious',
-    meta: 'Holding company · [Role] · [2025]',
+    meta: 'Holding company · Web Developer · 2026',
     src: '/images/veracious.jpg',
     text: 'A dark, cinematic brand site for a holding company, with gold details and a classic serif voice.',
   },
   {
     name: 'WealthVentures',
-    meta: 'Luxury travel club · [Role] · [2024]',
+    meta: 'Luxury travel club · Web Developer · 2026',
     src: '/images/wealthventures.jpg',
     text: 'A luxury travel club site built around full-bleed photography and an elegant, editorial layout.',
   },
@@ -34,6 +34,10 @@ export default function Work() {
         <div className={styles.headText}>
           <div className={styles.eyebrow}>Selected work (03)</div>
           <h2 id="work-heading" className={`${styles.serif} ${styles.heading}`}>A few projects I'm proud of.</h2>
+        </div>
+        {/* Same number as in numCol; shown here instead when the row is too narrow for both (see Work.module.css) */}
+        <div key={active} aria-hidden="true" className={`${styles.serif} ${styles.fadeIn} ${styles.big} ${styles.cornerNum}`}>
+          {`${pad(active + 1)}”`}
         </div>
       </div>
 

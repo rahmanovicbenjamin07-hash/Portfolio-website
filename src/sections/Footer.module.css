@@ -2,11 +2,12 @@
   background: var(--color-bg);
   color: var(--color-text);
   border-top: 1px solid var(--color-border);
-  padding: 96px 32px 0;
+  padding: clamp(112px, 10vw, 144px) 32px 0;
   overflow: hidden;
 }
 
 .top {
+  padding: 0 clamp(0px, 5vw - 16px, 64px);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -89,6 +90,7 @@
   width: max-content;
   padding-top: 0.2em;
   animation: footer-marquee 32s linear infinite;
+  will-change: transform;
 }
 
 @keyframes footer-marquee {
