@@ -19,4 +19,39 @@
   --radius-card: 8px;
   --radius-tag: 6px;
   --radius-pill: 999px;
+
+  /* Spacing: desktop values, scaled down below for tablet and mobile.
+     Sections keep their own desktop values and switch to these tokens inside their
+     tablet/mobile media queries, so the approved desktop layout does not change. */
+  --gutter: 32px; /* container left/right padding */
+  --section-space: 120px; /* section top/bottom padding */
+  --gap-xl: 64px; /* between a section's main blocks (heading block -> content) */
+  --gap-lg: 40px; /* between groups inside a block */
+  --gap-md: 24px; /* between elements */
+  --gap-sm: 16px; /* between tight elements (buttons, list rows) */
+}
+
+/* Breakpoints. CSS can't read variables inside @media, so use these exact queries:
+     tablet: @media (max-width: 1024px)
+     mobile: @media (max-width: 480px) */
+@media (max-width: 1024px) {
+  :root {
+    --gutter: 24px;
+    --section-space: 88px;
+    --gap-xl: 48px;
+    --gap-lg: 32px;
+    --gap-md: 20px;
+    --gap-sm: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --gutter: 16px;
+    --section-space: 60px;
+    --gap-xl: 32px;
+    --gap-lg: 24px;
+    --gap-md: 16px;
+    --gap-sm: 12px;
+  }
 }

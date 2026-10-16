@@ -208,6 +208,31 @@
   color: var(--color-bg);
 }
 
+/* Tablet and mobile spacing: shared tokens (tokens.css). The grid gap uses a stronger
+   selector so the 900px stacking rule below doesn't override it. */
+@media (max-width: 1024px) {
+  .testimonials {
+    padding: var(--section-space) var(--gutter);
+  }
+
+  .testimonials .grid {
+    gap: var(--gap-lg);
+  }
+
+  .left,
+  .card {
+    gap: var(--gap-lg);
+  }
+
+  .intro {
+    gap: var(--gap-md);
+  }
+
+  .card {
+    padding: var(--gap-lg);
+  }
+}
+
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;

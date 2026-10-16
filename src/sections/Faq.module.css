@@ -101,3 +101,27 @@
   line-height: 1.6;
   color: var(--color-text-muted);
 }
+
+/* Tablet and mobile spacing: shared tokens (tokens.css) */
+@media (max-width: 1024px) {
+  .faq {
+    padding: var(--section-space) 0;
+  }
+
+  .inner {
+    padding: 0 var(--gutter);
+    gap: var(--gap-xl);
+  }
+
+  .intro {
+    gap: var(--gap-md);
+  }
+
+  .question {
+    padding: var(--gap-md) 0;
+  }
+
+  .answer {
+    margin-bottom: var(--gap-md);
+  }
+}

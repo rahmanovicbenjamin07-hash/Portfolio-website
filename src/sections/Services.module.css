@@ -296,6 +296,38 @@
   }
 }
 
+/* Tablet and mobile spacing: shared tokens (tokens.css) */
+@media (max-width: 1024px) {
+  .services {
+    padding: var(--section-space) 0;
+  }
+
+  .inner {
+    padding: 0 var(--gutter);
+  }
+
+  .header {
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-lg);
+  }
+
+  .headingGroup {
+    gap: var(--gap-md);
+  }
+
+  .grid {
+    gap: var(--gap-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .web,
+  .seo {
+    padding: var(--gap-lg);
+    gap: var(--gap-md);
+  }
+}
+
 /* Tablet and phone: everything stacks */
 @media (max-width: 1000px) {
   .grid {
