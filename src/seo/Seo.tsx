@@ -1,4 +1,4 @@
-import { SITE_URL } from './site'
+import { NAME, OG_IMAGE, SITE_URL } from './site'
 
 type Props = {
   title: string
@@ -18,6 +18,21 @@ export default function Seo({ title, description, path, noindex, jsonLd }: Props
       <meta name="description" content={description} />
       {path !== undefined && <link rel="canonical" href={SITE_URL + path} />}
       {noindex && <meta name="robots" content="noindex" />}
+
+      {/* Share cards: Open Graph (LinkedIn, Facebook, Slack, WhatsApp…); X reads og:title/description too */}
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={NAME} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      {path !== undefined && <meta property="og:url" content={SITE_URL + path} />}
+      <meta property="og:image" content={OG_IMAGE.url} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content={String(OG_IMAGE.width)} />
+      <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+      <meta property="og:image:alt" content={OG_IMAGE.alt} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={OG_IMAGE.url} />
+      <meta name="twitter:image:alt" content={OG_IMAGE.alt} />
       {jsonLd && (
         <script
           type="application/ld+json"
