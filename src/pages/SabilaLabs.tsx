@@ -349,7 +349,7 @@ export default function SabilaLabs() {
   return (
     <>
       <Seo
-        title="Sabila Labs Case Study | Benjamin Rahmanović, Webflow Expert"
+        title="Sabila Labs Case Study | Benjamin Rahmanović, Webflow Developer"
         description="The launch site for Prism, Sabila Labs' skin-intelligence layer for Shopify skincare brands. Logo, Figma design, Webflow build, animation and SEO: one person, from a blank file to live."
         path="/work/sabila-labs"
       />

@@ -310,7 +310,7 @@ export default function TopOneTrader() {
   return (
     <>
       <Seo
-        title="Top One Trader Case Study | Benjamin Rahmanović, Webflow Expert"
+        title="Top One Trader Case Study | Benjamin Rahmanović, Webflow Developer"
         description="The main site of a prop trading firm that funds traders on its own capital: a dark, high-contrast home page built around funded-account offers, a video hero and live promo banners."
         path="/work/top-one-trader"
       />

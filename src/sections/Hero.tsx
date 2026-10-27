@@ -133,13 +133,13 @@ export default function Hero() {
           </div>
           <h1 className={styles.title}>
             {/* Not shown (the design's headline stays as is), but part of the h1 for crawlers and screen readers. */}
-            <span className="sr-only">Webflow Expert Developer: </span>
-            <span className={styles.line}>Hand me the design.</span>
+            <span className="sr-only">Webflow developer for agencies: </span>
+            <span className={styles.line}>Hand me the design.</span>{' '}
             <span className={styles.line}>
               {/* Decorative: the h1 text already says "Webflow", an alt would only repeat it. */}
               <img src="/images/webflow-logo.png" alt="" width={186} height={187} className={styles.webflow} />
               Get back a
-            </span>
+            </span>{' '}
             <span className={styles.line}>
               finished{' '}
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={styles.check}>

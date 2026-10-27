@@ -223,7 +223,7 @@ export default function TopOneLaunchpad() {
   return (
     <>
       <Seo
-        title="Top One Launchpad Case Study | Benjamin Rahmanović, Webflow Expert"
+        title="Top One Launchpad Case Study | Benjamin Rahmanović, Webflow Developer"
         description="The landing page for Launch Pad, Top One Trader's new home for testing account types: a parallax starfield, a pricing slider into checkout and a custom loader, built in Webflow in about two days."
         path="/work/top-one-launchpad"
       />

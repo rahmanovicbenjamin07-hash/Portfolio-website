@@ -22,8 +22,8 @@ export default function Testimonials() {
           <div data-reveal className={styles.intro}>
             <div className={styles.label}>[ TESTIMONIALS ]</div>
             <h2 id="t-heading" className={styles.heading}>
-              <span className={styles.line}>Results</span>
-              <span className={styles.line}>speak</span>
+              <span className={styles.line}>Results</span>{' '}
+              <span className={styles.line}>speak</span>{' '}
               <span className={`${styles.line} ${styles.accent}`}>louder</span>
             </h2>
           </div>

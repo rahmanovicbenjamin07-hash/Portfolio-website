@@ -13,5 +13,5 @@ export const OG_IMAGE = {
   url: `${SITE_URL}/images/open-graph.png`,
   width: 1200,
   height: 600,
-  alt: 'BR monogram of Benjamin Rahmanović, Webflow Expert Developer, in white script on dark navy',
+  alt: 'BR monogram of Benjamin Rahmanović, Webflow Developer, in white script on dark navy',
 }
