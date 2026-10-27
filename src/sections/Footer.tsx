@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { LINKEDIN, UPWORK } from '../seo/site'
 import styles from './Footer.module.css'
 
@@ -37,14 +38,21 @@ function LinkList({ title, links }: { title: string; links: FooterLink[] }) {
   )
 }
 
+// Prerendered pages ship with this year; the browser swaps in the current one after load.
+const FALLBACK_YEAR = 2026
+
 export default function Footer() {
+  const [year, setYear] = useState(FALLBACK_YEAR)
+  useEffect(() => setYear(new Date().getFullYear()), [])
+
   return (
     <footer className={styles.footer}>
       <div className={styles.top}>
         <div className={styles.credits}>
           <div>Designed &amp; built by Benjamin Rahmanović</div>
-          <div>Built in Webflow</div>
-          <div>© 2026</div>
+          <div>
+            © <span>{year}</span> Benjamin Rahmanović
+          </div>
         </div>
         <div className={styles.lists}>
           <LinkList title="Index" links={INDEX} />
