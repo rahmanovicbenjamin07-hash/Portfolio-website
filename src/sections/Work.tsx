@@ -7,7 +7,7 @@ const PROJECTS = [
     meta: 'Product launch page · Web Developer · 2026',
     src: '/images/topone-launchpad.jpg',
     href: '/work/top-one-launchpad',
-    alt: 'Top One Launchpad website built in Webflow: a space-themed launch page for Top One Trader with planets, stars and the headline "Experimental accounts. Limited launch."',
+    alt: 'Top One Launchpad website built in Webflow: a space-themed launch page',
     text: 'A space-themed launch page for limited trading accounts, with a limited-spots counter and bold, cinematic visuals.',
   },
   {
@@ -15,7 +15,7 @@ const PROJECTS = [
     meta: 'Prop trading firm · Web Developer · 2026',
     src: '/images/topone-trader.jpg',
     href: '/work/top-one-trader',
-    alt: 'Top One Trader website built in Webflow: a dark prop trading firm home page with the headline "Experience Top One 2.0", funding stats and a promo video',
+    alt: 'Top One Trader website built in Webflow: a prop trading firm home page',
     text: 'The main site of a futures prop trading firm: a dark, high-contrast home page built around funded-account offers, a video hero and live promo banners.',
   },
   {
@@ -23,7 +23,7 @@ const PROJECTS = [
     meta: 'Skincare AI software · Web Developer · 2026',
     src: '/images/prism-sabila.jpg',
     href: '/work/sabila-labs',
-    alt: 'Sabila Labs website built in Webflow: a light home page for Prism with the headline "Skin intelligence infrastructure for Shopify skincare brands" beside a rainbow light wave',
+    alt: 'Sabila Labs website built in Webflow: a skincare AI product home page',
     text: 'A product site for Prism, skin intelligence for Shopify skincare brands, with an editorial serif voice and a soft, spectrum-light hero.',
   },
 ]

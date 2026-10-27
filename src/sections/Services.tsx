@@ -83,9 +83,13 @@ export default function Services() {
                             aria-hidden={copy > 0 || undefined}
                             className={`${styles.logoSlot} ${file === 'finsweet' ? styles.logoSlotWordmark : ''}`}
                           >
+                            {/* Only the first copy is described; the loop copies are decorative */}
                             <img
                               src={`/portfolio-logos/${file}.svg`}
-                              alt={name}
+                              alt={copy === 0 ? `${name} logo` : ''}
+                              width={file === 'finsweet' ? 109 : 40}
+                              height={file === 'finsweet' ? 22 : 40}
+                              loading="lazy"
                               className={file === 'finsweet' ? styles.logoWordmark : styles.logo}
                             />
                           </li>
@@ -126,7 +130,7 @@ export default function Services() {
             <div data-reveal className={`${styles.card} ${styles.media} ${styles.cms}`}>
               <img
                 src="/images/cms-demo.jpg"
-                alt="Journal page built on Webflow CMS: article search, category filters with Webflow selected, and a list of CMS articles"
+                alt="Webflow CMS journal page with article search and category filters"
                 width={840}
                 height={1600}
                 loading="lazy"
@@ -144,7 +148,7 @@ export default function Services() {
             <div data-reveal className={`${styles.card} ${styles.photo}`}>
               <img
                 src="/images/benjamin.jpg"
-                alt="Portrait of Benjamin Rahmanović, Webflow expert developer, smiling in a navy waistcoat and pink tie"
+                alt="Portrait of Benjamin Rahmanović, Webflow developer"
                 width={688}
                 height={1568}
                 loading="lazy"

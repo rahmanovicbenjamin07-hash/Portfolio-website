@@ -106,11 +106,11 @@ const IMG = '/images/sabila-labs'
 
 type Img = { src: string; width: number; height: number; alt: string }
 
-const HERO_IMG: Img = { src: '/images/prism-sabila.jpg', width: 1600, height: 971, alt: 'Sabila Labs home page' }
+const HERO_IMG: Img = { src: '/images/prism-sabila.jpg', width: 1600, height: 971, alt: 'Sabila Labs website built in Webflow' }
 const LOGO_LIGHT: Img = { src: `${IMG}/logo-black-white.svg`, width: 2520, height: 2488, alt: 'Sabila Labs logo on light background' }
 const LOGO_DARK: Img = { src: `${IMG}/logo-teal-black.svg`, width: 2522, height: 2488, alt: 'Sabila Labs logo on dark background' }
-const PLATFORM_IMG: Img = { src: `${IMG}/platform-desktop.avif`, width: 2490, height: 1476, alt: 'Sabila Labs Platform section on desktop' }
-const NEXT_IMG: Img = { src: '/images/top-one-launchpad/launchpad-hero-desktop.avif', width: 2490, height: 1476, alt: 'Top One Launchpad home page' }
+const PLATFORM_IMG: Img = { src: `${IMG}/platform-desktop.avif`, width: 2490, height: 1476, alt: 'Sabila Labs platform section on desktop' }
+const NEXT_IMG: Img = { src: '/images/top-one-launchpad/launchpad-hero-desktop.avif', width: 2490, height: 1476, alt: 'Top One Launchpad website built in Webflow' }
 
 const PHONES: Img[] = [
   { src: `${IMG}/sabila-labs-hero.avif`, width: 948, height: 1600, alt: 'Sabila Labs on mobile: hero' },

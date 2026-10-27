@@ -143,13 +143,13 @@ const PHONES: Img[] = [
   {
     // The file name has a space: "mobile-challanges (1).avif"
     src: `${IMG_DIR}/mobile-challanges%20(1).avif`,
-    alt: 'X-DAILY Launchpad offer on mobile',
+    alt: 'Top One Trader X-DAILY offer on mobile',
     width: 826,
     height: 1600,
   },
   {
     src: `${IMG_DIR}/mobile-pricing.avif`,
-    alt: 'Account configuration table on mobile',
+    alt: 'Top One Trader account pricing table on mobile',
     width: 826,
     height: 1600,
   },
@@ -157,7 +157,7 @@ const PHONES: Img[] = [
 
 const HERO_IMG: Img = {
   src: `${IMG_DIR}/www.toponetrader.com_.avif`,
-  alt: 'Top One Trader home page',
+  alt: 'Top One Trader website built in Webflow',
   width: 2490,
   height: 1476,
   priority: true,
@@ -165,7 +165,7 @@ const HERO_IMG: Img = {
 
 const COVER_IMG: Img = {
   src: `${IMG_DIR}/www.sabilalabs.ai_.avif`,
-  alt: 'Sabila Labs home page',
+  alt: 'Sabila Labs website built in Webflow',
   width: 2490,
   height: 1476,
   alignLeft: true,

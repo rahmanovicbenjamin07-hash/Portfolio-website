@@ -307,7 +307,7 @@ export default function TopOneLaunchpad() {
                     src={`${IMG}/launchpad-hero-desktop.avif`}
                     width={2490}
                     height={1476}
-                    alt="Top One Launchpad hero"
+                    alt="Top One Launchpad landing page built in Webflow"
                     decoding="async"
                     fetchPriority="high"
                     className="cs-media-img"
@@ -401,7 +401,7 @@ export default function TopOneLaunchpad() {
                       src={`${IMG}/launchpad-offers.avif`}
                       width={2490}
                       height={1476}
-                      alt="Top One Launchpad offer cards"
+                      alt="Top One Launchpad offer cards section"
                       decoding="async"
                       loading="lazy"
                       className="cs-media-img cs-media-img-center"
@@ -415,7 +415,7 @@ export default function TopOneLaunchpad() {
                       src={`${IMG}/launchpad-pricing-desktop.avif`}
                       width={2490}
                       height={1476}
-                      alt="X-DAILY pricing on desktop"
+                      alt="Top One Launchpad X-DAILY pricing section on desktop"
                       decoding="async"
                       loading="lazy"
                       className="cs-media-img cs-media-img-center"
@@ -470,7 +470,7 @@ export default function TopOneLaunchpad() {
                     src="/images/top-one-trader/www.toponetrader.com_.avif"
                     width={2490}
                     height={1476}
-                    alt="Top One Trader homepage"
+                    alt="Top One Trader website built in Webflow"
                     decoding="async"
                     loading="lazy"
                     className="cs-media-img"
