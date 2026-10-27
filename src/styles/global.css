@@ -1,5 +1,24 @@
 @import './tokens.css';
 
+/* Case-study titles and big numbers are set in Instrument Serif, which the site doesn't self-host yet. Until it
+   does, all three case studies fall back to the self-hosted Newsreader (same file as src/styles/fonts.ts), scaled
+   to Instrument Serif's width so the layouts hold (unscaled, "Top One Trader" runs into the "01”"). */
+@font-face {
+  font-family: 'cs-serif-fallback';
+  font-style: normal;
+  font-display: swap;
+  src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2') format('woff2');
+  size-adjust: 71.5%;
+}
+
+@font-face {
+  font-family: 'cs-serif-fallback';
+  font-style: italic;
+  font-display: swap;
+  src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-italic.woff2') format('woff2');
+  size-adjust: 64%;
+}
+
 body {
   margin: 0;
   background: var(--color-bg);

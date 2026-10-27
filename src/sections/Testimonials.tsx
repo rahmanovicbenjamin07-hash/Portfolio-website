@@ -19,7 +19,7 @@ export default function Testimonials() {
     <section aria-labelledby="t-heading" className={styles.testimonials}>
       <div className={styles.grid}>
         <div className={styles.left}>
-          <div className={styles.intro}>
+          <div data-reveal className={styles.intro}>
             <div className={styles.label}>[ TESTIMONIALS ]</div>
             <h2 id="t-heading" className={styles.heading}>
               <span className={styles.line}>Results</span>
@@ -27,7 +27,7 @@ export default function Testimonials() {
               <span className={`${styles.line} ${styles.accent}`}>louder</span>
             </h2>
           </div>
-          <div className={styles.rating}>
+          <div data-reveal className={styles.rating}>
             <span aria-label="5 stars" className={styles.stars}>
               ★★★★★
             </span>
@@ -35,7 +35,7 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <figure className={styles.card}>
+        <figure data-reveal className={styles.card}>
           <div className={styles.cardTop}>
             <svg aria-hidden="true" width="56" height="44" viewBox="0 0 56 44" fill="#1E3BF0">
               <path d="M0 44V26C0 11 7 2 22 0l2 7c-8 2-12 7-12 14h10v23H0zm32 0V26c0-15 7-24 22-26l2 7c-8 2-12 7-12 14h10v23H32z" />

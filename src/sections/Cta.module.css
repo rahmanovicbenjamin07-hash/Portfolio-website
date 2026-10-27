@@ -1,25 +1,36 @@
+/* A full-screen panel that comes up from the background: --p is the grow progress (0 -> 1, set by Cta.tsx while
+   the section is pinned). At 0 it is scaled to 80% with rounded corners; at 1 it fills the screen edge to edge with
+   square corners. 1 is also the resting state with no JS or reduced motion. Nothing below the box, so the next
+   section follows right under it. */
 .cta {
+  --p: 1;
   background: var(--color-bg);
-  padding: 120px 32px 0;
+  padding: 120px 0 0;
 }
 
+/* Heading at the top, </> tile in the middle, button + note at the bottom on the blue horizon */
 .box {
   position: relative;
-  max-width: 1280px;
-  height: 620px;
-  margin: 0 auto;
+  box-sizing: border-box;
+  height: 100svh;
+  min-height: 620px;
   overflow: hidden;
-  border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 56px;
+  /* 10px at 80% scale = the site's 8px corner */
+  border-radius: calc(10px * (1 - var(--p)));
   background: #101012;
   border: 1px solid var(--color-border);
   color: #ffffff;
+  transform: scale(calc(0.8 + 0.2 * var(--p)));
+  transform-origin: 50% 50%;
 }
 
 .heading {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 24px;
+  position: relative;
   margin: 0;
   text-align: center;
   font-size: clamp(88px, 14vw, 210px);
@@ -58,12 +69,10 @@
 
 /* Floating </> tile */
 .object {
-  position: absolute;
-  left: 50%;
-  top: 236px;
+  position: relative;
+  flex: none;
   width: 184px;
   height: 184px;
-  margin-left: -92px;
   animation: cta-float 7s ease-in-out infinite;
   will-change: transform;
 }
@@ -115,16 +124,12 @@
 
 /* Button + note */
 .actions {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 56px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
   text-align: center;
-  padding: 0 24px;
 }
 
 .button {
@@ -156,10 +161,8 @@
   .box {
     container-type: inline-size;
     height: auto;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    min-height: 100svh;
+    justify-content: center;
     gap: 36px;
     padding: 40px 24px 56px;
   }

@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Seo from '../seo/Seo'
 import { CALENDLY } from '../seo/site'
 import Cta from '../sections/Cta'
@@ -8,6 +10,40 @@ import styles from './TopOneTrader.module.css'
 
 // Case study: Top One Trader (/work/top-one-trader).
 // The cs-* class names are styled in TopOneTrader.module.css, scoped under styles.page.
+
+gsap.registerPlugin(ScrollTrigger)
+
+// Scroll reveals, same as the Top One Launchpad case study. Everything starts visible (prerendered HTML, no JS,
+// reduced motion); only with motion allowed are [data-reveal] items hidden and faded up as they come 15% into
+// view: 300ms, 45ms (15%) apart. The cards' own CSS transition is switched off while GSAP moves them.
+function useScrollReveal(root: RefObject<HTMLElement | null>) {
+  useLayoutEffect(() => {
+    const el = root.current
+    if (!el) return
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const items = gsap.utils.toArray<HTMLElement>('[data-reveal]', el)
+      gsap.set(items, { opacity: 0, y: 16, transition: 'none' })
+      ScrollTrigger.batch(items, {
+        start: 'top 85%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            stagger: 0.045,
+            clearProps: 'opacity,transform,transition',
+          }),
+      })
+    })
+    return () => mm.revert()
+  }, [root])
+}
+
+// Hero items (.cs-in) fade up on load in CSS, one after another: --d is the item's place in that order.
+const order = (d: number) => ({ '--d': d }) as CSSProperties
 
 // Same links as the homepage menu, as absolute paths so they work from this page.
 const MENU_LINKS = [
@@ -38,22 +74,22 @@ const OVERVIEW = [
   },
 ]
 
+// The project name, as set in the page's main heading. The "Visit" button reuses it.
+const PROJECT_NAME = 'Top One Trader'
+
 const SHIPPED = [
   {
     title: 'New pages',
     text: 'Campaign and product pages built from scratch, including Launch Pad, the NOVA challenge, the Battle for the Belt competition and its prize-wheel and mystery-box promos.',
   },
   {
-    title: 'Page updates',
-    text: 'Ongoing changes across the home, loyalty, affiliate and challenge pages as offers, rules and features changed.',
+    title: 'Ongoing updates',
+    text: 'Home, loyalty, affiliate and challenge pages kept current, with banners, promo codes, pricing, copy and videos updated for every new offer and launch.',
   },
   {
     title: 'Split test',
     text: 'A second version of a key page, built to test against the original with real traffic.',
-    accent: true,
   },
-  { title: 'Content updates', text: 'Promo banners, discount codes, pricing and copy kept in sync with every new offer.' },
-  { title: 'Video updates', text: 'Video sections replaced and updated as new products and launches went live.' },
   {
     title: 'Fixes & QA',
     text: 'Responsive bugs, broken links and layout issues tracked down and fixed on desktop and mobile.',
@@ -61,7 +97,6 @@ const SHIPPED = [
 ]
 
 // Real pixel sizes go in width/height so the browser reserves the right box before the image loads.
-// fitWidth: for a shot wider than its slot, show the full width (top aligned) instead of cropping the sides.
 // alignLeft: crop from the right only, for shots whose content starts at the left edge.
 type Img = {
   src: string
@@ -69,7 +104,6 @@ type Img = {
   width: number
   height: number
   priority?: boolean
-  fitWidth?: boolean
   alignLeft?: boolean
 }
 
@@ -105,7 +139,6 @@ const PHONES: Img[] = [
     alt: 'Top One Trader home page hero on mobile',
     width: 1206,
     height: 2043,
-    fitWidth: true,
   },
   {
     // The file name has a space: "mobile-challanges (1).avif"
@@ -142,7 +175,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 
 function ArrowLeft() {
   return (
-    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M19 12H5" />
       <path d="M11 6l-6 6 6 6" />
     </svg>
@@ -243,14 +276,14 @@ function Shot({ img }: { img: Img }) {
       height={img.height}
       decoding="async"
       {...(img.priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
-      className={`cs-img${img.fitWidth ? ' cs-img-fit-width' : ''}${img.alignLeft ? ' cs-img-left' : ''}`}
+      className={`cs-img${img.alignLeft ? ' cs-img-left' : ''}`}
     />
   )
 }
 
-function Media({ img, className = '' }: { img: Img; className?: string }) {
+function Media({ img, className = '', reveal = false }: { img: Img; className?: string; reveal?: boolean }) {
   return (
-    <div className={`cs-media ${className}`}>
+    <div data-reveal={reveal || undefined} className={`cs-media ${className}`}>
       <Shot img={img} />
     </div>
   )
@@ -258,7 +291,7 @@ function Media({ img, className = '' }: { img: Img; className?: string }) {
 
 function SectionHead({ eyebrow, id, title, aside }: { eyebrow: string; id: string; title: ReactNode; aside?: string }) {
   return (
-    <div className="cs-head">
+    <div data-reveal className="cs-head">
       <div>
         <p className="cs-eyebrow">{eyebrow}</p>
         <h2 id={id} className="cs-h2">
@@ -271,6 +304,9 @@ function SectionHead({ eyebrow, id, title, aside }: { eyebrow: string; id: strin
 }
 
 export default function TopOneTrader() {
+  const mainRef = useRef<HTMLElement>(null)
+  useScrollReveal(mainRef)
+
   return (
     <>
       <Seo
@@ -283,11 +319,11 @@ export default function TopOneTrader() {
           <SiteNav />
         </header>
 
-        <main>
+        <main ref={mainRef}>
           {/* Hero: title, summary, project facts, hero shot */}
           <section aria-labelledby="cs-title" className="cs-section cs-hero">
             <div className="cs-container">
-              <div className="cs-topbar">
+              <div className="cs-topbar cs-in" style={order(0)}>
                 <a href="/#work" className="cs-back">
                   <ArrowLeft />
                   All work
@@ -296,23 +332,23 @@ export default function TopOneTrader() {
               </div>
 
               <div className="cs-intro">
-                <p className="cs-eyebrow cs-intro-eyebrow">[ Case study ]</p>
-                <h1 id="cs-title" className="cs-title">
-                  Top One Trader
+                <p className="cs-eyebrow cs-intro-eyebrow cs-in" style={order(1)}>[ Case study ]</p>
+                <h1 id="cs-title" className="cs-title cs-in" style={order(2)}>
+                  {PROJECT_NAME}
                 </h1>
-                <p className="cs-eyebrow cs-intro-sub">Prop trading firm · Webflow development · 2026</p>
-                <span aria-hidden="true" className="cs-bignum">
+                <p className="cs-eyebrow cs-intro-sub cs-in" style={order(3)}>Prop trading firm · Webflow development · 2026</p>
+                <span aria-hidden="true" className="cs-bignum cs-in" style={order(3)}>
                   01”
                 </span>
               </div>
 
               <div className="cs-summary">
-                <p className="cs-lead">
+                <p className="cs-lead cs-in" style={order(4)}>
                   The main site of a prop trading firm that funds traders on its own capital. A dark, high-contrast home page built
                   around funded-account offers, a video hero and live promo banners, and a site that has to keep up with every
                   launch.
                 </p>
-                <div className="cs-facts">
+                <div className="cs-facts cs-in" style={order(5)}>
                   <dl className="cs-meta">
                     {META.map((m) => (
                       <div key={m.label}>
@@ -321,8 +357,8 @@ export default function TopOneTrader() {
                       </div>
                     ))}
                   </dl>
-                  <a href="https://toponetrader.com" target="_blank" rel="noopener" aria-label="Visit toponetrader.com (opens in new tab)" className="cs-visit">
-                    Visit toponetrader.com
+                  <a href="https://toponetrader.com" target="_blank" rel="noopener" aria-label={`Visit ${PROJECT_NAME} (opens in new tab)`} data-cursor="view" data-cursor-label="Visit" className="cs-visit">
+                    Visit {PROJECT_NAME}
                     <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M7 17L17 7" />
                       <path d="M8 7h9v9" />
@@ -331,7 +367,7 @@ export default function TopOneTrader() {
                 </div>
               </div>
 
-              <div className="cs-browser">
+              <div className="cs-browser cs-in" style={order(6)}>
                 <div aria-hidden="true" className="cs-browser-bar">
                   <span className="cs-browser-dots">
                     <span />
@@ -350,21 +386,21 @@ export default function TopOneTrader() {
           {/* Overview */}
           <section aria-labelledby="cs-overview" className="cs-section">
             <div className="cs-container cs-overview">
-              <div>
+              <div data-reveal>
                 <p className="cs-eyebrow">[ Overview ]</p>
                 <h2 id="cs-overview" className="cs-h2 cs-h2-sm">
                   The client.
                 </h2>
               </div>
               <div>
-                <p className="cs-overview-text">
+                <p data-reveal className="cs-overview-text">
                   Top One Trader is a proprietary trading firm founded in 2023 and led by founder and CEO Matt Morris. It gives traders
                   access to firm capital through one- and two-step challenges and instant-funding accounts, with fast payouts as the
                   headline promise.
                 </p>
                 <div className="cs-points">
                   {OVERVIEW.map((p, i) => (
-                    <div key={p.title} className="cs-point">
+                    <div key={p.title} data-reveal className="cs-point">
                       <span className="cs-point-num">{pad(i + 1)}</span>
                       <h3 className="cs-point-title">{p.title}</h3>
                       <p className="cs-point-text">{p.text}</p>
@@ -390,7 +426,7 @@ export default function TopOneTrader() {
               />
               <ul className="cs-cards">
                 {SHIPPED.map((c, i) => (
-                  <li key={c.title} className={`cs-card${c.accent ? ' cs-card-accent' : ''}`}>
+                  <li key={c.title} data-reveal className="cs-card">
                     <span aria-hidden="true" className="cs-card-num">
                       {pad(i + 1)}
                     </span>
@@ -410,7 +446,7 @@ export default function TopOneTrader() {
               <SectionHead eyebrow="[ Split test ]" id="cs-split" title="Two versions, one winner." />
               <div className="cs-variants">
                 {VARIANTS.map((v) => (
-                  <div key={v.name} className="cs-variant">
+                  <div key={v.name} data-reveal className="cs-variant">
                     <div className="cs-variant-head">
                       <span className={`cs-chip${v.accent ? ' cs-chip-accent' : ''}`}>{v.name}</span>
                       <span className="cs-variant-role">{v.role}</span>
@@ -419,7 +455,7 @@ export default function TopOneTrader() {
                   </div>
                 ))}
               </div>
-              <p className="cs-split-text">
+              <p data-reveal className="cs-split-text">
                 I built a second version of the page so the team could test it against the original with real visitors, then keep
                 whichever one sold better.
               </p>
@@ -437,7 +473,7 @@ export default function TopOneTrader() {
               />
               <div className="cs-phones">
                 {PHONES.map((img) => (
-                  <div key={img.src} className="cs-phone">
+                  <div key={img.src} data-reveal className="cs-phone">
                     <Shot img={img} />
                   </div>
                 ))}
@@ -448,15 +484,15 @@ export default function TopOneTrader() {
           {/* Next project */}
           <section aria-labelledby="cs-next-title" className="cs-next">
             <div className="cs-container">
-              <div className="cs-next-bar">
-                <a href="/#work" className="cs-back">
+              <div data-reveal className="cs-next-bar">
+                <a href="/work/top-one-launchpad" className="cs-back">
                   <ArrowLeft />
-                  All work
+                  Top One Launchpad
                 </a>
                 <p className="cs-eyebrow">[ Next project ]</p>
               </div>
-              <a href="/work/sabila-labs" className="cs-next-card">
-                <div className="cs-next-text">
+              <a href="/work/sabila-labs" data-cursor="view" className="cs-next-card">
+                <div data-reveal className="cs-next-text">
                   <p className="cs-eyebrow cs-next-eyebrow">02 · AI skincare startup · Design & Webflow</p>
                   <h2 id="cs-next-title" className="cs-next-title">
                     Sabila Labs
@@ -471,7 +507,7 @@ export default function TopOneTrader() {
                     </span>
                   </span>
                 </div>
-                <Media img={COVER_IMG} className="cs-media-cover" />
+                <Media img={COVER_IMG} className="cs-media-cover" reveal />
               </a>
             </div>
           </section>

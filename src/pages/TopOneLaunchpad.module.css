@@ -15,7 +15,7 @@
   --cs-accent-text: #7d8cff;
   --cs-chip-bg: #13204a;
   --cs-chip-text: #c3cbff;
-  --cs-serif: 'Instrument Serif', 'Newsreader Variable', serif;
+  --cs-serif: 'Instrument Serif', 'cs-serif-fallback', var(--font-serif);
   --cs-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --cs-gutter: clamp(16px, 3vw, 40px);
   --cs-space-section: clamp(80px, 10vw, 160px);
@@ -55,7 +55,7 @@
 .page :global(.cs-eyebrow) {
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 18px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cs-subtle);
@@ -71,7 +71,7 @@
 }
 
 .page :global(.cs-h2) {
-  margin-top: 20px;
+  margin-top: 16px;
   font-size: clamp(40px, 5.6vw, 84px);
   font-weight: 700;
   line-height: 1;
@@ -79,7 +79,7 @@
 }
 
 .page :global(.cs-h2-sm) {
-  margin-top: 16px;
+  margin-top: 17px;
   font-size: clamp(36px, 3.4vw, 48px);
 }
 
@@ -113,7 +113,9 @@
   gap: 10px;
   font-size: 14px;
   font-weight: 400;
-  color: var(--cs-text);
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: #b5b5b5;
   text-decoration: none;
 }
 
@@ -133,6 +135,10 @@
   font-size: 13px;
 }
 
+.page :global(.cs-hero-top .cs-eyebrow) {
+  letter-spacing: 0.08em;
+}
+
 .page :global(.cs-hero-tags) {
   margin-top: 24px;
 }
@@ -145,8 +151,7 @@
   font-style: italic;
   font-size: clamp(96px, 14.1vw, 203px);
   line-height: 1;
-  letter-spacing: -0.03em;
-  color: #2b2b2b;
+  color: #2a2a2a;
   pointer-events: none;
   user-select: none;
 }
@@ -176,29 +181,39 @@
 .page :global(.cs-meta-label) {
   font-size: 12px;
   font-weight: 500;
+  line-height: 16px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cs-subtle);
 }
 
 .page :global(.cs-meta-value) {
-  margin-top: 8px;
+  margin-top: 7px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 24px;
   color: var(--cs-text);
 }
 
 .page :global(.cs-button) {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 15px 22px;
+  gap: 12px;
+  padding: 14px 24px 14px 22px;
   border-radius: var(--cs-radius-pill);
   background: var(--cs-text);
   color: var(--cs-bg);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
   text-decoration: none;
+}
+
+/* Same arrow as the "Visit" button on the other case studies */
+.page :global(.cs-button svg) {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.8;
 }
 
 /* Browser mock */
@@ -207,7 +222,7 @@
   overflow: hidden;
   border: 1px solid var(--cs-border);
   border-radius: var(--cs-radius-panel);
-  background: #111111;
+  background: var(--cs-card);
 }
 
 .page :global(.cs-browser-bar) {
@@ -238,9 +253,10 @@
   transform: translateX(-50%);
   padding: 5px 16px;
   border-radius: 8px;
-  background: #010101;
+  background: var(--cs-inset);
   color: var(--cs-muted);
   font-size: 12px;
+  line-height: 18px;
   white-space: nowrap;
 }
 
@@ -297,18 +313,20 @@
   display: block;
   font-size: 13px;
   font-weight: 600;
+  line-height: 16px;
   color: var(--cs-accent-text);
 }
 
 .page :global(.cs-card-title) {
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 28px;
   letter-spacing: -0.02em;
 }
 
 .page :global(.cs-card-text) {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 15px;
   line-height: 1.6;
   color: var(--cs-muted);
@@ -330,10 +348,31 @@
 }
 
 .page :global(.cs-turnaround-time) {
+  position: relative;
   font-family: var(--cs-serif);
   font-size: clamp(72px, 10vw, 144px);
   line-height: 0.8;
   letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+/* The counting number sits on top of an invisible "~48h", which holds the width so nothing moves */
+.page :global(.cs-count-sizer) {
+  visibility: hidden;
+}
+
+.page :global(.cs-count-value) {
+  position: absolute;
+  inset: 0;
+  text-align: right;
+}
+
+.page :global(.cs-sr) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
   white-space: nowrap;
 }
 
@@ -346,8 +385,25 @@
 .page :global(.cs-step) {
   display: flex;
   flex-direction: column;
-  padding: 20px 24px 0 0;
-  border-top: 2px solid var(--cs-accent);
+  padding-right: 24px;
+}
+
+/* Rounded bar per step; the blue fill grows in from the left on scroll */
+.page :global(.cs-step-bar) {
+  display: block;
+  height: 4px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border-radius: var(--cs-radius-pill);
+  background: var(--cs-border);
+}
+
+.page :global(.cs-step-fill) {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cs-accent);
+  transform-origin: left center;
 }
 
 .page :global(.cs-step-time) {
@@ -370,260 +426,6 @@
   color: var(--cs-muted);
 }
 
-/* What's inside */
-.page :global(.cs-features) {
-  margin-top: 52px;
-  border-bottom: 1px solid var(--cs-border);
-}
-
-.page :global(.cs-feature) {
-  display: grid;
-  grid-template-columns: minmax(0, 537fr) minmax(0, 783fr);
-  align-items: center;
-  gap: 40px;
-  padding: 48px 0;
-  border-top: 1px solid var(--cs-border);
-}
-
-.page :global(.cs-feature-num) {
-  font-family: var(--cs-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 48px;
-  line-height: 1;
-}
-
-.page :global(.cs-feature-title) {
-  margin-top: 22px;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-}
-
-.page :global(.cs-feature-body) {
-  margin-top: 16px;
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--cs-muted);
-}
-
-/* 01: empty card, new content to come */
-.page :global(.cs-feature-card) {
-  aspect-ratio: 16 / 10;
-  border: 1px solid var(--cs-border);
-  border-radius: var(--cs-radius-card);
-  background: var(--cs-space);
-}
-
-/* 02: pricing card */
-.page :global(.cs-pricing) {
-  padding: 48px;
-  border: 1px solid var(--cs-border);
-  border-radius: var(--cs-radius-panel);
-  background: var(--cs-space);
-}
-
-.page :global(.cs-pricing-top) {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.page :global(.cs-pricing-plan) {
-  letter-spacing: 0.1em;
-  color: var(--cs-subtle);
-}
-
-.page :global(.cs-pricing-tag) {
-  color: var(--cs-chip-text);
-}
-
-.page :global(.cs-pricing-label) {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--cs-muted);
-}
-
-.page :global(.cs-pricing-top + .cs-pricing-label) {
-  margin-top: 26px;
-}
-
-.page :global(.cs-pricing-size) {
-  margin-top: 4px;
-  font-size: 56px;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.05em;
-}
-
-.page :global(.cs-pricing-track) {
-  margin-top: 22px;
-  height: 5px;
-  border-radius: var(--cs-radius-pill);
-  background: var(--cs-border);
-  overflow: hidden;
-}
-
-.page :global(.cs-pricing-fill) {
-  height: 100%;
-  border-radius: inherit;
-  background: var(--cs-accent);
-  transition: width 0.35s ease;
-}
-
-.page :global(.cs-pricing-pills) {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 18px;
-}
-
-.page :global(.cs-pricing-pill) {
-  height: 44px;
-  padding: 0 8px;
-  border: 1px solid var(--cs-border-strong);
-  border-radius: var(--cs-radius-pill);
-  background: transparent;
-  color: var(--cs-text);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.page :global(.cs-pricing-pill:hover) {
-  border-color: #4a4a4a;
-}
-
-.page :global(.cs-pricing-pill[aria-pressed='true']) {
-  border-color: var(--cs-accent);
-  background: var(--cs-accent);
-  color: #ffffff;
-}
-
-.page :global(.cs-pricing-pill:focus-visible) {
-  outline: 2px solid var(--cs-accent-text);
-  outline-offset: 2px;
-}
-
-.page :global(.cs-pricing-totals) {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--cs-border);
-}
-
-.page :global(.cs-pricing-value) {
-  margin-top: 4px;
-  font-size: 23px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.page :global(.cs-pricing-cta) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 52px;
-  margin-top: 28px;
-  border-radius: var(--cs-radius-pill);
-  background: var(--cs-text);
-  color: var(--cs-bg);
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-/* 03: loader code embed */
-.page :global(.cs-code) {
-  margin: 0;
-  padding: 22px 24px;
-  border: 1px solid var(--cs-border);
-  border-radius: var(--cs-radius-card);
-  background: var(--cs-inset);
-  font-family: var(--cs-mono);
-  font-size: 13px;
-  line-height: 23px;
-  color: var(--cs-muted);
-  white-space: pre;
-  overflow: auto;
-}
-
-.page :global(.cs-code code) {
-  font: inherit;
-}
-
-.page :global(.cs-code-comment) {
-  color: var(--cs-subtle);
-}
-
-.page :global(.cs-code-tag) {
-  color: var(--cs-chip-text);
-}
-
-/* 04: form flow */
-.page :global(.cs-flow) {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 50px minmax(0, 1fr) 50px minmax(0, 1fr);
-  align-items: center;
-  padding: 48px;
-  border: 1px solid var(--cs-border);
-  border-radius: var(--cs-radius-panel);
-  background: var(--cs-space);
-}
-
-.page :global(.cs-flow-step) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 18px 12px;
-  border: 1px solid var(--cs-border-strong);
-  border-radius: 12px;
-  background: var(--cs-card);
-  text-align: center;
-}
-
-.page :global(.cs-flow-step-accent) {
-  border-color: var(--cs-accent);
-  background: var(--cs-accent);
-}
-
-.page :global(.cs-flow-step-end) {
-  border-color: #2e2e2e;
-}
-
-.page :global(.cs-flow-label) {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--cs-muted);
-}
-
-.page :global(.cs-flow-step-accent .cs-flow-label) {
-  color: #dfe3ff;
-}
-
-.page :global(.cs-flow-value) {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.page :global(.cs-flow-arrow) {
-  display: flex;
-  justify-content: center;
-  color: var(--cs-muted);
-}
-
 /* Showcase */
 .page :global(.cs-showcase-head) {
   display: flex;
@@ -636,11 +438,12 @@
 .page :global(.cs-showcase-note) {
   padding-bottom: 6px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
+  line-height: 1.5;
   color: var(--cs-muted);
 }
 
-/* Offer cards + desktop pricing: two equal columns that wrap to one column when narrow */
+/* Offer cards + desktop pricing shots: two equal columns that wrap to one column when narrow */
 .page :global(.cs-showcase) {
   display: flex;
   flex-wrap: wrap;
@@ -671,7 +474,7 @@
 }
 
 .page :global(.cs-phone) {
-  flex: 0 1 273px;
+  flex: 0 1 274px;
   aspect-ratio: 273 / 553;
   border: 1px solid var(--cs-border);
   border-radius: 28px;
@@ -684,7 +487,7 @@
 }
 
 .page :global(.cs-next-top) {
-  margin-top: 14px;
+  margin-top: 12px;
   padding-bottom: 36px;
   border-bottom: 1px solid var(--cs-border);
 }
@@ -708,11 +511,11 @@
 }
 
 .page :global(.cs-next-title) {
-  margin-top: 12px;
+  margin-top: 15px;
   font-family: var(--cs-serif);
   font-weight: 400;
-  font-size: clamp(56px, 8.8vw, 127px);
-  line-height: 0.95;
+  font-size: clamp(56px, 9.03vw, 130px);
+  line-height: 0.9;
   letter-spacing: -0.03em;
 }
 
@@ -766,11 +569,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     row-gap: 32px;
   }
-
-  /* minmax(0, …) so the code panel's long lines scroll inside it instead of widening the row */
-  .page :global(.cs-feature) {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 /* Mobile landscape and portrait */
@@ -782,12 +580,11 @@
 
   .page :global(.cs-hero-num) {
     top: -8px;
-    font-size: 64px;
+    font-size: 72px;
   }
 
   .page :global(.cs-hero-tags) {
-    margin-top: 20px;
-    font-size: 12px;
+    margin-top: 16px;
   }
 
   .page :global(.cs-hero-body) {
@@ -798,31 +595,10 @@
     margin-top: 40px;
   }
 
-  .page :global(.cs-browser-bar) {
-    height: 40px;
-    padding: 0 14px;
-  }
-
-  .page :global(.cs-browser-dots) {
-    gap: 6px;
-  }
-
-  .page :global(.cs-browser-dots span) {
-    width: 7px;
-    height: 7px;
-  }
-
-  .page :global(.cs-browser-url) {
-    left: auto;
-    right: 12px;
-    transform: none;
-    font-size: 11px;
-  }
-
   .page :global(.cs-cards) {
     grid-template-columns: 1fr;
     gap: 32px;
-    margin-top: 40px;
+    margin-top: 48px;
   }
 
   .page :global(.cs-turnaround) {
@@ -834,6 +610,10 @@
     align-items: flex-start;
   }
 
+  .page :global(.cs-count-value) {
+    text-align: left;
+  }
+
   .page :global(.cs-steps) {
     grid-template-columns: 1fr;
     row-gap: 24px;
@@ -842,57 +622,6 @@
 
   .page :global(.cs-step) {
     padding-right: 0;
-  }
-
-  .page :global(.cs-features) {
-    margin-top: 40px;
-  }
-
-  .page :global(.cs-feature) {
-    gap: 32px;
-    padding: 40px 0;
-  }
-
-  .page :global(.cs-feature-num) {
-    font-size: 44px;
-  }
-
-  .page :global(.cs-feature-title) {
-    margin-top: 16px;
-    font-size: 26px;
-  }
-
-  .page :global(.cs-feature-body) {
-    font-size: 16px;
-  }
-
-  .page :global(.cs-pricing) {
-    padding: 24px;
-  }
-
-  .page :global(.cs-pricing-size) {
-    font-size: 48px;
-  }
-
-  .page :global(.cs-pricing-pills) {
-    gap: 6px;
-  }
-
-  .page :global(.cs-pricing-pill) {
-    height: 40px;
-    padding: 0;
-    font-size: 12px;
-  }
-
-  .page :global(.cs-flow) {
-    grid-template-columns: 1fr;
-    justify-items: stretch;
-    gap: 8px;
-    padding: 24px;
-  }
-
-  .page :global(.cs-flow-arrow) {
-    transform: rotate(90deg);
   }
 
   .page :global(.cs-showcase-note) {
@@ -917,12 +646,31 @@
   }
 
   .page :global(.cs-next-top) {
-    padding-bottom: 32px;
+    padding-bottom: 24px;
   }
 
   .page :global(.cs-next) {
     grid-template-columns: 1fr;
     gap: 32px;
     padding-top: 32px;
+  }
+}
+
+/* Hero fades up on load, item by item (--d set in the markup): 300ms each, 45ms apart */
+@keyframes cs-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.page :global(.cs-in) {
+  animation: cs-fade-up 0.3s ease-out both;
+  animation-delay: calc(var(--d, 0) * 45ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page :global(.cs-in) {
+    animation: none;
   }
 }

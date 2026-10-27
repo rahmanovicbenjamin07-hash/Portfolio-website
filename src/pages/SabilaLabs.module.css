@@ -10,9 +10,11 @@
   --cs-text: #f5f5f5;
   --cs-muted: #a3a3a3;
   --cs-subtle: #8f8f8f;
+  --cs-link: #b5b5b5;
   --cs-accent: #2a45f5;
   --cs-accent-text: #7d8cff;
-  --cs-serif: 'Instrument Serif', var(--font-serif);
+  --cs-radius-card: 16px;
+  --cs-serif: 'Instrument Serif', 'cs-serif-fallback', var(--font-serif);
   --cs-gutter: clamp(16px, 3vw, 40px);
 
   background: var(--cs-bg);
@@ -36,14 +38,14 @@
 .counter {
   font-size: 14px;
   font-weight: 500;
-  line-height: 1;
+  line-height: 18px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cs-subtle);
 }
 
 .cs-h2 {
-  margin: 17px 0 0;
+  margin: 16px 0 0;
   font-size: clamp(40px, 5.6vw, 84px);
   font-weight: 700;
   line-height: 1;
@@ -51,7 +53,7 @@
 }
 
 .h2Small {
-  margin-top: 20px;
+  margin-top: 17px;
   font-size: clamp(36px, 3.34vw, 48px);
   letter-spacing: -0.04em;
 }
@@ -99,7 +101,7 @@
   overflow: hidden;
   background: var(--cs-card);
   border: 1px solid var(--cs-border);
-  border-radius: 8px;
+  border-radius: var(--cs-radius-card);
 }
 
 .shotImg {
@@ -112,15 +114,11 @@
   object-position: top center;
 }
 
-.fitImg {
-  object-fit: contain;
-}
-
 .cs-card {
   box-sizing: border-box;
   background: var(--cs-card);
   border: 1px solid var(--cs-border);
-  border-radius: 8px;
+  border-radius: var(--cs-radius-card);
 }
 
 /* Hero */
@@ -141,14 +139,11 @@
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--cs-muted);
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: var(--cs-link);
   text-decoration: none;
-}
-
-.back:hover {
-  color: var(--cs-text);
-  opacity: 1;
 }
 
 .titleRow {
@@ -179,14 +174,14 @@
 }
 
 .titleRow .kicker {
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .bigNum {
   font-family: var(--cs-serif);
   font-style: italic;
   margin-bottom: -2px;
-  font-size: clamp(96px, 13.9vw, 200px);
+  font-size: clamp(96px, 14.1vw, 203px);
   line-height: 0.8;
   color: #2a2a2a;
   white-space: nowrap;
@@ -209,37 +204,36 @@
 }
 
 .cs-meta dd {
-  margin: 6px 0 0;
+  margin: 7px 0 0;
 }
 
 .cs-meta-label {
   font-size: 12px;
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 16px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cs-subtle);
 }
 
 .cs-meta-value {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.02em;
+  line-height: 24px;
 }
 
 .visit {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 28px;
-  padding: 15px 24px;
+  gap: 12px;
+  margin-top: 29px;
+  padding: 14px 24px 14px 22px;
   border-radius: 999px;
   background: var(--cs-text);
   color: var(--cs-bg);
   font-size: 14px;
   font-weight: 600;
-  line-height: 18px;
+  line-height: 20px;
   text-decoration: none;
 }
 
@@ -280,7 +274,7 @@
   border-radius: 8px;
   background: var(--cs-inset);
   font-size: 12px;
-  line-height: 1.4;
+  line-height: 18px;
   color: var(--cs-muted);
 }
 
@@ -299,40 +293,11 @@
 }
 
 .overviewText {
-  margin: -3px 0 0;
-  font-size: clamp(22px, 2.19vw, 32px);
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 32px);
   font-weight: 500;
-  line-height: 1.34;
+  line-height: 1.35;
   letter-spacing: -0.02em;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 42px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.stats li {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 25px 24px 19px;
-}
-
-.statValue {
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-.statLabel {
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--cs-muted);
 }
 
 .brief {
@@ -343,14 +308,14 @@
 }
 
 .briefItem {
-  padding-top: 21px;
+  padding-top: 24px;
   border-top: 1px solid var(--cs-border);
 }
 
 .briefNum {
   font-size: 13px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 16px;
   color: var(--cs-accent-text);
 }
 
@@ -358,7 +323,7 @@
   margin: 12px 0 0;
   font-size: 20px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 28px;
   letter-spacing: -0.02em;
 }
 
@@ -369,7 +334,7 @@
   color: var(--cs-muted);
 }
 
-/* Scope of work */
+/* Process: four steps in one row; 2×2 on tablet, stacked on phone */
 .scope {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -379,65 +344,92 @@
   list-style: none;
 }
 
-/* Fixed gap under the number (not space-between), so the headings line up across a row whatever the text length */
+/* Same card as Top One Trader's scope cards. Content starts at the top, so every card's title sits on the same
+   line whatever the text length. The border stays on in the active state (in the card's own blue), so content
+   never shifts. */
 .scopeCard {
   display: flex;
   flex-direction: column;
-  gap: 85px;
-  padding: 34px 32px 30px;
+  justify-content: flex-start;
+  gap: 32px;
+  min-height: 306px;
+  padding: 32px;
+  transition:
+    transform 0.3s ease-out,
+    border-color 0.3s ease-out,
+    background-color 0.3s ease-out;
 }
 
-.scopeCardOn {
-  background: var(--cs-accent);
-  border-color: var(--cs-accent);
+.cs-card-num,
+.scopeText {
+  transition: color 0.3s ease-out;
 }
 
 .cs-card-num {
   font-family: var(--cs-serif);
   font-style: italic;
-  font-size: 40px;
+  font-size: 42px;
   line-height: 1;
+  letter-spacing: -0.04em;
   color: var(--cs-accent-text);
-}
-
-.scopeCardOn .cs-card-num {
-  color: #ffffff;
-}
-
-.scopeCardOn .scopeText {
-  color: rgba(255, 255, 255, 0.82);
 }
 
 .scopeTitle {
   margin: 0;
   font-size: 24px;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 32px;
   letter-spacing: -0.03em;
 }
 
 .scopeText {
-  margin: 15px 0 0;
+  margin: 13px 0 0;
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 24px;
   color: var(--cs-muted);
 }
 
-/* Identity: logos stacked on the left; typography + palette on the right, palette filling the rest */
+/* Active state on hover (same as Top One Trader): the card lifts 4px and turns accent blue with white text.
+   Only on devices that really hover, so a tap never leaves a card stuck in this state. */
+@media (hover: hover) and (pointer: fine) {
+  .scopeCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--cs-accent);
+    background-color: var(--cs-accent);
+  }
+
+  .scopeCard:hover .cs-card-num,
+  .scopeCard:hover .scopeText {
+    color: #ffffff;
+  }
+}
+
+/* Identity: logos stacked on the left; typography + palette on the right, palette filling the rest.
+   Kept compact: a smaller heading and gap, 2:1 logo cards, smaller specimens and swatches. */
+.headIdentity {
+  margin-bottom: 40px;
+}
+
+.headIdentity .cs-h2 {
+  font-size: clamp(40px, 4.6vw, 66px);
+}
+
 .identity {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 12px;
 }
 
 .identityCol {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
+/* Grows if the right column is taller (tablet), so both columns end on the same line */
 .logo {
-  aspect-ratio: 16 / 10;
+  flex: 1 0 auto;
+  aspect-ratio: 2 / 1;
 }
 
 /* The logo files carry their own ground (pure white / pure black): the card takes the same color, so the
@@ -461,14 +453,14 @@
 }
 
 .typo {
-  padding: 32px;
+  padding: 26px 28px 24px;
 }
 
 .palette {
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 32px;
+  padding: 26px 28px 24px;
 }
 
 .cardLabel {
@@ -483,20 +475,20 @@
 .typoRow {
   display: flex;
   align-items: flex-end;
-  gap: 32px;
-  margin-top: 16px;
+  gap: 28px;
+  margin-top: 12px;
 }
 
 /* Specimens in Sabila Labs' own fonts (loaded from Google Fonts by the page, "Aa" only) */
 .typoSerif {
   font-family: 'Bodoni Moda', var(--cs-serif);
-  font-size: 96px;
+  font-size: 76px;
   line-height: 1;
 }
 
 .typoSans {
   font-family: 'DM Sans', sans-serif;
-  font-size: 90px;
+  font-size: 72px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -515,7 +507,7 @@
   flex: 1;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  margin: 20px 0 0;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -533,13 +525,14 @@
 /* Filled with the brand color inline; the border keeps the dark navy visible on the dark card */
 .swatch {
   flex: 1;
-  min-height: 120px;
+  min-height: 88px;
   border: 1px solid #3a3a3a;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
+/* Next-project cover: same shape as the screenshot, so the whole image shows with nothing cut off */
 .wide {
-  aspect-ratio: 14 / 9;
+  aspect-ratio: 2490 / 1476;
 }
 
 /* Showcase */
@@ -547,38 +540,35 @@
   margin: 0;
 }
 
+/* Same ratio as the screenshot (2490 × 1476), so it fills the frame with nothing cropped and no empty band */
 .shotMedia {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 2490 / 1476;
 }
 
 .caption {
-  margin-top: 9px;
+  margin-top: 12px;
   font-size: 14px;
-  line-height: 1.4;
   color: var(--cs-muted);
 }
 
+/* Phones sit straight on the page, as on the Top One Launchpad page (no panel behind them) */
 .phones {
   display: flex;
   justify-content: center;
-  gap: 60px;
-  margin-top: 16px;
-  padding: 72px 32px;
-  background: var(--cs-card);
-  border: 1px solid var(--cs-border);
-  border-radius: 20px;
+  gap: 56px;
+  margin-top: 56px;
 }
 
-/* Phone frame: the screenshot fills it and the 28px radius clips it. 14:25 sits between the 830×1600 shots
-   (they lose a little at the bottom) and the wider 948×1600 hero (it loses only empty side margin, no text). */
+/* Phone frame: the screenshot fills it and the 28px radius clips it, with no fill of its own behind it.
+   14:25 sits between the 830×1600 shots (they lose a little at the bottom) and the wider 948×1600 hero
+   (it loses only empty side margin, no text). */
 .cs-phone {
   position: relative;
-  width: 272px;
+  flex: 0 1 274px;
   aspect-ratio: 14 / 25;
   box-sizing: border-box;
   overflow: hidden;
-  background: var(--cs-inset);
-  border: 1px solid var(--cs-border-strong);
+  border: 1px solid var(--cs-border);
   border-radius: 28px;
 }
 
@@ -636,10 +626,12 @@
   inset: 0;
 }
 
+/* Tabular digits, so the number keeps its width while it counts up */
 .ringScore {
   font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 
 .ringLabel {
@@ -650,7 +642,7 @@
 
 /* Next project */
 .nextBar {
-  padding: 12px 0 34px;
+  padding: 12px 0 36px;
   border-bottom: 1px solid var(--cs-border);
 }
 
@@ -658,7 +650,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
-  gap: 64px;
+  gap: 66px;
   margin-top: 48px;
   color: inherit;
   text-decoration: none;
@@ -669,9 +661,9 @@
 }
 
 .nextTitle {
-  margin: 14px 0 0;
+  margin: 15px 0 0;
   font-family: var(--cs-serif);
-  font-size: clamp(56px, 9vw, 130px);
+  font-size: clamp(56px, 9.03vw, 130px);
   font-weight: 400;
   line-height: 0.9;
   letter-spacing: -0.03em;
@@ -689,8 +681,8 @@
 .nextArrow {
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--cs-text);
   color: var(--cs-bg);
@@ -699,6 +691,18 @@
 
 .nextLink:hover .nextArrow {
   transform: translateX(4px);
+}
+
+/* Small desktop: four narrow cards in a row, so slightly tighter padding and titles (as on Top One Trader) */
+@media (min-width: 1025px) and (max-width: 1240px) {
+  .scopeCard {
+    padding: 28px 24px;
+  }
+
+  .scopeTitle {
+    font-size: 21px;
+    line-height: 28px;
+  }
 }
 
 /* Tablet */
@@ -743,21 +747,67 @@
     padding-top: 48px;
   }
 
+  /* The big "02”" moves up next to the eyebrow, as on Top One Trader */
   .titleRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'eyebrow num'
+      'title title'
+      'sub sub';
+    align-items: end;
+    gap: 0;
     margin-top: 40px;
   }
 
+  .titleRow > div:first-child {
+    display: contents;
+  }
+
+  .titleRow .cs-eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .titleRow .cs-title {
+    grid-area: title;
+    margin-top: 12px;
+  }
+
+  .titleRow .kicker {
+    grid-area: sub;
+    margin-top: 16px;
+  }
+
   .bigNum {
-    display: none;
+    grid-area: num;
+    margin: 0;
+    font-size: 72px;
   }
 
   .kicker {
     line-height: 1.5;
   }
 
-  .stats,
-  .brief {
+  .cs-browser {
+    margin-top: 40px;
+  }
+
+  .side {
+    font-size: 16px;
+  }
+
+  .nextBar {
+    padding-bottom: 24px;
+  }
+
+  .brief,
+  .scope {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .scopeCard {
+    min-height: 0;
+    padding: 24px;
   }
 
   .brief {
@@ -773,11 +823,12 @@
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    padding: 40px 24px;
+    margin-top: 40px;
   }
 
   .cs-phone {
-    width: min(200px, 100%);
+    flex: none;
+    width: min(220px, 100%);
   }
 
   .perf {
@@ -791,15 +842,6 @@
 }
 
 @media (max-width: 479px) {
-  .scope {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .scopeCard {
-    gap: 32px;
-    padding: 24px;
-  }
-
   .typo,
   .palette {
     padding: 24px;
@@ -807,15 +849,11 @@
 
   .typoSerif,
   .typoSans {
-    font-size: 72px;
+    font-size: 64px;
   }
 
   .swatches {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .side {
-    font-size: 16px;
   }
 
   .topRow {
@@ -823,8 +861,33 @@
   }
 }
 
+/* Hero fades up on load, item by item (--d set in the markup): 300ms each, 45ms apart (same as the other case studies) */
+@keyframes cs-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.cs-in {
+  animation: cs-fade-up 0.3s ease-out both;
+  animation-delay: calc(var(--d, 0) * 45ms);
+}
+
+/* Card hover keeps its colour change but drops the movement; the hero shows at once */
 @media (prefers-reduced-motion: reduce) {
-  .nextArrow {
+  .cs-in {
+    animation: none;
+  }
+
+  .nextArrow,
+  .scopeCard,
+  .cs-card-num,
+  .scopeText {
     transition: none;
+  }
+
+  .scopeCard:hover {
+    transform: none;
   }
 }

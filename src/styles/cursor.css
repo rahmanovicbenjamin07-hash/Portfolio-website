@@ -1,0 +1,71 @@
+/* Custom cursor (src/cursor.ts). The elements are direct children of <body>, fixed at 0,0 and moved with
+   transform; the negative margins centre each one on its point. */
+.cursor-ring,
+.cursor-dot,
+.cursor-view {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483000;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+/* Solid "View" circle over project cards (no blending, so the label stays readable) */
+.cursor-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  margin: -44px 0 0 -44px;
+  background: #ffffff;
+  color: var(--color-bg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  transform: scale(0);
+}
+
+/* Native cursor off once the custom one is running; text fields keep the text cursor */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+html.has-cursor :is(textarea, [contenteditable=''], [contenteditable='true']),
+html.has-cursor input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='range'], [type='file'], [type='color'], [type='hidden']) {
+  cursor: text !important;
+}
+
+/* Mouse outside the window (or before it first moves) */
+html.cursor-hidden :is(.cursor-ring, .cursor-dot, .cursor-view) {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring,
+  .cursor-dot,
+  .cursor-view {
+    transition: none;
+  }
+}

@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Seo from '../seo/Seo'
 import { CALENDLY } from '../seo/site'
 import Cta from '../sections/Cta'
@@ -8,6 +10,40 @@ import s from './SabilaLabs.module.css'
 
 // Case-study classes (cs-*) are in the DOM as written, plus their scoped CSS Module class for the styles.
 const cs = (name: string) => `${name} ${s[name]}`
+
+gsap.registerPlugin(ScrollTrigger)
+
+// Hero items (.cs-in) fade up on load in CSS, one after another: --d is the item's place in that order.
+const order = (d: number) => ({ '--d': d }) as CSSProperties
+
+// Scroll reveals, same as the other case studies. Everything starts visible (prerendered HTML, no JS, reduced
+// motion); only with motion allowed are [data-reveal] items hidden and faded up as they come 15% into view:
+// 300ms, 45ms (15%) apart. The cards' own CSS transition is switched off while GSAP moves them.
+function useScrollReveal(root: RefObject<HTMLElement | null>) {
+  useLayoutEffect(() => {
+    const el = root.current
+    if (!el) return
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const items = gsap.utils.toArray<HTMLElement>('[data-reveal]', el)
+      gsap.set(items, { opacity: 0, y: 16, transition: 'none' })
+      ScrollTrigger.batch(items, {
+        start: 'top 85%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            stagger: 0.045,
+            clearProps: 'opacity,transform,transition',
+          }),
+      })
+    })
+    return () => mm.revert()
+  }, [root])
+}
 
 // Same links as the homepage menu, as absolute paths so they lead back to the homepage sections.
 const MENU_LINKS = [
@@ -23,11 +59,8 @@ const META = [
   { label: 'Based in', value: 'Palo Alto, CA' },
 ]
 
-const STATS = [
-  { value: '10,000+', label: 'Assessments completed in Prism' },
-  { value: '83%', label: 'Assessment completion rate' },
-  { value: 'Live', label: 'On real brand storefronts' },
-]
+// The project name, as set in the page's main heading. The "Visit" button reuses it.
+const PROJECT_NAME = 'Sabila Labs'
 
 const BRIEF = [
   {
@@ -44,16 +77,24 @@ const BRIEF = [
   },
 ]
 
-const SCOPE = [
-  { title: 'Logo design', text: 'A clean mark and wordmark for a new AI brand, made to work on light and dark backgrounds.' },
-  { title: 'Design in Figma', text: 'Every page and breakpoint designed in Figma, with reusable components and text styles.' },
-  { title: 'Figma to Webflow', text: 'Rebuilt pixel for pixel in Webflow with a clean class system and fully responsive layouts.' },
-  { title: 'Animations', text: 'Subtle load, scroll and hover effects that make the product feel alive without slowing the page.' },
+// The process, in order.
+const PROCESS = [
   {
-    title: 'Optimization & SEO',
-    text: 'Compressed assets, clean meta and solid page structure: 99 for performance and 100 for SEO on PageSpeed.',
+    title: 'Client briefing',
+    text: 'Talking with the team about what they needed and wanted: their goals, their audience and the references they liked.',
   },
-  { title: 'QA & updates', text: 'Tested across browsers and devices before launch, with ongoing updates as the product grows.' },
+  {
+    title: 'Design in Figma',
+    text: 'The brief turned into the design: layouts for every page and breakpoint, and a clear visual direction.',
+  },
+  {
+    title: 'Webflow development',
+    text: 'Built in Webflow, responsive across all devices, with the CMS and interactions set up.',
+  },
+  {
+    title: 'QA, optimization & launch',
+    text: 'Testing, performance optimization, SEO and a final polish on the animations, then live.',
+  },
 ]
 
 // Sabila Labs' own fonts and brand colors, from the live site's CSS (sabilalabs.ai: Webflow WebFont.load + :root variables).
@@ -63,13 +104,12 @@ const PALETTE = ['#2BD2BD', '#091628', '#5A6B7F', '#FFFFFF']
 
 const IMG = '/images/sabila-labs'
 
-// fit: the screenshot is wider than its frame; show its full width (pinned to the top) instead of cutting text off the sides.
-type Img = { src: string; width: number; height: number; alt: string; fit?: boolean }
+type Img = { src: string; width: number; height: number; alt: string }
 
 const HERO_IMG: Img = { src: '/images/prism-sabila.jpg', width: 1600, height: 971, alt: 'Sabila Labs home page' }
 const LOGO_LIGHT: Img = { src: `${IMG}/logo-black-white.svg`, width: 2520, height: 2488, alt: 'Sabila Labs logo on light background' }
 const LOGO_DARK: Img = { src: `${IMG}/logo-teal-black.svg`, width: 2522, height: 2488, alt: 'Sabila Labs logo on dark background' }
-const PLATFORM_IMG: Img = { src: `${IMG}/platform-desktop.avif`, width: 2490, height: 1476, alt: 'Sabila Labs Platform section on desktop', fit: true }
+const PLATFORM_IMG: Img = { src: `${IMG}/platform-desktop.avif`, width: 2490, height: 1476, alt: 'Sabila Labs Platform section on desktop' }
 const NEXT_IMG: Img = { src: '/images/top-one-launchpad/launchpad-hero-desktop.avif', width: 2490, height: 1476, alt: 'Top One Launchpad home page' }
 
 const PHONES: Img[] = [
@@ -90,6 +130,86 @@ const pad = (k: number) => (k < 10 ? '0' : '') + k
 // Ring: r 46 in a 104 box, 5px stroke; the accent arc covers score% of the circle, from 12 o'clock.
 const RING_R = 46
 const RING_C = 2 * Math.PI * RING_R
+const ringOffset = (value: number) => (RING_C * (100 - value)) / 100
+
+/**
+ * PageSpeed rings. The HTML always holds the final scores, so they show as-is without JavaScript or with
+ * reduced motion. Otherwise the rings are set to 0 and count up (number + arc together) once, when the list
+ * comes into view: same trigger and easing as the ~48h count on the Top One Launchpad case study, with a
+ * slight stagger between rings.
+ */
+function ScoreRings() {
+  const listRef = useRef<HTMLUListElement>(null)
+  const numRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const arcRefs = useRef<(SVGCircleElement | null)[]>([])
+
+  useLayoutEffect(() => {
+    const list = listRef.current
+    if (!list) return
+
+    const set = (k: number, value: number) => {
+      const num = numRefs.current[k]
+      const arc = arcRefs.current[k]
+      if (num) num.textContent = String(Math.round(value))
+      if (arc) arc.style.strokeDashoffset = String(ringOffset(value))
+    }
+
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const values = SCORES.map(() => ({ v: 0 }))
+      values.forEach((_, k) => set(k, 0))
+      gsap.to(values, {
+        v: (k: number) => SCORES[k].score,
+        duration: 1.7,
+        ease: 'power2.out',
+        stagger: 0.12,
+        scrollTrigger: { trigger: list, start: 'top 85%', once: true },
+        onUpdate: () => values.forEach((n, k) => set(k, n.v)),
+      })
+      return () => SCORES.forEach((r, k) => set(k, r.score))
+    })
+    return () => mm.revert()
+  }, [])
+
+  return (
+    <ul ref={listRef} className={s.rings}>
+      {SCORES.map((r, k) => (
+        <li key={r.label} className={s.ring}>
+          <span className={s.ringDial}>
+            <svg aria-hidden="true" width="104" height="104" viewBox="0 0 104 104" fill="none">
+              <circle cx="52" cy="52" r={RING_R} stroke="#262626" strokeWidth="5" />
+              <circle
+                ref={(el) => {
+                  arcRefs.current[k] = el
+                }}
+                cx="52"
+                cy="52"
+                r={RING_R}
+                stroke="#2a45f5"
+                strokeWidth="5"
+                strokeDasharray={RING_C}
+                strokeDashoffset={ringOffset(r.score)}
+                transform="rotate(-90 52 52)"
+              />
+            </svg>
+            {/* The counting digits are hidden from screen readers; they read the final score instead */}
+            <span
+              ref={(el) => {
+                numRefs.current[k] = el
+              }}
+              aria-hidden="true"
+              className={s.ringScore}
+            >
+              {r.score}
+            </span>
+            <span className="sr-only">{r.score}</span>
+          </span>
+          <span className={s.ringLabel}>{r.label}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 /** The homepage header nav (src/sections/Hero.tsx): same markup, classes and menu behaviour. */
 function SiteNav() {
@@ -194,19 +314,23 @@ function Pic({ img, className, priority = false }: { img: Img; className: string
       alt={img.alt}
       decoding="async"
       {...(priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
-      className={img.fit ? `${className} ${s.fitImg}` : className}
+      className={className}
     />
   )
 }
 
-/** Media slot: a framed box holding one image. */
-function Media({ className = '', children }: { className?: string; children: ReactNode }) {
-  return <div className={`${cs('cs-media')} ${className}`}>{children}</div>
+/** Media slot: a framed box holding one image. `reveal` fades it up on scroll. */
+function Media({ className = '', reveal = false, children }: { className?: string; reveal?: boolean; children: ReactNode }) {
+  return (
+    <div data-reveal={reveal || undefined} className={`${cs('cs-media')} ${className}`}>
+      {children}
+    </div>
+  )
 }
 
 function SectionHead({ eyebrow, id, title, side, className = '' }: { eyebrow: string; id: string; title: ReactNode; side?: string; className?: string }) {
   return (
-    <div className={`${s.head} ${className}`}>
+    <div data-reveal className={`${s.head} ${className}`}>
       <div>
         <div className={cs('cs-eyebrow')}>{eyebrow}</div>
         <h2 id={id} className={cs('cs-h2')}>
@@ -219,6 +343,9 @@ function SectionHead({ eyebrow, id, title, side, className = '' }: { eyebrow: st
 }
 
 export default function SabilaLabs() {
+  const mainRef = useRef<HTMLElement>(null)
+  useScrollReveal(mainRef)
+
   return (
     <>
       <Seo
@@ -231,11 +358,11 @@ export default function SabilaLabs() {
           <SiteNav />
         </header>
 
-        <main>
+        <main ref={mainRef}>
           {/* Hero */}
           <section aria-labelledby="cs-title" className={`${cs('cs-hero')} ${cs('cs-section')}`}>
             <div className={s.wrap}>
-              <div className={s.topRow}>
+              <div className={`${s.topRow} ${cs('cs-in')}`} style={order(0)}>
                 <a href="/#work" className={s.back}>
                   <ArrowLeft />
                   All work
@@ -245,23 +372,27 @@ export default function SabilaLabs() {
 
               <div className={s.titleRow}>
                 <div>
-                  <div className={cs('cs-eyebrow')}>[ Case study ]</div>
-                  <h1 id="cs-title" className={cs('cs-title')}>
-                    Sabila Labs
+                  <div className={`${cs('cs-eyebrow')} ${cs('cs-in')}`} style={order(1)}>
+                    [ Case study ]
+                  </div>
+                  <h1 id="cs-title" className={`${cs('cs-title')} ${cs('cs-in')}`} style={order(2)}>
+                    {PROJECT_NAME}
                   </h1>
-                  <div className={s.kicker}>AI skincare startup · Design, brand &amp; Webflow</div>
+                  <div className={`${s.kicker} ${cs('cs-in')}`} style={order(3)}>
+                    AI skincare startup · Design, brand &amp; Webflow
+                  </div>
                 </div>
-                <div aria-hidden="true" className={s.bigNum}>
+                <div aria-hidden="true" className={`${s.bigNum} ${cs('cs-in')}`} style={order(3)}>
                   02”
                 </div>
               </div>
 
               <div className={s.intro}>
-                <p className={cs('cs-lead')}>
+                <p className={`${cs('cs-lead')} ${cs('cs-in')}`} style={order(4)}>
                   The launch site for Prism, Sabila Labs' skin-intelligence layer for Shopify skincare brands. Logo, Figma design, Webflow build,
                   animation and SEO: one person, from a blank file to live.
                 </p>
-                <div>
+                <div className={cs('cs-in')} style={order(5)}>
                   <dl className={cs('cs-meta')}>
                     {META.map((m) => (
                       <div key={m.label}>
@@ -270,9 +401,9 @@ export default function SabilaLabs() {
                       </div>
                     ))}
                   </dl>
-                  <a href="https://www.sabilalabs.ai" target="_blank" rel="noopener" aria-label="Visit sabilalabs.ai (opens in new tab)" className={s.visit}>
-                    Visit sabilalabs.ai
-                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <a href="https://www.sabilalabs.ai" target="_blank" rel="noopener" aria-label={`Visit ${PROJECT_NAME} (opens in new tab)`} data-cursor="view" data-cursor-label="Visit" className={s.visit}>
+                    Visit {PROJECT_NAME}
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M7 17L17 7" />
                       <path d="M8 7h9v9" />
                     </svg>
@@ -280,7 +411,7 @@ export default function SabilaLabs() {
                 </div>
               </div>
 
-              <div className={cs('cs-browser')}>
+              <div className={`${cs('cs-browser')} ${cs('cs-in')}`} style={order(6)}>
                 <div className={s.browserBar}>
                   <span aria-hidden="true" className={s.dots}>
                     <span />
@@ -299,28 +430,20 @@ export default function SabilaLabs() {
           {/* Overview */}
           <section aria-labelledby="cs-overview" className={cs('cs-section')}>
             <div className={`${s.wrap} ${s.overview}`}>
-              <div>
+              <div data-reveal>
                 <div className={cs('cs-eyebrow')}>[ Overview ]</div>
                 <h2 id="cs-overview" className={`${cs('cs-h2')} ${s.h2Small}`}>
                   The client.
                 </h2>
               </div>
               <div>
-                <p className={s.overviewText}>
+                <p data-reveal className={s.overviewText}>
                   Sabila Labs is a Palo Alto startup founded in 2025. Its product, Prism, drops into a Shopify storefront as one embed and turns a
                   brand's own catalog into personalized, non-diagnostic skincare guidance, then hands the brand customer insight after checkout.
                 </p>
-                <ul className={s.stats}>
-                  {STATS.map((st) => (
-                    <li key={st.label} className={cs('cs-card')}>
-                      <span className={s.statValue}>{st.value}</span>
-                      <span className={s.statLabel}>{st.label}</span>
-                    </li>
-                  ))}
-                </ul>
                 <div className={s.brief}>
                   {BRIEF.map((b, k) => (
-                    <div key={b.title} className={s.briefItem}>
+                    <div key={b.title} data-reveal className={s.briefItem}>
                       <div className={s.briefNum}>{pad(k + 1)}</div>
                       <h3 className={s.briefTitle}>{b.title}</h3>
                       <p className={s.briefText}>{b.text}</p>
@@ -335,7 +458,7 @@ export default function SabilaLabs() {
           <section aria-labelledby="cs-scope" className={cs('cs-section')}>
             <div className={s.wrap}>
               <SectionHead
-                eyebrow="[ Scope of work ]"
+                eyebrow="[ Process ]"
                 id="cs-scope"
                 title={
                   <>
@@ -345,8 +468,8 @@ export default function SabilaLabs() {
                 side="No agency, no handoff. Every step designed and built by me."
               />
               <ol className={s.scope}>
-                {SCOPE.map((c, k) => (
-                  <li key={c.title} className={`${cs('cs-card')} ${s.scopeCard} ${k === 2 ? s.scopeCardOn : ''}`}>
+                {PROCESS.map((c, k) => (
+                  <li key={c.title} data-reveal className={`${cs('cs-card')} ${s.scopeCard}`}>
                     <span className={cs('cs-card-num')}>{pad(k + 1)}</span>
                     <div>
                       <h3 className={s.scopeTitle}>{c.title}</h3>
@@ -361,18 +484,18 @@ export default function SabilaLabs() {
           {/* Identity */}
           <section aria-labelledby="cs-identity" className={cs('cs-section')}>
             <div className={s.wrap}>
-              <SectionHead eyebrow="[ Identity ]" id="cs-identity" title="A mark, a palette, a voice." />
+              <SectionHead eyebrow="[ Identity ]" id="cs-identity" title="A mark, a palette, a voice." className={s.headIdentity} />
               <div className={s.identity}>
                 <div className={s.identityCol}>
-                  <Media className={`${s.logo} ${s.logoLight}`}>
+                  <Media className={`${s.logo} ${s.logoLight}`} reveal>
                     <Pic img={LOGO_LIGHT} className={s.logoImg} />
                   </Media>
-                  <Media className={`${s.logo} ${s.logoDark}`}>
+                  <Media className={`${s.logo} ${s.logoDark}`} reveal>
                     <Pic img={LOGO_DARK} className={s.logoImg} />
                   </Media>
                 </div>
                 <div className={s.identityCol}>
-                  <div className={`${cs('cs-card')} ${s.typo}`}>
+                  <div data-reveal className={`${cs('cs-card')} ${s.typo}`}>
                     <link rel="stylesheet" href={SPECIMEN_FONTS} precedence="default" />
                     <div className={s.cardLabel}>Typography</div>
                     <div className={s.typoRow}>
@@ -390,7 +513,7 @@ export default function SabilaLabs() {
                       </div>
                     </div>
                   </div>
-                  <div className={`${cs('cs-card')} ${s.palette}`}>
+                  <div data-reveal className={`${cs('cs-card')} ${s.palette}`}>
                     <div className={s.cardLabel}>Palette</div>
                     <ul className={s.swatches}>
                       {PALETTE.map((hex) => (
@@ -416,7 +539,7 @@ export default function SabilaLabs() {
                 side="Key sections and the mobile build."
                 className={s.headShowcase}
               />
-              <figure className={s.shot}>
+              <figure data-reveal className={s.shot}>
                 <Media className={s.shotMedia}>
                   <Pic img={PLATFORM_IMG} className={s.shotImg} />
                 </Media>
@@ -424,7 +547,7 @@ export default function SabilaLabs() {
               </figure>
               <div className={s.phones}>
                 {PHONES.map((p) => (
-                  <div key={p.src} className={cs('cs-phone')}>
+                  <div key={p.src} data-reveal className={cs('cs-phone')}>
                     <Pic img={p} className={s.shotImg} />
                   </div>
                 ))}
@@ -435,7 +558,7 @@ export default function SabilaLabs() {
           {/* Performance */}
           <section aria-labelledby="cs-performance" className={cs('cs-section')}>
             <div className={s.wrap}>
-              <div className={s.perf}>
+              <div data-reveal className={s.perf}>
                 <div>
                   <div className={cs('cs-eyebrow')}>[ Performance ]</div>
                   <h2 id="cs-performance" className={`${cs('cs-h2')} ${s.perfH2}`}>
@@ -443,29 +566,7 @@ export default function SabilaLabs() {
                   </h2>
                   <p className={s.perfNote}>Google PageSpeed Insights, measured on the live site.</p>
                 </div>
-                <ul className={s.rings}>
-                  {SCORES.map((r) => (
-                    <li key={r.label} className={s.ring}>
-                      <span className={s.ringDial}>
-                        <svg aria-hidden="true" width="104" height="104" viewBox="0 0 104 104" fill="none">
-                          <circle cx="52" cy="52" r={RING_R} stroke="#262626" strokeWidth="5" />
-                          <circle
-                            cx="52"
-                            cy="52"
-                            r={RING_R}
-                            stroke="#2a45f5"
-                            strokeWidth="5"
-                            strokeDasharray={RING_C}
-                            strokeDashoffset={(RING_C * (100 - r.score)) / 100}
-                            transform="rotate(-90 52 52)"
-                          />
-                        </svg>
-                        <span className={s.ringScore}>{r.score}</span>
-                      </span>
-                      <span className={s.ringLabel}>{r.label}</span>
-                    </li>
-                  ))}
-                </ul>
+                <ScoreRings />
               </div>
             </div>
           </section>
@@ -473,15 +574,15 @@ export default function SabilaLabs() {
           {/* Next project */}
           <section aria-labelledby="cs-next-title" className={`${cs('cs-next')} ${cs('cs-section')}`}>
             <div className={s.wrap}>
-              <div className={s.nextBar}>
+              <div data-reveal className={s.nextBar}>
                 <a href="/work/top-one-trader" className={s.back}>
                   <ArrowLeft />
                   Top One Trader
                 </a>
-                <span className={s.counter}>[ Next project ]</span>
+                <span className={cs('cs-eyebrow')}>[ Next project ]</span>
               </div>
-              <a href="/work/top-one-launchpad" className={s.nextLink}>
-                <div className={s.nextText}>
+              <a href="/work/top-one-launchpad" data-cursor="view" className={s.nextLink}>
+                <div data-reveal>
                   <div className={s.kicker}>03 · Launch landing page · 2026</div>
                   <h2 id="cs-next-title" className={s.nextTitle}>
                     Top One Launchpad
@@ -489,14 +590,14 @@ export default function SabilaLabs() {
                   <span className={s.nextCta}>
                     View case study
                     <span aria-hidden="true" className={s.nextArrow}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14" />
                         <path d="M13 6l6 6-6 6" />
                       </svg>
                     </span>
                   </span>
                 </div>
-                <Media className={s.wide}>
+                <Media className={s.wide} reveal>
                   <Pic img={NEXT_IMG} className={s.shotImg} />
                 </Media>
               </a>
