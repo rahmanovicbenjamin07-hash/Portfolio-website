@@ -5,7 +5,6 @@ import styles from './Faq.module.css'
 const FAQS = [
   { q: 'How fast can you start?', a: 'Usually within 24 hours of getting the design and access.' },
   { q: 'Do you work white-label and under NDA?', a: "Yes. I work behind your agency's brand, sign your NDA, and never contact your client unless you ask me to." },
-  { q: 'What time zone are you in?', a: 'Central European Time. I overlap with European teams all day, and with US teams in my afternoon.' },
   { q: 'How do you price?', a: "I'm open to both hourly and per-project pricing. We can agree on what works best for you on a call." },
   { q: 'Who owns the website?', a: 'You and your client do. The site and all files are handed over at the end, with a short video showing how to edit it.' },
   { q: 'What do you need to get started?', a: "A Figma file, access to your Webflow workspace, and a deadline. That's it: I'll get everything else done." },
