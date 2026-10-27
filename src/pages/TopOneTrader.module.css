@@ -1,0 +1,725 @@
+/* Case study: Top One Trader. Every rule is scoped under .page, so the shared cs-* class names
+   can't leak into (or be overridden by) other pages. Nav, CTA and footer keep their own styles. */
+
+/* Titles and big numbers are set in Instrument Serif, which the site doesn't self-host yet. Until it does,
+   they fall back to the self-hosted Newsreader (same file as src/styles/fonts.ts), scaled to Instrument
+   Serif's width so the layout holds (unscaled, "Top One Trader" runs into the "01”"). */
+@font-face {
+  font-family: 'cs-tot-serif-fallback';
+  font-style: normal;
+  font-display: swap;
+  src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2') format('woff2');
+  size-adjust: 71.5%;
+}
+
+@font-face {
+  font-family: 'cs-tot-serif-fallback';
+  font-style: italic;
+  font-display: swap;
+  src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-italic.woff2') format('woff2');
+  size-adjust: 64%;
+}
+
+.page {
+  --cs-bg: #0a0a0a;
+  --cs-card: #141414;
+  --cs-inset: #0e0e0e;
+  --cs-view: #111111;
+  --cs-border: #262626;
+  --cs-border-2: #333333;
+  --cs-rule: #222222;
+  --cs-phone-border: #2e2e2e;
+  --cs-text: #f5f5f5;
+  --cs-muted: #a3a3a3;
+  --cs-subtle: #8f8f8f;
+  --cs-link: #b5b5b5;
+  --cs-accent: #2a45f5;
+  --cs-accent-text: #7d8cff;
+  --cs-chip-bg: #13204a;
+  --cs-serif: 'Instrument Serif', 'cs-tot-serif-fallback', var(--font-serif);
+  --cs-gutter: clamp(16px, 3vw, 40px);
+  --cs-section-pb: clamp(80px, 10vw, 160px);
+  --cs-radius-card: 16px;
+  --cs-radius-panel: 20px;
+
+  background: var(--cs-bg);
+  color: var(--cs-text);
+}
+
+.page :global(.cs-container) {
+  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--cs-gutter);
+}
+
+.page :global(.cs-section) {
+  padding-bottom: var(--cs-section-pb);
+}
+
+.page p,
+.page h1,
+.page h2,
+.page h3,
+.page dl,
+.page dd,
+.page figure {
+  margin: 0;
+}
+
+/* Shared type */
+.page :global(.cs-eyebrow) {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-h2) {
+  margin-top: 16px;
+  font-size: clamp(40px, 5.6vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.page :global(.cs-accent) {
+  color: var(--cs-accent);
+}
+
+.page :global(.cs-head) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 64px;
+}
+
+.page :global(.cs-aside) {
+  width: 420px;
+  max-width: 100%;
+  margin-bottom: 1px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--cs-muted);
+}
+
+.page :global(.cs-back) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: var(--cs-link);
+  text-decoration: none;
+}
+
+/* Image slots: fixed-ratio boxes; the slot's radius clips the screenshot inside */
+.page :global(.cs-media),
+.page :global(.cs-browser-view),
+.page :global(.cs-phone) {
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* A screenshot fills its slot edge to edge */
+.page :global(.cs-img) {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.page :global(.cs-img-fit-width) {
+  object-fit: contain;
+}
+
+.page :global(.cs-img-left) {
+  object-position: top left;
+}
+
+.page :global(.cs-media) {
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-card);
+  background: var(--cs-card);
+}
+
+/* Hero */
+.page :global(.cs-hero) {
+  padding-top: 105px;
+}
+
+.page :global(.cs-topbar),
+.page :global(.cs-next-bar) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.page :global(.cs-intro) {
+  position: relative;
+  margin-top: 52px;
+}
+
+.page :global(.cs-title) {
+  margin-top: 20px;
+  font-family: var(--cs-serif);
+  font-size: clamp(64px, 11vw, 176px);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.page :global(.cs-intro-sub),
+.page :global(.cs-count),
+.page :global(.cs-next-eyebrow) {
+  font-size: 13px;
+}
+
+.page :global(.cs-count) {
+  letter-spacing: 0.08em;
+}
+
+.page :global(.cs-intro-sub) {
+  margin-top: 23px;
+}
+
+.page :global(.cs-bignum) {
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  font-family: var(--cs-serif);
+  font-style: italic;
+  font-size: clamp(64px, 14.1vw, 203px);
+  line-height: 1;
+  color: #2a2a2a;
+  user-select: none;
+}
+
+.page :global(.cs-summary) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 49px;
+  margin-top: 71px;
+  padding-top: 40px;
+  border-top: 1px solid var(--cs-rule);
+}
+
+.page :global(.cs-lead) {
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.page :global(.cs-meta) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px 24px;
+}
+
+.page :global(.cs-meta-label) {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-meta-value) {
+  margin-top: 7px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.page :global(.cs-visit) {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 29px;
+  padding: 14px 24px 14px 22px;
+  border-radius: 999px;
+  background: var(--cs-text);
+  color: var(--cs-bg);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+/* Browser frame around the hero shot */
+.page :global(.cs-browser) {
+  margin-top: 56px;
+  overflow: hidden;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-panel);
+  background: var(--cs-card);
+}
+
+.page :global(.cs-browser-bar) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-browser-dots) {
+  display: flex;
+  gap: 8px;
+}
+
+.page :global(.cs-browser-dots span) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cs-border-2);
+}
+
+.page :global(.cs-browser-url) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 5px 16px;
+  border-radius: 8px;
+  background: var(--cs-inset);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-browser-view) {
+  aspect-ratio: 1358 / 778;
+  background: var(--cs-view);
+}
+
+/* Overview */
+.page :global(.cs-overview) {
+  display: grid;
+  grid-template-columns: minmax(0, 386fr) minmax(0, 934fr);
+  gap: 40px;
+}
+
+.page :global(.cs-h2-sm) {
+  margin-top: 17px;
+  font-size: clamp(36px, 3.4vw, 48px);
+  letter-spacing: -0.04em;
+}
+
+.page :global(.cs-overview-text) {
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.page :global(.cs-points) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 64px;
+}
+
+.page :global(.cs-point) {
+  padding-top: 24px;
+  border-top: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-point-num) {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: var(--cs-accent-text);
+}
+
+.page :global(.cs-point-title) {
+  margin-top: 11px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.025em;
+}
+
+.page :global(.cs-point-text) {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--cs-muted);
+}
+
+/* Scope of work: six cards, 03 is the accent card */
+.page :global(.cs-cards) {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 56px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Content starts at the top, so every card's title sits on the same line whatever the text length */
+.page :global(.cs-card) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 32px;
+  min-height: 306px;
+  padding: 32px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-card);
+  background: var(--cs-card);
+}
+
+.page :global(.cs-card-num) {
+  font-family: var(--cs-serif);
+  font-style: italic;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--cs-accent-text);
+}
+
+.page :global(.cs-card-title) {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.03em;
+}
+
+.page :global(.cs-card-text) {
+  margin-top: 13px;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--cs-muted);
+}
+
+/* Border kept (in the card's own blue) so its content lines up with the other cards */
+.page :global(.cs-card-accent) {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent);
+}
+
+.page :global(.cs-card-accent .cs-card-num),
+.page :global(.cs-card-accent .cs-card-text) {
+  color: #ffffff;
+}
+
+/* Split test */
+.page :global(.cs-variants) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+  align-items: start;
+}
+
+.page :global(.cs-variant) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.page :global(.cs-variant-head) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.page :global(.cs-chip) {
+  padding: 4px 12px;
+  border: 1px solid var(--cs-border-2);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.page :global(.cs-chip-accent) {
+  border: 0;
+  background: var(--cs-chip-bg);
+}
+
+.page :global(.cs-variant-role) {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-media-split) {
+  aspect-ratio: 672 / 433;
+}
+
+.page :global(.cs-split-text) {
+  max-width: 720px;
+  margin-top: 48px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--cs-muted);
+}
+
+/* Showcase: three phones in one panel */
+.page :global(.cs-phones) {
+  display: flex;
+  justify-content: center;
+  gap: 56px;
+  margin-top: 48px;
+  padding: 72px 24px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-panel);
+  background: var(--cs-card);
+}
+
+.page :global(.cs-phone) {
+  flex: none;
+  width: 274px;
+  aspect-ratio: 274 / 554;
+  border: 1px solid var(--cs-phone-border);
+  border-radius: 28px;
+  background: var(--cs-inset);
+}
+
+/* Next project */
+.page :global(.cs-next) {
+  padding: 12px 0 20px;
+}
+
+.page :global(.cs-next-bar) {
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-next-card) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 66px;
+  margin-top: 48px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.page :global(.cs-next-card:hover) {
+  opacity: 1;
+}
+
+.page :global(.cs-next-title) {
+  margin-top: 15px;
+  font-family: var(--cs-serif);
+  font-size: clamp(56px, 9.03vw, 130px);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.page :global(.cs-next-cta) {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 32px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.page :global(.cs-next-arrow) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cs-text);
+  color: var(--cs-bg);
+  transition: transform 0.25s ease;
+}
+
+.page :global(.cs-next-card:hover .cs-next-arrow) {
+  transform: translateX(4px);
+}
+
+.page :global(.cs-media-cover) {
+  aspect-ratio: 647 / 417;
+}
+
+/* Tablet: single-column summary and overview, two cards per row */
+@media (max-width: 1024px) {
+  .page :global(.cs-hero) {
+    padding-top: 64px;
+  }
+
+  .page :global(.cs-intro) {
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-summary) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    margin-top: 56px;
+  }
+
+  .page :global(.cs-facts) {
+    max-width: 504px;
+  }
+
+  .page :global(.cs-overview) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .page :global(.cs-points) {
+    margin-top: 48px;
+  }
+
+  .page :global(.cs-cards) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page :global(.cs-aside) {
+    width: auto;
+  }
+
+  .page :global(.cs-phones) {
+    gap: 24px;
+    padding: 48px 24px;
+  }
+
+  .page :global(.cs-phone) {
+    flex: 0 1 274px;
+    width: auto;
+  }
+
+  .page :global(.cs-next-card) {
+    gap: 40px;
+  }
+}
+
+/* Phone: everything stacks; the big "01”" moves up next to the eyebrow */
+@media (max-width: 767px) {
+  .page :global(.cs-intro) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'eyebrow num'
+      'title title'
+      'sub sub';
+    align-items: end;
+  }
+
+  .page :global(.cs-intro-eyebrow) {
+    grid-area: eyebrow;
+  }
+
+  .page :global(.cs-title) {
+    grid-area: title;
+    margin-top: 12px;
+  }
+
+  .page :global(.cs-intro-sub) {
+    grid-area: sub;
+    margin-top: 16px;
+  }
+
+  .page :global(.cs-bignum) {
+    grid-area: num;
+    position: static;
+    font-size: 72px;
+    line-height: 0.8;
+  }
+
+  .page :global(.cs-points),
+  .page :global(.cs-cards),
+  .page :global(.cs-variants),
+  .page :global(.cs-next-card) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page :global(.cs-points) {
+    gap: 32px;
+  }
+
+  .page :global(.cs-cards) {
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-card) {
+    min-height: 0;
+    padding: 24px;
+  }
+
+  .page :global(.cs-variants) {
+    gap: 32px;
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-split-text) {
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-phones) {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    padding: 32px 16px;
+  }
+
+  .page :global(.cs-phone) {
+    flex: none;
+    width: min(274px, 100%);
+  }
+
+  .page :global(.cs-next) {
+    padding-top: 0;
+  }
+
+  .page :global(.cs-next-bar) {
+    padding-bottom: 24px;
+  }
+
+  .page :global(.cs-next-card) {
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  .page :global(.cs-next-cta) {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 479px) {
+  .page :global(.cs-hero) {
+    padding-top: 32px;
+  }
+
+  .page :global(.cs-intro) {
+    margin-top: 32px;
+  }
+
+  .page :global(.cs-summary) {
+    margin-top: 40px;
+    padding-top: 32px;
+  }
+
+  .page :global(.cs-browser) {
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-meta) {
+    gap: 20px 16px;
+  }
+}

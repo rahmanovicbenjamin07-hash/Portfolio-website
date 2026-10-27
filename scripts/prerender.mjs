@@ -34,7 +34,9 @@ for (const page of pages) {
   if (!/<title>[^<]+<\/title>/.test(head)) throw new Error(`${page.path}: no <title> was rendered`)
   // Function replacers, so "$" in the page content is never read as a replacement pattern.
   const html = template.replace('<!--app-head-->', () => head).replace('<!--app-html-->', () => body)
-  fs.writeFileSync(path.join(DIST, page.file), html)
+  const out = path.join(DIST, page.file)
+  fs.mkdirSync(path.dirname(out), { recursive: true })
+  fs.writeFileSync(out, html)
   console.log(`prerendered ${page.path} -> dist/${page.file}`)
 }
 

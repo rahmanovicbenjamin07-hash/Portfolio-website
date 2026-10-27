@@ -1,0 +1,928 @@
+/* Top One Launchpad case study (/work/top-one-launchpad).
+   Shared case-study class names (cs-*) are kept as written in the DOM (:global), scoped under this
+   page's hashed root class so they never clash with other pages' styles. */
+.page {
+  --cs-bg: #0a0a0a;
+  --cs-card: #141414;
+  --cs-inset: #0e0e0e;
+  --cs-space: #05060c;
+  --cs-border: #262626;
+  --cs-border-strong: #333333;
+  --cs-text: #f5f5f5;
+  --cs-muted: #a3a3a3;
+  --cs-subtle: #8f8f8f;
+  --cs-accent: #2a45f5;
+  --cs-accent-text: #7d8cff;
+  --cs-chip-bg: #13204a;
+  --cs-chip-text: #c3cbff;
+  --cs-serif: 'Instrument Serif', 'Newsreader Variable', serif;
+  --cs-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --cs-gutter: clamp(16px, 3vw, 40px);
+  --cs-space-section: clamp(80px, 10vw, 160px);
+  --cs-radius-card: 16px;
+  --cs-radius-panel: 20px;
+  --cs-radius-pill: 999px;
+
+  background: var(--cs-bg);
+  color: var(--cs-text);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+.page :global(.cs-container) {
+  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--cs-gutter);
+}
+
+.page :global(.cs-section) {
+  padding-bottom: var(--cs-space-section);
+}
+
+/* Resets for this page's own content only (not the shared nav, CTA and footer). :where() keeps them
+   below the component rules that follow. */
+.page :global(.cs-container) :where(p, h1, h2, h3, dl, dd, ol, figure) {
+  margin: 0;
+}
+
+.page :global(.cs-container) :where(ol) {
+  padding: 0;
+  list-style: none;
+}
+
+/* Type */
+.page :global(.cs-eyebrow) {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-title) {
+  margin-top: 22px;
+  font-family: var(--cs-serif);
+  font-weight: 400;
+  font-size: clamp(64px, 11vw, 176px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.page :global(.cs-h2) {
+  margin-top: 20px;
+  font-size: clamp(40px, 5.6vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.page :global(.cs-h2-sm) {
+  margin-top: 16px;
+  font-size: clamp(36px, 3.4vw, 48px);
+}
+
+.page :global(.cs-accent) {
+  color: var(--cs-accent);
+}
+
+.page :global(.cs-lead) {
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.page :global(.cs-lead-lg) {
+  font-size: clamp(22px, 2.2vw, 32px);
+}
+
+/* Back link + "Case study 03 / 03" row (also used above the next project) */
+.page :global(.cs-hero-top),
+.page :global(.cs-next-top) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.page :global(.cs-back) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cs-text);
+  text-decoration: none;
+}
+
+/* Hero */
+.page :global(.cs-hero) {
+  padding-top: clamp(40px, 7vw, 100px);
+}
+
+.page :global(.cs-hero-head) {
+  position: relative;
+  margin-top: 56px;
+  padding-bottom: 72px;
+}
+
+.page :global(.cs-hero-tags),
+.page :global(.cs-hero-top .cs-eyebrow) {
+  font-size: 13px;
+}
+
+.page :global(.cs-hero-tags) {
+  margin-top: 24px;
+}
+
+.page :global(.cs-hero-num) {
+  position: absolute;
+  right: 6px;
+  top: 46px;
+  font-family: var(--cs-serif);
+  font-style: italic;
+  font-size: clamp(96px, 14.1vw, 203px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #2b2b2b;
+  pointer-events: none;
+  user-select: none;
+}
+
+.page :global(.cs-hero-body) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 504px;
+  column-gap: 56px;
+  padding-top: 42px;
+  border-top: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-hero-side) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.page :global(.cs-meta) {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 24px;
+}
+
+.page :global(.cs-meta-label) {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-meta-value) {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cs-text);
+}
+
+.page :global(.cs-button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 22px;
+  border-radius: var(--cs-radius-pill);
+  background: var(--cs-text);
+  color: var(--cs-bg);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Browser mock */
+.page :global(.cs-browser) {
+  margin-top: 56px;
+  overflow: hidden;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-panel);
+  background: #111111;
+}
+
+.page :global(.cs-browser-bar) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 18px;
+  background: var(--cs-card);
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-browser-dots) {
+  display: flex;
+  gap: 9px;
+}
+
+.page :global(.cs-browser-dots span) {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cs-border-strong);
+}
+
+.page :global(.cs-browser-url) {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 16px;
+  border-radius: 8px;
+  background: #010101;
+  color: var(--cs-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.page :global(.cs-browser-screen) {
+  aspect-ratio: 7 / 4;
+}
+
+/* Image slots: the slot's radius and border clip what is inside */
+.page :global(.cs-media) {
+  position: relative;
+  overflow: hidden;
+}
+
+.page :global(.cs-media-box) {
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-card);
+  background: var(--cs-card);
+}
+
+/* Screenshot filling a slot; the slot's radius and border clip it */
+.page :global(.cs-media-img) {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.page :global(.cs-media-img-center) {
+  object-position: center;
+}
+
+/* Overview */
+.page :global(.cs-overview) {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 11fr);
+}
+
+.page :global(.cs-cards) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 64px;
+}
+
+.page :global(.cs-card) {
+  padding-top: 24px;
+  border-top: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-card-num) {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-accent-text);
+}
+
+.page :global(.cs-card-title) {
+  margin-top: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.page :global(.cs-card-text) {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cs-muted);
+}
+
+/* Turnaround */
+.page :global(.cs-turnaround) {
+  padding: 64px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-panel);
+  background: var(--cs-card);
+}
+
+.page :global(.cs-turnaround-head) {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.page :global(.cs-turnaround-time) {
+  font-family: var(--cs-serif);
+  font-size: clamp(72px, 10vw, 144px);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.page :global(.cs-steps) {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 52px;
+}
+
+.page :global(.cs-step) {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px 0 0;
+  border-top: 2px solid var(--cs-accent);
+}
+
+.page :global(.cs-step-time) {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-step-title) {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page :global(.cs-step-text) {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--cs-muted);
+}
+
+/* What's inside */
+.page :global(.cs-features) {
+  margin-top: 52px;
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-feature) {
+  display: grid;
+  grid-template-columns: minmax(0, 537fr) minmax(0, 783fr);
+  align-items: center;
+  gap: 40px;
+  padding: 48px 0;
+  border-top: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-feature-num) {
+  font-family: var(--cs-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.page :global(.cs-feature-title) {
+  margin-top: 22px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.page :global(.cs-feature-body) {
+  margin-top: 16px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--cs-muted);
+}
+
+/* 01: empty card, new content to come */
+.page :global(.cs-feature-card) {
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-card);
+  background: var(--cs-space);
+}
+
+/* 02: pricing card */
+.page :global(.cs-pricing) {
+  padding: 48px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-panel);
+  background: var(--cs-space);
+}
+
+.page :global(.cs-pricing-top) {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.page :global(.cs-pricing-plan) {
+  letter-spacing: 0.1em;
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-pricing-tag) {
+  color: var(--cs-chip-text);
+}
+
+.page :global(.cs-pricing-label) {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cs-muted);
+}
+
+.page :global(.cs-pricing-top + .cs-pricing-label) {
+  margin-top: 26px;
+}
+
+.page :global(.cs-pricing-size) {
+  margin-top: 4px;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+}
+
+.page :global(.cs-pricing-track) {
+  margin-top: 22px;
+  height: 5px;
+  border-radius: var(--cs-radius-pill);
+  background: var(--cs-border);
+  overflow: hidden;
+}
+
+.page :global(.cs-pricing-fill) {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cs-accent);
+  transition: width 0.35s ease;
+}
+
+.page :global(.cs-pricing-pills) {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.page :global(.cs-pricing-pill) {
+  height: 44px;
+  padding: 0 8px;
+  border: 1px solid var(--cs-border-strong);
+  border-radius: var(--cs-radius-pill);
+  background: transparent;
+  color: var(--cs-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.page :global(.cs-pricing-pill:hover) {
+  border-color: #4a4a4a;
+}
+
+.page :global(.cs-pricing-pill[aria-pressed='true']) {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent);
+  color: #ffffff;
+}
+
+.page :global(.cs-pricing-pill:focus-visible) {
+  outline: 2px solid var(--cs-accent-text);
+  outline-offset: 2px;
+}
+
+.page :global(.cs-pricing-totals) {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-pricing-value) {
+  margin-top: 4px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page :global(.cs-pricing-cta) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  margin-top: 28px;
+  border-radius: var(--cs-radius-pill);
+  background: var(--cs-text);
+  color: var(--cs-bg);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* 03: loader code embed */
+.page :global(.cs-code) {
+  margin: 0;
+  padding: 22px 24px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-card);
+  background: var(--cs-inset);
+  font-family: var(--cs-mono);
+  font-size: 13px;
+  line-height: 23px;
+  color: var(--cs-muted);
+  white-space: pre;
+  overflow: auto;
+}
+
+.page :global(.cs-code code) {
+  font: inherit;
+}
+
+.page :global(.cs-code-comment) {
+  color: var(--cs-subtle);
+}
+
+.page :global(.cs-code-tag) {
+  color: var(--cs-chip-text);
+}
+
+/* 04: form flow */
+.page :global(.cs-flow) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 50px minmax(0, 1fr) 50px minmax(0, 1fr);
+  align-items: center;
+  padding: 48px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-panel);
+  background: var(--cs-space);
+}
+
+.page :global(.cs-flow-step) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px;
+  border: 1px solid var(--cs-border-strong);
+  border-radius: 12px;
+  background: var(--cs-card);
+  text-align: center;
+}
+
+.page :global(.cs-flow-step-accent) {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent);
+}
+
+.page :global(.cs-flow-step-end) {
+  border-color: #2e2e2e;
+}
+
+.page :global(.cs-flow-label) {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cs-muted);
+}
+
+.page :global(.cs-flow-step-accent .cs-flow-label) {
+  color: #dfe3ff;
+}
+
+.page :global(.cs-flow-value) {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.page :global(.cs-flow-arrow) {
+  display: flex;
+  justify-content: center;
+  color: var(--cs-muted);
+}
+
+/* Showcase */
+.page :global(.cs-showcase-head) {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+  flex-wrap: wrap;
+}
+
+.page :global(.cs-showcase-note) {
+  padding-bottom: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--cs-muted);
+}
+
+/* Offer cards + desktop pricing: two equal columns that wrap to one column when narrow */
+.page :global(.cs-showcase) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 44px;
+}
+
+.page :global(.cs-figure) {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.page :global(.cs-showcase-shot) {
+  aspect-ratio: 16 / 10;
+}
+
+.page :global(.cs-caption) {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--cs-muted);
+}
+
+.page :global(.cs-phones) {
+  display: flex;
+  justify-content: center;
+  gap: 56px;
+  margin-top: 56px;
+}
+
+.page :global(.cs-phone) {
+  flex: 0 1 273px;
+  aspect-ratio: 273 / 553;
+  border: 1px solid var(--cs-border);
+  border-radius: 28px;
+  background: var(--cs-inset);
+}
+
+/* Next project */
+.page :global(.cs-next-section) {
+  padding-top: 0;
+}
+
+.page :global(.cs-next-top) {
+  margin-top: 14px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--cs-border);
+}
+
+.page :global(.cs-next) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.045fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+  padding-top: 48px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.page :global(.cs-next:hover) {
+  opacity: 1;
+}
+
+.page :global(.cs-next .cs-eyebrow) {
+  font-size: 13px;
+}
+
+.page :global(.cs-next-title) {
+  margin-top: 12px;
+  font-family: var(--cs-serif);
+  font-weight: 400;
+  font-size: clamp(56px, 8.8vw, 127px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.page :global(.cs-next-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.page :global(.cs-next-circle) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cs-text);
+  color: var(--cs-bg);
+  transition: transform 0.3s ease;
+}
+
+.page :global(.cs-next:hover .cs-next-circle) {
+  transform: translateX(4px);
+}
+
+/* Same shape as the cover screenshot, so the whole image shows, centered, with nothing cut off */
+.page :global(.cs-next-cover) {
+  aspect-ratio: 2490 / 1476;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .page :global(.cs-hero-body) {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+
+  .page :global(.cs-overview) {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .page :global(.cs-turnaround) {
+    padding: 40px;
+  }
+
+  .page :global(.cs-steps) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 32px;
+  }
+
+  /* minmax(0, …) so the code panel's long lines scroll inside it instead of widening the row */
+  .page :global(.cs-feature) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Mobile landscape and portrait */
+@media (max-width: 767px) {
+  .page :global(.cs-hero-head) {
+    margin-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .page :global(.cs-hero-num) {
+    top: -8px;
+    font-size: 64px;
+  }
+
+  .page :global(.cs-hero-tags) {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+
+  .page :global(.cs-hero-body) {
+    padding-top: 32px;
+  }
+
+  .page :global(.cs-browser) {
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-browser-bar) {
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  .page :global(.cs-browser-dots) {
+    gap: 6px;
+  }
+
+  .page :global(.cs-browser-dots span) {
+    width: 7px;
+    height: 7px;
+  }
+
+  .page :global(.cs-browser-url) {
+    left: auto;
+    right: 12px;
+    transform: none;
+    font-size: 11px;
+  }
+
+  .page :global(.cs-cards) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-turnaround) {
+    padding: 32px 24px;
+  }
+
+  .page :global(.cs-turnaround-head) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page :global(.cs-steps) {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-step) {
+    padding-right: 0;
+  }
+
+  .page :global(.cs-features) {
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-feature) {
+    gap: 32px;
+    padding: 40px 0;
+  }
+
+  .page :global(.cs-feature-num) {
+    font-size: 44px;
+  }
+
+  .page :global(.cs-feature-title) {
+    margin-top: 16px;
+    font-size: 26px;
+  }
+
+  .page :global(.cs-feature-body) {
+    font-size: 16px;
+  }
+
+  .page :global(.cs-pricing) {
+    padding: 24px;
+  }
+
+  .page :global(.cs-pricing-size) {
+    font-size: 48px;
+  }
+
+  .page :global(.cs-pricing-pills) {
+    gap: 6px;
+  }
+
+  .page :global(.cs-pricing-pill) {
+    height: 40px;
+    padding: 0;
+    font-size: 12px;
+  }
+
+  .page :global(.cs-flow) {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+    gap: 8px;
+    padding: 24px;
+  }
+
+  .page :global(.cs-flow-arrow) {
+    transform: rotate(90deg);
+  }
+
+  .page :global(.cs-showcase-note) {
+    padding-bottom: 0;
+    font-size: 16px;
+  }
+
+  .page :global(.cs-showcase) {
+    margin-top: 32px;
+  }
+
+  .page :global(.cs-phones) {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .page :global(.cs-phone) {
+    flex: none;
+    width: min(220px, 100%);
+  }
+
+  .page :global(.cs-next-top) {
+    padding-bottom: 32px;
+  }
+
+  .page :global(.cs-next) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 32px;
+  }
+}
