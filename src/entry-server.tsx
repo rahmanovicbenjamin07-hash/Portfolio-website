@@ -6,7 +6,7 @@ import { NOT_FOUND, ROUTES } from './routes'
 
 export { SITE_URL } from './seo/site'
 
-export const pages = [...ROUTES, NOT_FOUND].map(({ path, file, sitemap }) => ({ path, file, sitemap }))
+export const pages = [...ROUTES, NOT_FOUND].map(({ path, file, sitemap, jsonLd }) => ({ path, file, sitemap, jsonLd }))
 
 export function render(path: string) {
   return renderToString(

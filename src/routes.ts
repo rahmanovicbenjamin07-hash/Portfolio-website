@@ -4,6 +4,7 @@ import NotFound from './pages/NotFound'
 import SabilaLabs from './pages/SabilaLabs'
 import TopOneLaunchpad from './pages/TopOneLaunchpad'
 import TopOneTrader from './pages/TopOneTrader'
+import { HOME_JSON_LD } from './seo/jsonLd'
 
 export type Route = {
   path: string
@@ -12,11 +13,13 @@ export type Route = {
   Page: ComponentType
   /** Listed in sitemap.xml. */
   sitemap: boolean
+  /** Structured data written into the page's <head> by scripts/prerender.mjs. */
+  jsonLd?: object
 }
 
 // Add new pages here: each one is prerendered and (if sitemap is true) listed in sitemap.xml.
 export const ROUTES: Route[] = [
-  { path: '/', file: 'index.html', Page: Home, sitemap: true },
+  { path: '/', file: 'index.html', Page: Home, sitemap: true, jsonLd: HOME_JSON_LD },
   // Case studies. Cloudflare Pages serves work/x.html at /work/x.
   { path: '/work/top-one-launchpad', file: 'work/top-one-launchpad.html', Page: TopOneLaunchpad, sitemap: true },
   { path: '/work/top-one-trader', file: 'work/top-one-trader.html', Page: TopOneTrader, sitemap: true },
