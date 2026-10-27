@@ -4,6 +4,7 @@ import './styles/fonts'
 import './styles/global.css'
 import App from './App'
 import { startSmoothScroll } from './smoothScroll'
+import { startCursor } from './cursor'
 
 const container = document.getElementById('root')!
 const app = (
@@ -17,3 +18,4 @@ if (container.firstElementChild) hydrateRoot(container, app)
 else createRoot(container).render(app)
 
 startSmoothScroll()
+startCursor()
