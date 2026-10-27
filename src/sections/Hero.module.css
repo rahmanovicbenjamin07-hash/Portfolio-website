@@ -259,10 +259,6 @@
   font-size: 14px;
 }
 
-.muted {
-  color: rgba(255, 255, 255, 0.72);
-}
-
 .strong {
   color: #ffffff;
   font-weight: 600;
@@ -365,6 +361,18 @@
 /* Primary CTA inside the menu: only on mobile, where the header button is hidden */
 .menuCta {
   display: none;
+}
+
+/* Desktop: the hero is exactly one screen tall (nav, headline and bottom row all in view), with less
+   padding around the headline. It only grows past the screen if the screen is shorter than the content. */
+@media (min-width: 1025px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  .main {
+    padding: 16px 24px 32px;
+  }
 }
 
 /* Tablet: shared spacing tokens; the layout stays as on desktop */
