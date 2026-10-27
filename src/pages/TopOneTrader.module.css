@@ -1,25 +1,6 @@
 /* Case study: Top One Trader. Every rule is scoped under .page, so the shared cs-* class names
    can't leak into (or be overridden by) other pages. Nav, CTA and footer keep their own styles. */
 
-/* Titles and big numbers are set in Instrument Serif, which the site doesn't self-host yet. Until it does,
-   they fall back to the self-hosted Newsreader (same file as src/styles/fonts.ts), scaled to Instrument
-   Serif's width so the layout holds (unscaled, "Top One Trader" runs into the "01”"). */
-@font-face {
-  font-family: 'cs-tot-serif-fallback';
-  font-style: normal;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2') format('woff2');
-  size-adjust: 71.5%;
-}
-
-@font-face {
-  font-family: 'cs-tot-serif-fallback';
-  font-style: italic;
-  font-display: swap;
-  src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-italic.woff2') format('woff2');
-  size-adjust: 64%;
-}
-
 .page {
   --cs-bg: #0a0a0a;
   --cs-card: #141414;
@@ -28,7 +9,6 @@
   --cs-border: #262626;
   --cs-border-2: #333333;
   --cs-rule: #222222;
-  --cs-phone-border: #2e2e2e;
   --cs-text: #f5f5f5;
   --cs-muted: #a3a3a3;
   --cs-subtle: #8f8f8f;
@@ -36,7 +16,7 @@
   --cs-accent: #2a45f5;
   --cs-accent-text: #7d8cff;
   --cs-chip-bg: #13204a;
-  --cs-serif: 'Instrument Serif', 'cs-tot-serif-fallback', var(--font-serif);
+  --cs-serif: 'Instrument Serif', 'cs-serif-fallback', var(--font-serif);
   --cs-gutter: clamp(16px, 3vw, 40px);
   --cs-section-pb: clamp(80px, 10vw, 160px);
   --cs-radius-card: 16px;
@@ -70,7 +50,7 @@
 /* Shared type */
 .page :global(.cs-eyebrow) {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 18px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -138,10 +118,6 @@
   object-position: top center;
 }
 
-.page :global(.cs-img-fit-width) {
-  object-fit: contain;
-}
-
 .page :global(.cs-img-left) {
   object-position: top left;
 }
@@ -171,7 +147,7 @@
 }
 
 .page :global(.cs-title) {
-  margin-top: 20px;
+  margin-top: 22px;
   font-family: var(--cs-serif);
   font-size: clamp(64px, 11vw, 176px);
   font-weight: 400;
@@ -190,7 +166,7 @@
 }
 
 .page :global(.cs-intro-sub) {
-  margin-top: 23px;
+  margin-top: 24px;
 }
 
 .page :global(.cs-bignum) {
@@ -224,14 +200,14 @@
 .page :global(.cs-meta) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 25px 24px;
+  gap: 28px 24px;
 }
 
 .page :global(.cs-meta-label) {
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 16px;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cs-subtle);
 }
@@ -298,7 +274,7 @@
   background: var(--cs-inset);
   font-size: 12px;
   line-height: 18px;
-  color: var(--cs-subtle);
+  color: var(--cs-muted);
 }
 
 .page :global(.cs-browser-view) {
@@ -340,19 +316,18 @@
 
 .page :global(.cs-point-num) {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 16px;
-  letter-spacing: 0.05em;
   color: var(--cs-accent-text);
 }
 
 .page :global(.cs-point-title) {
-  margin-top: 11px;
+  margin-top: 12px;
   font-size: 20px;
   font-weight: 700;
   line-height: 28px;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 
 .page :global(.cs-point-text) {
@@ -362,7 +337,7 @@
   color: var(--cs-muted);
 }
 
-/* Scope of work: six cards, 03 is the accent card */
+/* Scope of work: four cards in one row. Grid rows stretch, so cards in a row share one height. */
 .page :global(.cs-cards) {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -372,7 +347,8 @@
   list-style: none;
 }
 
-/* Content starts at the top, so every card's title sits on the same line whatever the text length */
+/* Content starts at the top, so every card's title sits on the same line whatever the text length.
+   The border stays on in the active state (in the card's own blue), so content never shifts. */
 .page :global(.cs-card) {
   box-sizing: border-box;
   display: flex;
@@ -384,6 +360,15 @@
   border: 1px solid var(--cs-border);
   border-radius: var(--cs-radius-card);
   background: var(--cs-card);
+  transition:
+    transform 0.3s ease-out,
+    border-color 0.3s ease-out,
+    background-color 0.3s ease-out;
+}
+
+.page :global(.cs-card-num),
+.page :global(.cs-card-text) {
+  transition: color 0.3s ease-out;
 }
 
 .page :global(.cs-card-num) {
@@ -409,15 +394,19 @@
   color: var(--cs-muted);
 }
 
-/* Border kept (in the card's own blue) so its content lines up with the other cards */
-.page :global(.cs-card-accent) {
-  border-color: var(--cs-accent);
-  background: var(--cs-accent);
-}
+/* Active state on hover: the card lifts 4px (like the homepage service cards) and turns accent blue with
+   white text. Only on devices that really hover, so a tap never leaves a card stuck in this state. */
+@media (hover: hover) and (pointer: fine) {
+  .page :global(.cs-card:hover) {
+    transform: translateY(-4px);
+    border-color: var(--cs-accent);
+    background-color: var(--cs-accent);
+  }
 
-.page :global(.cs-card-accent .cs-card-num),
-.page :global(.cs-card-accent .cs-card-text) {
-  color: #ffffff;
+  .page :global(.cs-card:hover .cs-card-num),
+  .page :global(.cs-card:hover .cs-card-text) {
+    color: #ffffff;
+  }
 }
 
 /* Split test */
@@ -474,30 +463,27 @@
   color: var(--cs-muted);
 }
 
-/* Showcase: three phones in one panel */
+/* Showcase: three phones on the page background, no panel (same as the Top One Launchpad case study) */
 .page :global(.cs-phones) {
   display: flex;
   justify-content: center;
   gap: 56px;
-  margin-top: 48px;
-  padding: 72px 24px;
-  border: 1px solid var(--cs-border);
-  border-radius: var(--cs-radius-panel);
-  background: var(--cs-card);
+  margin-top: 56px;
 }
 
+/* Every frame has the mobile hero shot's exact shape (1206 × 2043), so that shot fills it edge to edge with
+   nothing cropped. The two taller 826 × 1600 shots fill the width and lose only empty space at the bottom. */
 .page :global(.cs-phone) {
-  flex: none;
-  width: 274px;
-  aspect-ratio: 274 / 554;
-  border: 1px solid var(--cs-phone-border);
+  flex: 0 1 274px;
+  aspect-ratio: 1206 / 2043;
+  border: 1px solid var(--cs-border);
   border-radius: 28px;
   background: var(--cs-inset);
 }
 
 /* Next project */
 .page :global(.cs-next) {
-  padding: 12px 0 20px;
+  padding: 12px 0 var(--cs-section-pb);
 }
 
 .page :global(.cs-next-bar) {
@@ -531,10 +517,10 @@
 .page :global(.cs-next-cta) {
   display: inline-flex;
   align-items: center;
-  gap: 13px;
-  margin-top: 32px;
+  gap: 12px;
+  margin-top: 28px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .page :global(.cs-next-arrow) {
@@ -546,15 +532,28 @@
   border-radius: 50%;
   background: var(--cs-text);
   color: var(--cs-bg);
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease;
 }
 
 .page :global(.cs-next-card:hover .cs-next-arrow) {
   transform: translateX(4px);
 }
 
+/* Same shape as the cover screenshot, so the whole image shows with nothing cut off */
 .page :global(.cs-media-cover) {
-  aspect-ratio: 647 / 417;
+  aspect-ratio: 2490 / 1476;
+}
+
+/* Small desktop: four narrow cards in a row, so slightly tighter padding and titles keep every title on one line */
+@media (min-width: 1025px) and (max-width: 1240px) {
+  .page :global(.cs-card) {
+    padding: 28px 24px;
+  }
+
+  .page :global(.cs-card-title) {
+    font-size: 21px;
+    line-height: 28px;
+  }
 }
 
 /* Tablet: single-column summary and overview, two cards per row */
@@ -582,25 +581,11 @@
     gap: 32px;
   }
 
-  .page :global(.cs-points) {
-    margin-top: 48px;
-  }
-
   .page :global(.cs-cards) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .page :global(.cs-aside) {
-    width: auto;
-  }
-
-  .page :global(.cs-phones) {
-    gap: 24px;
-    padding: 48px 24px;
-  }
-
-  .page :global(.cs-phone) {
-    flex: 0 1 274px;
     width: auto;
   }
 
@@ -651,6 +636,7 @@
 
   .page :global(.cs-points) {
     gap: 32px;
+    margin-top: 48px;
   }
 
   .page :global(.cs-cards) {
@@ -674,13 +660,13 @@
   .page :global(.cs-phones) {
     flex-direction: column;
     align-items: center;
+    gap: 24px;
     margin-top: 40px;
-    padding: 32px 16px;
   }
 
   .page :global(.cs-phone) {
     flex: none;
-    width: min(274px, 100%);
+    width: min(220px, 100%);
   }
 
   .page :global(.cs-next) {
@@ -696,8 +682,12 @@
     margin-top: 32px;
   }
 
-  .page :global(.cs-next-cta) {
-    margin-top: 24px;
+  .page :global(.cs-aside) {
+    font-size: 16px;
+  }
+
+  .page :global(.cs-browser) {
+    margin-top: 40px;
   }
 }
 
@@ -715,11 +705,37 @@
     padding-top: 32px;
   }
 
-  .page :global(.cs-browser) {
-    margin-top: 40px;
-  }
-
   .page :global(.cs-meta) {
     gap: 20px 16px;
+  }
+}
+
+/* Hero fades up on load, item by item (--d set in the markup): 300ms each, 45ms apart (same as Top One Launchpad) */
+@keyframes cs-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.page :global(.cs-in) {
+  animation: cs-fade-up 0.3s ease-out both;
+  animation-delay: calc(var(--d, 0) * 45ms);
+}
+
+/* Hover keeps its colour change but drops the movement; the hero shows at once */
+@media (prefers-reduced-motion: reduce) {
+  .page :global(.cs-in) {
+    animation: none;
+  }
+
+  .page :global(.cs-card),
+  .page :global(.cs-card-num),
+  .page :global(.cs-card-text) {
+    transition: none;
+  }
+
+  .page :global(.cs-card:hover) {
+    transform: none;
   }
 }
