@@ -17,7 +17,7 @@ export default function Faq() {
   return (
     <section aria-labelledby="faq-heading" className={styles.faq}>
       <div className={styles.inner}>
-        <div className={styles.intro}>
+        <div data-reveal className={styles.intro}>
           <div className={styles.label}>[ FAQ ]</div>
           <h2 id="faq-heading" className={styles.heading}>
             Questions agencies ask first.
@@ -30,9 +30,15 @@ export default function Faq() {
 
         <div className={styles.list}>
           {FAQS.map((f, i) => (
-            <div key={f.q} className={styles.item}>
+            <div key={f.q} data-reveal className={styles.item}>
               <h3 className={styles.questionHeading}>
-                <button aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)} className={styles.question}>
+                <button
+                  id={`faq-q-${i}`}
+                  aria-expanded={open === i}
+                  aria-controls={`faq-a-${i}`}
+                  onClick={() => setOpen(open === i ? -1 : i)}
+                  className={styles.question}
+                >
                   <span>{f.q}</span>
                   <svg
                     aria-hidden="true"
@@ -48,7 +54,19 @@ export default function Faq() {
                   </svg>
                 </button>
               </h3>
-              {open === i && <p className={styles.answer}>{f.a}</p>}
+              {/* Every answer stays in the page so its height can animate open and closed; a closed one is inert
+                  (no focus, hidden from screen readers) */}
+              <div
+                id={`faq-a-${i}`}
+                role="region"
+                aria-labelledby={`faq-q-${i}`}
+                inert={open !== i}
+                className={`${styles.panel} ${open === i ? styles.panelOpen : ''}`}
+              >
+                <div className={styles.panelInner}>
+                  <p className={styles.answer}>{f.a}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -92,7 +92,7 @@
   flex: none;
   width: 22px;
   height: 22px;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
   transform: rotate(0deg);
 }
 
@@ -100,12 +100,53 @@
   transform: rotate(45deg);
 }
 
+/* Answer panel: the grid row grows from 0fr to 1fr, so the height animates to the text's real height
+   (whatever its length or the screen width). The + turns into × over the same 0.3s. */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* The text fades in and settles down as the panel opens, and fades out quickly as it closes */
 .answer {
-  margin: 0 0 24px;
+  margin: 0;
+  padding-bottom: 24px;
   max-width: 560px;
   font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.panelOpen .answer {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.2s ease 0.1s,
+    transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon,
+  .panel,
+  .answer,
+  .panelOpen .answer {
+    transition: none;
+  }
 }
 
 /* Tablet and mobile spacing: shared tokens (tokens.css) */
@@ -128,6 +169,6 @@
   }
 
   .answer {
-    margin-bottom: var(--gap-md);
+    padding-bottom: var(--gap-md);
   }
 }
