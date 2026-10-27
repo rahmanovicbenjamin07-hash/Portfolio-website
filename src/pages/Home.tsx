@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import Seo from '../seo/Seo'
+import { useScrollReveal } from '../useScrollReveal'
 import { GITHUB, JOB_TITLE, LINKEDIN, NAME, SITE_URL, UPWORK } from '../seo/site'
 import Hero from '../sections/Hero'
 import Banner from '../sections/Banner'
@@ -35,6 +37,9 @@ const JSON_LD = {
 }
 
 export default function Home() {
+  const mainRef = useRef<HTMLElement>(null)
+  useScrollReveal(mainRef)
+
   return (
     <>
       <Seo
@@ -45,7 +50,7 @@ export default function Home() {
       />
       <div id="top">
         <Hero />
-        <main>
+        <main ref={mainRef}>
           <Banner />
           <Work />
           <Services />

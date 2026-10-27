@@ -37,7 +37,7 @@ export default function Work() {
   return (
     <section id="work" aria-labelledby="work-heading" className={styles.work}>
       <div className={styles.head}>
-        <div className={styles.headText}>
+        <div data-reveal className={styles.headText}>
           <div className={styles.eyebrow}>Selected work (03)</div>
           <h2 id="work-heading" className={`${styles.serif} ${styles.heading}`}>A few projects I'm proud of.</h2>
         </div>
@@ -47,7 +47,7 @@ export default function Work() {
         </div>
       </div>
 
-      <div className={styles.stage}>
+      <div data-reveal className={styles.stage}>
         <div aria-hidden="true" className={`${styles.serif} ${styles.ghost}`}>Selected work</div>
 
         <div className={styles.row}>
@@ -66,6 +66,7 @@ export default function Work() {
                   role="tab"
                   aria-selected={k === active}
                   aria-label={p.name}
+                  data-cursor="view"
                   className={`${styles.acc} ${k === active ? styles.on : ''}`}
                   onClick={() => setActive(k)}
                 >
@@ -81,7 +82,7 @@ export default function Work() {
         </div>
       </div>
 
-      <div className={styles.descWrap}>
+      <div data-reveal className={styles.descWrap}>
         <div key={active} className={`${styles.desc} ${styles.fadeIn}`}>
           <div className={styles.descTitle}>
             <span className={`${styles.serif} ${styles.descName}`}>{current.name}</span>
@@ -103,7 +104,7 @@ export default function Work() {
       {/* Tablet and phone: every project as its own card, stacked (the accordion above is hidden there) */}
       <ul className={styles.list}>
         {PROJECTS.map((p, k) => (
-          <li key={p.name} className={styles.project}>
+          <li key={p.name} data-cursor="view" data-reveal className={styles.project}>
             <img
               className={styles.projectImg}
               src={p.src}
