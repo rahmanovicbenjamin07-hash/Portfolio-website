@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Seo from '../seo/Seo'
 import { CALENDLY } from '../seo/site'
 import Cta from '../sections/Cta'
 import Footer from '../sections/Footer'
 import nav from '../sections/Hero.module.css'
 import styles from './TopOneLaunchpad.module.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Same links as the homepage menu, made absolute so they lead back to the homepage sections.
 const MENU_LINKS = [
@@ -132,7 +136,7 @@ const OVERVIEW = [
   },
   {
     title: 'The challenge',
-    text: 'One day. Animation, pricing logic, checkout links and a form integration, all live and tested before the launch went out.',
+    text: 'Two days. Animation, pricing logic, checkout links and a form integration, all live and tested before the launch went out.',
   },
   {
     title: 'My role',
@@ -148,125 +152,60 @@ const STEPS = [
   { title: 'QA & live', text: 'Devices, links, publish' },
 ]
 
-// Empty card for row 01; its new content is still to come.
-function FeatureCard() {
-  return <div className="cs-media cs-feature-card" />
+// Hero items (.cs-in) fade up on load in CSS, one after another: --d is the item's place in that order.
+const order = (d: number) => ({ '--d': d }) as CSSProperties
+
+// Scroll motion. Everything starts visible (prerendered HTML, no JS, reduced motion); only with motion allowed
+// are [data-reveal] items hidden and faded up as they come 15% into view: 300ms, 45ms (15%) apart.
+function useScrollMotion(root: RefObject<HTMLElement | null>) {
+  useLayoutEffect(() => {
+    const el = root.current
+    if (!el) return
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const start = 'top 85%'
+
+      const items = gsap.utils.toArray<HTMLElement>('[data-reveal]', el)
+      gsap.set(items, { opacity: 0, y: 16 })
+      ScrollTrigger.batch(items, {
+        start,
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', stagger: 0.045, clearProps: 'opacity,transform' }),
+      })
+
+      // Turnaround: ~0h counts up to ~48h. The number sits over a hidden "~48h", so its width never changes.
+      const count = el.querySelector<HTMLElement>('.cs-count-value')
+      const steps = el.querySelector('.cs-steps')
+      if (count && steps) {
+        const n = { v: 0 }
+        count.textContent = '~0h'
+        gsap.to(n, {
+          v: 48,
+          duration: 1.2,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: steps, start, once: true },
+          onUpdate: () => {
+            count.textContent = `~${Math.round(n.v)}h`
+          },
+        })
+        // Step bars fill left to right, one after another.
+        gsap.from(el.querySelectorAll('.cs-step-fill'), {
+          scaleX: 0,
+          duration: 0.3,
+          ease: 'power1.out',
+          stagger: 0.24,
+          scrollTrigger: { trigger: steps, start, once: true },
+        })
+      }
+
+      return () => {
+        if (count) count.textContent = '~48h'
+      }
+    })
+    return () => mm.revert()
+  }, [root])
 }
-
-const SIZES = [
-  { size: '$5K', payout: '$150' },
-  { size: '$10K', payout: '$300' },
-  { size: '$25K', payout: '$750' },
-  { size: '$50K', payout: '$1,000' },
-  { size: '$100K', payout: '$2,000' },
-]
-
-function PricingCard() {
-  const [active, setActive] = useState(SIZES.length - 1)
-  const { size, payout } = SIZES[active]
-
-  return (
-    <div className="cs-pricing">
-      <div className="cs-pricing-top">
-        <span className="cs-pricing-plan">X-DAILY · 1-STEP</span>
-        <span className="cs-pricing-tag">Daily payouts</span>
-      </div>
-      <div className="cs-pricing-label">Account size</div>
-      <div className="cs-pricing-size" aria-live="polite">
-        {size}
-      </div>
-      <div aria-hidden="true" className="cs-pricing-track">
-        <div className="cs-pricing-fill" style={{ width: `${(active / (SIZES.length - 1)) * 100}%` }} />
-      </div>
-      <div role="group" aria-label="Account size" className="cs-pricing-pills">
-        {SIZES.map((s, i) => (
-          <button key={s.size} type="button" aria-pressed={i === active} onClick={() => setActive(i)} className="cs-pricing-pill">
-            {s.size}
-          </button>
-        ))}
-      </div>
-      <div className="cs-pricing-totals">
-        <div>
-          <div className="cs-pricing-label">Max payout per request</div>
-          <div className="cs-pricing-value" aria-live="polite">
-            {payout}
-          </div>
-        </div>
-      </div>
-      <a href={LIVE_URL} target="_blank" rel="noopener" aria-label="Get funded (opens in new tab)" className="cs-pricing-cta">
-        Get funded <ArrowUpRight />
-      </a>
-    </div>
-  )
-}
-
-function LoaderMedia() {
-  return (
-    <pre className="cs-code">
-      <code>
-        <span className="cs-code-comment">{'<!-- Code embed -->'}</span>
-        {'\n'}
-        <span className="cs-code-tag">{'<div'}</span>
-        {' class="tl-loader">'}
-        <span className="cs-code-tag">{'<span'}</span>
-        {' class="tl-loader__bar">'}
-        <span className="cs-code-tag">{'</span></div>'}</span>
-        {'\n'}
-        <span className="cs-code-tag">{'<script>'}</span>
-        {"\n  window.addEventListener('load', () =>\n    document.querySelector('.tl-loader').classList.add('is-done'));\n"}
-        <span className="cs-code-tag">{'</script>'}</span>
-      </code>
-    </pre>
-  )
-}
-
-function FormFlow() {
-  return (
-    <div className="cs-flow">
-      <div className="cs-flow-step">
-        <span className="cs-flow-label">Webflow</span>
-        <span className="cs-flow-value">Form</span>
-      </div>
-      <span aria-hidden="true" className="cs-flow-arrow">
-        <ArrowRight size={20} />
-      </span>
-      <div className="cs-flow-step cs-flow-step-accent">
-        <span className="cs-flow-label">Automation</span>
-        <span className="cs-flow-value">Zapier</span>
-      </div>
-      <span aria-hidden="true" className="cs-flow-arrow">
-        <ArrowRight size={20} />
-      </span>
-      <div className="cs-flow-step cs-flow-step-end">
-        <span className="cs-flow-label">Destination</span>
-        <span className="cs-flow-value">Team workflow</span>
-      </div>
-    </div>
-  )
-}
-
-const FEATURES = [
-  {
-    title: 'Parallax starfield & planets',
-    text: 'Layers of stars drift at different speeds as you scroll, with planets sitting in the background to give the page depth.',
-    media: <FeatureCard />,
-  },
-  {
-    title: 'Pricing slider to checkout',
-    text: "Traders pick an account size and the price, payout cap and checkout link update with it. The button hands off to Top One's external checkout with the right product already selected. Try it on the right.",
-    media: <PricingCard />,
-  },
-  {
-    title: 'Custom loading animation',
-    text: 'A branded loader written as a code embed, so the page opens like a countdown instead of a blank screen.',
-    media: <LoaderMedia />,
-  },
-  {
-    title: 'Form integration',
-    text: 'The page form sends sign-ups on through Zapier, so leads land where the team already works.',
-    media: <FormFlow />,
-  },
-]
 
 const IMG = '/images/top-one-launchpad'
 const LIVE_URL = 'https://www.toponetrader.com/launchpad'
@@ -278,11 +217,14 @@ const PHONES = [
 ]
 
 export default function TopOneLaunchpad() {
+  const mainRef = useRef<HTMLElement>(null)
+  useScrollMotion(mainRef)
+
   return (
     <>
       <Seo
         title="Top One Launchpad Case Study | Benjamin Rahmanović, Webflow Expert"
-        description="The landing page for Launch Pad, Top One Trader's new home for testing account types: a parallax starfield, a pricing slider into checkout and a custom loader, built in Webflow in about a day."
+        description="The landing page for Launch Pad, Top One Trader's new home for testing account types: a parallax starfield, a pricing slider into checkout and a custom loader, built in Webflow in about two days."
         path="/work/top-one-launchpad"
       />
       <div id="top" className={styles.page}>
@@ -290,11 +232,11 @@ export default function TopOneLaunchpad() {
           <SiteNav />
         </header>
 
-        <main>
+        <main ref={mainRef}>
           {/* Hero */}
           <section aria-labelledby="cs-title" className="cs-hero cs-section">
             <div className="cs-container">
-              <div className="cs-hero-top">
+              <div className="cs-hero-top cs-in" style={order(0)}>
                 <a href="/#work" className="cs-back">
                   <ArrowLeft />
                   All work
@@ -303,22 +245,26 @@ export default function TopOneLaunchpad() {
               </div>
 
               <div className="cs-hero-head">
-                <p className="cs-eyebrow">[ Case study ]</p>
-                <h1 id="cs-title" className="cs-title">
+                <p className="cs-eyebrow cs-in" style={order(1)}>
+                  [ Case study ]
+                </p>
+                <h1 id="cs-title" className="cs-title cs-in" style={order(2)}>
                   Top One Launchpad
                 </h1>
-                <p className="cs-eyebrow cs-hero-tags">Launch landing page · Webflow development · 2026</p>
-                <span aria-hidden="true" className="cs-hero-num">
+                <p className="cs-eyebrow cs-hero-tags cs-in" style={order(3)}>
+                  Launch landing page · Webflow development · 2026
+                </p>
+                <span aria-hidden="true" className="cs-hero-num cs-in" style={order(3)}>
                   03”
                 </span>
               </div>
 
               <div className="cs-hero-body">
-                <p className="cs-lead">
+                <p className="cs-lead cs-in" style={order(4)}>
                   The landing page for Launch Pad, Top One Trader's new home for testing account types. A space-themed page with a
-                  parallax starfield, a pricing slider into checkout and a custom loader, built in about a day.
+                  parallax starfield, a pricing slider into checkout and a custom loader, built in about two days.
                 </p>
-                <div className="cs-hero-side">
+                <div className="cs-hero-side cs-in" style={order(5)}>
                   <dl className="cs-meta">
                     <div>
                       <dt className="cs-meta-label">Client</dt>
@@ -326,7 +272,7 @@ export default function TopOneLaunchpad() {
                     </div>
                     <div>
                       <dt className="cs-meta-label">Turnaround</dt>
-                      <dd className="cs-meta-value">~1 day</dd>
+                      <dd className="cs-meta-value">~2 days</dd>
                     </div>
                     <div>
                       <dt className="cs-meta-label">My role</dt>
@@ -334,16 +280,20 @@ export default function TopOneLaunchpad() {
                     </div>
                     <div>
                       <dt className="cs-meta-label">Launched</dt>
-                      <dd className="cs-meta-value">October 2026</dd>
+                      <dd className="cs-meta-value">September 2026</dd>
                     </div>
                   </dl>
-                  <a href={LIVE_URL} target="_blank" rel="noopener" aria-label="Visit live page (opens in new tab)" className="cs-button">
+                  <a href={LIVE_URL} target="_blank" rel="noopener" aria-label="Visit live page (opens in new tab)"
+                    data-cursor="view"
+                    data-cursor-label="Visit"
+                    className="cs-button"
+                  >
                     Visit live page <ArrowUpRight />
                   </a>
                 </div>
               </div>
 
-              <div className="cs-browser">
+              <div className="cs-browser cs-in" style={order(6)}>
                 <div aria-hidden="true" className="cs-browser-bar">
                   <span className="cs-browser-dots">
                     <span />
@@ -370,21 +320,21 @@ export default function TopOneLaunchpad() {
           {/* Overview */}
           <section aria-labelledby="cs-overview" className="cs-section">
             <div className="cs-container cs-overview">
-              <div>
+              <div data-reveal>
                 <p className="cs-eyebrow">[ Overview ]</p>
                 <h2 id="cs-overview" className="cs-h2 cs-h2-sm">
                   The launch.
                 </h2>
               </div>
               <div>
-                <p className="cs-lead cs-lead-lg">
-                  Top One Trader announced Launch Pad on October 8, 2026, for its third anniversary. The first release was X-DAILY: a
+                <p data-reveal className="cs-lead cs-lead-lg">
+                  Top One Trader announced Launch Pad in September 2026, for its third anniversary. The first release was X-DAILY: a
                   one-step challenge from $5K to $100K with daily payouts, capped at 500 accounts. It needed its own page, and it
                   needed it fast.
                 </p>
                 <ol className="cs-cards">
                   {OVERVIEW.map((c, i) => (
-                    <li key={c.title} className="cs-card">
+                    <li key={c.title} data-reveal className="cs-card">
                       <span className="cs-card-num">{String(i + 1).padStart(2, '0')}</span>
                       <h3 className="cs-card-title">{c.title}</h3>
                       <p className="cs-card-text">{c.text}</p>
@@ -398,19 +348,30 @@ export default function TopOneLaunchpad() {
           {/* Turnaround */}
           <section aria-labelledby="cs-turnaround" className="cs-section">
             <div className="cs-container">
-              <div className="cs-turnaround">
+              <div data-reveal className="cs-turnaround">
                 <div className="cs-turnaround-head">
                   <div>
                     <p className="cs-eyebrow">[ Turnaround ]</p>
                     <h2 id="cs-turnaround" className="cs-h2">
-                      Brief to live in <span className="cs-accent">one day</span>.
+                      Brief to live in <span className="cs-accent">two days</span>.
                     </h2>
                   </div>
-                  <span className="cs-turnaround-time">~24h</span>
+                  <span className="cs-turnaround-time">
+                    <span className="cs-sr">About 48 hours</span>
+                    <span aria-hidden="true" className="cs-count-sizer">
+                      ~48h
+                    </span>
+                    <span aria-hidden="true" className="cs-count-value">
+                      ~48h
+                    </span>
+                  </span>
                 </div>
                 <ol className="cs-steps">
                   {STEPS.map((s, i) => (
                     <li key={s.title} className="cs-step">
+                      <span aria-hidden="true" className="cs-step-bar">
+                        <span className="cs-step-fill" />
+                      </span>
                       <span className="cs-step-time">Step {String(i + 1).padStart(2, '0')}</span>
                       <span className="cs-step-title">{s.title}</span>
                       <span className="cs-step-text">{s.text}</span>
@@ -421,40 +382,20 @@ export default function TopOneLaunchpad() {
             </div>
           </section>
 
-          {/* What's inside */}
-          <section aria-labelledby="cs-inside" className="cs-section">
-            <div className="cs-container">
-              <p className="cs-eyebrow">[ What's inside ]</p>
-              <h2 id="cs-inside" className="cs-h2">
-                Four pieces, one launch.
-              </h2>
-              <div className="cs-features">
-                {FEATURES.map((f, i) => (
-                  <article key={f.title} className="cs-feature">
-                    <div className="cs-feature-text">
-                      <span className="cs-card-num cs-feature-num">{String(i + 1).padStart(2, '0')}</span>
-                      <h3 className="cs-feature-title">{f.title}</h3>
-                      <p className="cs-feature-body">{f.text}</p>
-                    </div>
-                    <div className="cs-feature-media">{f.media}</div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
           {/* Showcase */}
           <section aria-labelledby="cs-showcase" className="cs-section">
             <div className="cs-container">
-              <p className="cs-eyebrow">[ Showcase ]</p>
-              <div className="cs-showcase-head">
+              <p data-reveal className="cs-eyebrow">
+                [ Showcase ]
+              </p>
+              <div data-reveal className="cs-showcase-head">
                 <h2 id="cs-showcase" className="cs-h2">
                   Up close.
                 </h2>
                 <p className="cs-showcase-note">Offers, pricing and the mobile build.</p>
               </div>
               <div className="cs-showcase">
-                <figure className="cs-figure">
+                <figure data-reveal className="cs-figure">
                   <div className="cs-media cs-media-box cs-showcase-shot">
                     <img
                       src={`${IMG}/launchpad-offers.avif`}
@@ -468,7 +409,7 @@ export default function TopOneLaunchpad() {
                   </div>
                   <figcaption className="cs-caption">Three launch cards, two still classified</figcaption>
                 </figure>
-                <figure className="cs-figure">
+                <figure data-reveal className="cs-figure">
                   <div className="cs-media cs-media-box cs-showcase-shot">
                     <img
                       src={`${IMG}/launchpad-pricing-desktop.avif`}
@@ -485,7 +426,7 @@ export default function TopOneLaunchpad() {
               </div>
               <div className="cs-phones">
                 {PHONES.map((p) => (
-                  <div key={p.src} className="cs-media cs-phone">
+                  <div key={p.src} data-reveal className="cs-media cs-phone">
                     <img
                       src={p.src}
                       width={p.width}
@@ -504,15 +445,15 @@ export default function TopOneLaunchpad() {
           {/* Next project */}
           <section aria-labelledby="cs-next" className="cs-section cs-next-section">
             <div className="cs-container">
-              <div className="cs-next-top">
+              <div data-reveal className="cs-next-top">
                 <a href="/work/sabila-labs" className="cs-back">
                   <ArrowLeft />
                   Sabila Labs
                 </a>
                 <span className="cs-eyebrow">[ Next project ]</span>
               </div>
-              <a href="/work/top-one-trader" className="cs-next">
-                <div className="cs-next-text">
+              <a href="/work/top-one-trader" data-cursor="view" className="cs-next">
+                <div data-reveal className="cs-next-text">
                   <p className="cs-eyebrow">01 · Prop trading firm · 2026</p>
                   <h2 id="cs-next" className="cs-next-title">
                     Top One Trader
@@ -520,11 +461,11 @@ export default function TopOneLaunchpad() {
                   <span className="cs-next-link">
                     View case study
                     <span aria-hidden="true" className="cs-next-circle">
-                      <ArrowRight />
+                      <ArrowRight size={18} />
                     </span>
                   </span>
                 </div>
-                <div className="cs-media cs-media-box cs-next-cover">
+                <div data-reveal className="cs-media cs-media-box cs-next-cover">
                   <img
                     src="/images/top-one-trader/www.toponetrader.com_.avif"
                     width={2490}
