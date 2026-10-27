@@ -26,34 +26,7 @@ const ROWS = [0, 1, 2, 3, 4].map((r) => {
   return { left: r % 2 === 0, shots: row.concat(row) }
 })
 
-function sarajevoTime(now: number | null) {
-  let time = '--:--'
-  let zone = 'GMT+2'
-  if (now === null) return { time, zone }
-  try {
-    const d = new Date(now)
-    time = d.toLocaleTimeString('en-GB', { timeZone: 'Europe/Sarajevo', hour: '2-digit', minute: '2-digit' })
-    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Sarajevo', timeZoneName: 'shortOffset' }).formatToParts(d)
-    const z = parts.find((x) => x.type === 'timeZoneName')
-    if (z) zone = z.value
-  } catch {
-    // keep fallbacks
-  }
-  return { time, zone }
-}
-
 export default function Hero() {
-  // No time in the prerendered HTML (it would be the build time): it is set as soon as the page hydrates.
-  const [now, setNow] = useState<number | null>(null)
-
-  useEffect(() => {
-    setNow(Date.now())
-    const timer = setInterval(() => setNow(Date.now()), 30000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const { time, zone } = sarajevoTime(now)
-
   // Menu: closes on Escape (focus back on the toggle), on a click outside the nav, and when focus leaves it.
   const [menuOpen, setMenuOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
@@ -160,13 +133,13 @@ export default function Hero() {
           </div>
           <h1 className={styles.title}>
             {/* Not shown (the design's headline stays as is), but part of the h1 for crawlers and screen readers. */}
-            <span className="sr-only">Webflow Expert Developer: </span>
-            <span className={styles.line}>Hand me the design.</span>
+            <span className="sr-only">Webflow developer for agencies: </span>
+            <span className={styles.line}>Hand me the design.</span>{' '}
             <span className={styles.line}>
               {/* Decorative: the h1 text already says "Webflow", an alt would only repeat it. */}
               <img src="/images/webflow-logo.png" alt="" width={186} height={187} className={styles.webflow} />
               Get back a
-            </span>
+            </span>{' '}
             <span className={styles.line}>
               finished{' '}
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={styles.check}>
@@ -187,9 +160,6 @@ export default function Hero() {
       </div>
 
       <div className={styles.bottom}>
-        <div className={styles.muted}>
-          <strong className={styles.strong}>{time}</strong> ({zone})
-        </div>
         <p className={styles.intro}>
           <strong className={styles.strong}>Benjamin</strong> builds Webflow websites for agencies and teams, from first design to launch.
         </p>

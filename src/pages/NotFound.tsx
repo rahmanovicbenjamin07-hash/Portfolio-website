@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <>
       <Seo
-        title="Page Not Found | Benjamin Rahmanović, Webflow Expert"
+        title="Page Not Found | Benjamin Rahmanović, Webflow Developer"
         description="This page doesn't exist, but your next custom Webflow website can. Meet the Webflow expert developer behind premium sites for ambitious companies."
         noindex
       />

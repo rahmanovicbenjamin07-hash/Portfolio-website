@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import Seo from '../seo/Seo'
 import { useScrollReveal } from '../useScrollReveal'
-import { GITHUB, JOB_TITLE, LINKEDIN, NAME, SITE_URL, UPWORK } from '../seo/site'
 import Hero from '../sections/Hero'
 import Banner from '../sections/Banner'
 import Work from '../sections/Work'
@@ -12,30 +11,6 @@ import Cta from '../sections/Cta'
 import Faq from '../sections/Faq'
 import Footer from '../sections/Footer'
 
-const JSON_LD = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Person',
-      '@id': `${SITE_URL}/#person`,
-      name: NAME,
-      url: `${SITE_URL}/`,
-      jobTitle: JOB_TITLE,
-      image: `${SITE_URL}/images/benjamin.jpg`,
-      knowsAbout: ['Webflow', 'Webflow development', 'Web design', 'Webflow CMS', 'Technical SEO'],
-      sameAs: [GITHUB, LINKEDIN, UPWORK],
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE_URL}/#website`,
-      url: `${SITE_URL}/`,
-      name: NAME,
-      inLanguage: 'en',
-      publisher: { '@id': `${SITE_URL}/#person` },
-    },
-  ],
-}
-
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null)
   useScrollReveal(mainRef)
@@ -43,10 +18,11 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Best Webflow Expert Developer for Your Website"
-        description="Benjamin Rahmanović is your expert Webflow developer, turning your ideas into the best possible website experience."
+        title="Webflow Developer for Agencies & B2B | Benjamin Rahmanović"
+        description="Webflow developer for agencies and B2B teams. Figma to Webflow builds, CMS, landing pages, SEO setup and ongoing maintenance."
+        ogTitle="Benjamin Rahmanović – Webflow Developer for Agencies"
+        ogDescription="Send me the Figma file and get back a fast Webflow site your team can edit. Builds, landing pages and maintenance."
         path="/"
-        jsonLd={JSON_LD}
       />
       <div id="top">
         <Hero />

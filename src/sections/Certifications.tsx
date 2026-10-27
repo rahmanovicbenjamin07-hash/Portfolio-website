@@ -45,7 +45,7 @@ export default function Certifications() {
           {CERTIFICATIONS.map((c) => (
             <article key={c.title} className={styles.card}>
               <div className={styles.cardTop}>
-                <img src="/images/webflow-logo.png" alt="Webflow" width="44" height="44" className={styles.logo} />
+                <img src="/images/webflow-logo.png" alt="Webflow logo" width="44" height="44" loading="lazy" className={styles.logo} />
                 <span className={`${styles.pill} ${c.status === 'passed' ? styles.passed : styles.progress}`}>
                   <span aria-hidden="true" className={styles.dot} />
                   {STATUS_LABEL[c.status]}

@@ -32,8 +32,12 @@ function splitHead(html) {
 for (const page of pages) {
   const { head, body } = splitHead(render(page.path))
   if (!/<title>[^<]+<\/title>/.test(head)) throw new Error(`${page.path}: no <title> was rendered`)
+  // Structured data goes straight into <head> (\u003c keeps a "</script>" inside the data from closing the tag)
+  const jsonLd = page.jsonLd
+    ? `\n    <script type="application/ld+json">${JSON.stringify(page.jsonLd).replace(/</g, '\\u003c')}</script>`
+    : ''
   // Function replacers, so "$" in the page content is never read as a replacement pattern.
-  const html = template.replace('<!--app-head-->', () => head).replace('<!--app-html-->', () => body)
+  const html = template.replace('<!--app-head-->', () => head + jsonLd).replace('<!--app-html-->', () => body)
   const out = path.join(DIST, page.file)
   fs.mkdirSync(path.dirname(out), { recursive: true })
   fs.writeFileSync(out, html)
