@@ -1,0 +1,9 @@
+/* Logo: pixel icon + name (components/Logo.tsx). */
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:18px;font-weight:600;line-height:1;text-decoration:none;color:#0E1B26}
+.logo img{display:block;flex:none}
+.logo.logo-dark{color:#F1F5E8}
+/* Icon only (the Nav): 64px = 4 × the 16px grid. The drawing fills rows 2–14 and columns 1–16, so the visible
+   mark is 48px tall, like "Let's talk" and the links pill with their 4px pixel borders. The negative margins shrink
+   the layout box to 42px (shorter than the 43px links pill, so the nav height is unchanged; the mark overhangs it
+   the way the pixel borders do) and trim the empty first column (mark starts on the gutter). */
+.logo.logo-icon-only img{margin:-11px 0 -11px -4px}

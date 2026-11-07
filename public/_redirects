@@ -1,0 +1,11 @@
+# Cloudflare static assets redirects (same format as Cloudflare Pages): /from /to status
+# https://developers.cloudflare.com/workers/static-assets/redirects/
+
+# Old project pages from the previous site, no longer built. Send old links and search results to the work
+# section instead of the 404. (/work/top-one-trader still exists: it's the new project page.)
+/work/top-one-launchpad        /#work  301
+/work/top-one-launchpad/       /#work  301
+/work/top-one-launchpad.html   /#work  301
+/work/sabila-labs              /#work  301
+/work/sabila-labs/             /#work  301
+/work/sabila-labs.html         /#work  301

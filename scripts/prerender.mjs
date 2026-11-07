@@ -9,10 +9,13 @@ const DIST = path.resolve('dist')
 const SSR = path.resolve('dist-ssr')
 const { render, pages, SITE_URL } = await import(pathToFileURL(path.join(SSR, 'entry-server.js')).href)
 
-const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8')
+const rawTemplate = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8')
 for (const mark of ['<!--app-head-->', '<!--app-html-->']) {
-  if (!template.includes(mark)) throw new Error(`index.html is missing the ${mark} placeholder`)
+  if (!rawTemplate.includes(mark)) throw new Error(`index.html is missing the ${mark} placeholder`)
 }
+// Developer notes in index.html stay out of the shipped pages: drop its HTML comments (not the two placeholders).
+// Only the template is cleaned; React's own <!-- --> markers in the rendered body are needed for hydration.
+const template = rawTemplate.replace(/<!--(?!app-head-->|app-html-->)[\s\S]*?-->\s*/g, '')
 
 // React 19 puts hoisted <title>, <meta> and <link> tags at the front of its output: move them into <head>.
 // It also adds <link rel="preload" as="image"> for every <img> (below the fold too): drop those, so they
@@ -32,6 +35,18 @@ function splitHead(html) {
 for (const page of pages) {
   const { head, body } = splitHead(render(page.path))
   if (!/<title>[^<]+<\/title>/.test(head)) throw new Error(`${page.path}: no <title> was rendered`)
+  // SEO checks. An empty body would ship a blank page to crawlers: stop the build. The rest only warns.
+  const text = body.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  if (text.length < 40) throw new Error(`${page.path}: prerendered body has almost no text (${text.length} chars)`)
+  const h1s = (body.match(/<h1[\s>]/g) || []).length
+  if (h1s !== 1) console.warn(`  warning: ${page.path} has ${h1s} <h1> elements (expected 1)`)
+  const desc = head.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? ''
+  const descLen = [...desc.replace(/&amp;/g, '&').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"')].length
+  const noindex = /<meta name="robots" content="noindex"/.test(head)
+  if (!noindex && (descLen < 150 || descLen > 160)) console.warn(`  warning: ${page.path} meta description is ${descLen} chars (aim for 150–160)`)
+  for (const tag of ['rel="canonical"', 'property="og:title"', 'property="og:description"', 'property="og:image"', 'name="twitter:card"']) {
+    if (!head.includes(tag)) console.warn(`  warning: ${page.path} is missing ${tag}`)
+  }
   // Structured data goes straight into <head> (\u003c keeps a "</script>" inside the data from closing the tag)
   const jsonLd = page.jsonLd
     ? `\n    <script type="application/ld+json">${JSON.stringify(page.jsonLd).replace(/</g, '\\u003c')}</script>`

@@ -1,0 +1,231 @@
+<!--
+  CURSOR DEMO — the approved Minecraft-style cursor, exported from the design canvas.
+  Same design-tool syntax as home.html (see its top comment). In the demo everything lives
+  inside one section; on the real site it must work page-wide (see the prompt).
+  The <style> block has every value to copy: .cx-cross, .cx-frame, .cx-burst, .cx-crack, keyframes cxin/cxp/cxshake.
+  The <script> at the bottom has the behaviour: move, enter/exit, burst on click, hold-to-break in 7 stages.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cursor demo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Pixelify+Sans:wght@400;500&amp;display=swap">
+<style>
+
+body{margin:0;background:#ffffff}
+a{color:#1F2A2E}a:hover{color:#146EF5}
+.px-label{display:flex;align-items:center;gap:10px;margin:0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:15px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.px-label i{display:block;width:10px;height:10px;background:#2E9E4F}
+.pxbox{--ink:#36502F;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
+a{color:#1F2A2E}
+.btn{--ink:#36502F;--fill:#E4ECD6;--fg:#1F2A2E;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;box-sizing:border-box;white-space:nowrap;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:17px;font-weight:500;text-decoration:none;color:var(--fg);background:var(--fill);box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.22);transition:transform .14s steps(2,end)}
+.btn:hover{color:var(--fg);transform:translateY(-2px)}
+.btn svg{display:block;flex:none;width:24px;height:21px}
+.btn-primary{--ink:#0B3F8F;--fill:#146EF5;--fg:#ffffff}
+.btn-dark{--ink:#1C2B19;--fill:#36502F;--fg:#F1F5E8}
+.wrap{padding-left:clamp(20px,6vw,112px);padding-right:clamp(20px,6vw,112px)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:20px;padding-bottom:20px}
+.links{--ink:#36502F;display:flex;gap:2px;padding:4px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink)}
+.links a{padding:8px 14px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:16px;font-weight:500;text-decoration:none}
+.links a.on{background:#D3E1C2}
+.back{display:inline-flex;align-items:center;gap:8px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:16px;font-weight:500;text-decoration:none;color:#4A5E44}
+.back svg{width:16px;height:14px;transform:scaleX(-1)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:40px;padding-top:24px;background-image:repeating-linear-gradient(90deg,#36502F 0 8px,transparent 8px 14px);background-size:100% 3px;background-repeat:no-repeat}
+.facts dt{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:14px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.facts dd{margin:6px 0 0;font-size:17px;color:#1F2A2E}
+.frame{--ink:#36502F;padding:14px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
+.browser{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;background:#36502F}
+.browser i{display:block;width:8px;height:8px}
+.browser i:nth-child(1){background:#E0705C}.browser i:nth-child(2){background:#E8C547}.browser i:nth-child(3){background:#7CC46B}
+.shot{display:grid;place-items:center;aspect-ratio:16/9;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#4A5E44}
+.shot.tall{aspect-ratio:4/3}
+.sec{padding-top:112px}
+.h2{margin:16px 0 0;font-family:'Inter Tight',Inter,sans-serif;font-size:clamp(30px,3vw,44px);line-height:1.08;font-weight:500;letter-spacing:-0.02em;color:#0E1B26}
+.h2 span{color:#4A6070}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;margin-top:40px}
+.two h3{margin:0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:24px;font-weight:500}
+.two p{margin:12px 0 0;font-size:18px;line-height:1.6;color:#2A3B45}
+.cap{margin:16px 4px 0;font-size:16px;line-height:1.5;color:#2A3B45}
+.cap b{font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:500;color:#1F2A2E}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:44px}
+.stat{--ink:#36502F;padding:28px 28px 30px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.16)}
+.stat b{display:block;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:52px;font-weight:500;line-height:1;color:#146EF5}
+.stat span{display:block;margin-top:12px;font-size:16px;color:#2A3B45}
+.next{--ink:#36502F;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:center;margin-top:44px;padding:28px;background:#E4ECD6;text-decoration:none;color:#1F2A2E;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16);transition:transform .14s steps(2,end)}
+.next:hover{color:#1F2A2E;transform:translateY(-4px)}
+.next small{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:15px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.next strong{display:block;margin-top:10px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:clamp(28px,3vw,44px);font-weight:500;line-height:1.1}
+.arrowblk{display:grid;place-items:center;width:60px;height:60px;margin-top:24px;background:#36502F;clip-path:polygon(4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px),0 4px,4px 4px)}
+.arrowblk svg{width:32px;height:28px;display:block}
+.banner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding:20px clamp(20px,6vw,112px);background:#1C2B19;color:#D9E5CB;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px}
+@media (max-width:860px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.stats,.next{grid-template-columns:minmax(0,1fr)}.links{display:none}}
+
+/* ---------- cursor demo ---------- */
+.cx{position:relative;overflow:hidden;min-height:640px;padding:56px clamp(20px,6vw,112px) 64px;background:#C1EEF7;cursor:none;user-select:none}
+.cx *{cursor:none}
+.cx input{cursor:text}
+.cx-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:56px;align-items:start}
+.cx-board{--ink:#36502F;padding:32px 36px 36px;background:#ffffff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
+.cx-row{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:28px}
+.cx-card{--ink:#36502F;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:32px;padding:18px 20px;background:#E4ECD6;text-decoration:none;color:#1F2A2E;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink)}
+.cx-card b{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500}
+.cx-card span{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:#4A5E44}
+.cx-link{font-size:17px;font-weight:500;color:#146EF5;text-decoration:underline;text-underline-offset:4px}
+.cx-input{--ink:#36502F;width:100%;max-width:320px;padding:12px 14px;border:0;font:inherit;font-size:16px;background:#F4F7EE;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink);outline:none}
+.cx-legend{--ink:#36502F;padding:26px 28px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
+.cx-legend h3{margin:0 0 14px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500}
+.cx-legend ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.5;color:#2A3B45}
+.cx-legend b{font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:500;color:#1F2A2E}
+/* crosshair */
+.cx-cross{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;pointer-events:none;z-index:20;mix-blend-mode:difference}
+.cx-cross::before,.cx-cross::after{content:"";position:absolute;background:#ffffff}
+.cx-cross::before{left:9px;top:0;width:4px;height:22px}
+.cx-cross::after{left:0;top:9px;width:22px;height:4px}
+/* selection frame */
+.cx-frame{position:absolute;pointer-events:none;z-index:19;transition:left .12s steps(3,end),top .12s steps(3,end),width .12s steps(3,end),height .12s steps(3,end);animation:cxin .18s steps(3,end) both}
+@keyframes cxin{from{opacity:0;transform:scale(1.12)}to{opacity:1;transform:none}}
+.cx-frame i{position:absolute;width:16px;height:16px;border:0 solid #1C2B19}
+.cx-frame i:nth-child(1){left:0;top:0;border-left-width:4px;border-top-width:4px}
+.cx-frame i:nth-child(2){right:0;top:0;border-right-width:4px;border-top-width:4px}
+.cx-frame i:nth-child(3){left:0;bottom:0;border-left-width:4px;border-bottom-width:4px}
+.cx-frame i:nth-child(4){right:0;bottom:0;border-right-width:4px;border-bottom-width:4px}
+/* block-break particles */
+.cx-burst{position:absolute;width:0;height:0;pointer-events:none;z-index:21}
+.cx-burst i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;animation:cxp .5s steps(5,end) forwards}
+.cx-burst i:nth-child(1){background:#7CC46B;--dx:-26px;--dy:-30px}
+.cx-burst i:nth-child(2){background:#4C8A2E;--dx:22px;--dy:-34px}
+.cx-burst i:nth-child(3){background:#8B5A2B;--dx:-34px;--dy:-10px}
+.cx-burst i:nth-child(4){background:#C08A54;--dx:30px;--dy:-14px}
+.cx-burst i:nth-child(5){background:#5A3A22;--dx:-12px;--dy:-40px}
+.cx-burst i:nth-child(6){background:#7CC46B;--dx:12px;--dy:-24px}
+@keyframes cxp{0%{transform:translate(0,0);opacity:1}55%{transform:translate(calc(var(--dx) * var(--k,1)),calc(var(--dy) * var(--k,1)));opacity:1}100%{transform:translate(calc(var(--dx) * var(--k,1) * 1.3),calc(var(--dy) * var(--k,1) * -0.2 + 26px));opacity:0}}
+.cx-burst i:nth-child(7){background:#C08A54;--dx:-40px;--dy:-24px}
+.cx-burst i:nth-child(8){background:#4C8A2E;--dx:38px;--dy:-26px}
+.cx-burst i:nth-child(9){background:#8B5A2B;--dx:-18px;--dy:-48px}
+.cx-burst i:nth-child(10){background:#7CC46B;--dx:20px;--dy:-46px}
+.cx-burst i:nth-child(11){background:#5A3A22;--dx:-46px;--dy:-4px}
+.cx-burst i:nth-child(12){background:#C08A54;--dx:44px;--dy:-6px}
+.cx-burst i:nth-child(n+7){display:none}
+.cx-burst.mini{--k:.45}
+.cx-burst.mini i{width:6px;height:6px;animation-duration:.35s}
+.cx-burst.mini i:nth-child(n+4){display:none}
+.cx-burst.big{--k:1.7}
+.cx-burst.big i{width:10px;height:10px;left:-5px;top:-5px;animation-duration:.7s}
+.cx-burst.big i:nth-child(n+7){display:block}
+.cx-crack{position:absolute;pointer-events:none;z-index:18;background-repeat:repeat;background-size:48px 48px;image-rendering:pixelated}
+.cx-crack.s1{background-image:url(/pixel/crack-1.png)}
+.cx-crack.s2{background-image:url(/pixel/crack-2.png)}
+.cx-crack.s3{background-image:url(/pixel/crack-3.png)}
+.cx-crack.s4{background-image:url(/pixel/crack-4.png)}
+.cx-crack.s5{background-image:url(/pixel/crack-5.png)}
+.cx-crack.s6{background-image:url(/pixel/crack-6.png)}
+.cx-crack.s7{background-image:url(/pixel/crack-7.png)}
+.cx-frame.holding{animation:cxshake .12s steps(2,end) infinite}
+@keyframes cxshake{0%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,0)}}
+
+
+</style>
+</helmet>
+<section class="cx" onMouseMove="{{move}}" onMouseLeave="{{leave}}" onMouseDown="{{burst}}" onMouseUp="{{release}}" aria-label="Cursor demo">
+<div class="cx-grid">
+<div class="cx-board">
+<p class="px-label"><i></i>Cursor demo</p>
+<h2 class="h2" style="margin-top: 14px">Move, hover <span>and click anywhere.</span></h2>
+<div class="cx-row">
+<a href="#work" class="btn btn-primary" draggable="false" onMouseDown="{{hold}}" onMouseEnter="{{enter}}" onMouseLeave="{{exit}}">See my work</a>
+<a href="#about" class="btn" draggable="false" onMouseDown="{{hold}}" onMouseEnter="{{enter}}" onMouseLeave="{{exit}}">About me</a>
+<a href="#case" class="cx-link" draggable="false" onMouseDown="{{hold}}" onMouseEnter="{{enter}}" onMouseLeave="{{exit}}">Read the case study</a>
+</div>
+<a href="#trader" class="cx-card" draggable="false" onMouseDown="{{hold}}" onMouseEnter="{{enter}}" onMouseLeave="{{exit}}"><b>Top One Trader</b><span>Webflow · 2026</span></a>
+<div class="cx-row"><label style="display: flex; flex-direction: column; gap: 8px; width: 100%; font-family: 'Pixelify Sans', system-ui, sans-serif; font-size: 16px; font-weight: 500">Text field (normal text cursor)<input class="cx-input" type="text" placeholder="Type here"></label></div>
+</div>
+<div class="cx-legend">
+<h3>What you're seeing</h3>
+<ol>
+<li><b>Crosshair:</b> a pixel “+” in place of the arrow. It inverts against whatever is behind it, so it's visible on light and dark.</li>
+<li><b>Selection frame:</b> hover a button, link or card and four pixel corners snap around it, like Minecraft's block outline.</li>
+<li><b>Block-break particles:</b> click and a few dirt and grass pixels pop out and fall.</li>
+<li><b>Hold to break:</b> hold the mouse on a button or card. Cracks spread, pixels chip off, and after a moment it breaks with a big burst. Let go early and the cracks vanish.</li>
+</ol>
+</div>
+</div>
+<sc-if value="{{showCross}}" hint-placeholder-val="{{ false }}"><span class="cx-cross" style="left: {{cx}}px; top: {{cy}}px"></span></sc-if>
+<sc-if value="{{showFrame}}" hint-placeholder-val="{{ false }}"><span class="{{frameCls}}" style="left: {{fx}}px; top: {{fy}}px; width: {{fw}}px; height: {{fh}}px"><i></i><i></i><i></i><i></i></span></sc-if>
+<sc-if value="{{showCrack}}" hint-placeholder-val="{{ false }}"><span class="{{crackCls}}" style="left: {{kx}}px; top: {{ky}}px; width: {{kw}}px; height: {{kh}}px"></span></sc-if>
+<sc-for list="{{bursts}}" as="b" hint-placeholder-count="0"><span class="{{b.cls}}" style="left: {{b.x}}px; top: {{b.y}}px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></sc-for>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":640}}'>
+class Component extends DCLogic {
+componentWillUnmount() {
+clearInterval(this.ht);
+}
+addBurst(x, y, kind) {
+const id = Date.now() + Math.random();
+this.setState((st) => ({ bursts: ((st && st.bursts) || []).concat([{ id: id, x: x, y: y, cls: 'cx-burst' + (kind ? ' ' + kind : '') }]) }));
+setTimeout(() => this.setState((st) => ({ bursts: ((st && st.bursts) || []).filter((b) => b.id !== id) })), 750);
+}
+startHold(rect) {
+clearInterval(this.ht);
+this.holdRect = rect;
+this.setState({ stage: 1, crack: rect });
+this.ht = setInterval(() => {
+const st = (this.state && this.state.stage) || 0;
+if (st >= 7) {
+clearInterval(this.ht);
+const r = this.holdRect;
+this.setState({ stage: 0, crack: null });
+this.addBurst(r.x + r.w / 2, r.y + r.h / 2, 'big');
+return;
+}
+this.setState({ stage: st + 1 });
+this.addBurst((this.state && this.state.x) || 0, (this.state && this.state.y) || 0, 'mini');
+}, 120);
+}
+stopHold() {
+clearInterval(this.ht);
+if (this.state && this.state.crack) this.setState({ stage: 0, crack: null });
+}
+renderVals() {
+const s = this.state || {};
+const self = this;
+const rel = (e) => {
+const root = e.currentTarget.closest ? e.currentTarget.closest('.cx') : null;
+const r = (root || e.currentTarget).getBoundingClientRect();
+return { x: e.clientX - r.left, y: e.clientY - r.top };
+};
+const box = (e) => {
+const el = e.currentTarget.getBoundingClientRect();
+const root = e.currentTarget.closest('.cx').getBoundingClientRect();
+return { x: el.left - root.left, y: el.top - root.top, w: el.width, h: el.height };
+};
+const k = s.crack;
+return {
+cx: s.x || 0, cy: s.y || 0, showCross: !!s.inside,
+showFrame: !!s.frame, fx: s.frame ? s.frame.x : 0, fy: s.frame ? s.frame.y : 0, fw: s.frame ? s.frame.w : 0, fh: s.frame ? s.frame.h : 0,
+frameCls: 'cx-frame' + (k ? ' holding' : ''),
+showCrack: !!k, crackCls: 'cx-crack s' + Math.max(1, Math.min(7, s.stage || 1)),
+kx: k ? k.x : 0, ky: k ? k.y : 0, kw: k ? k.w : 0, kh: k ? k.h : 0,
+bursts: s.bursts || [],
+move: (e) => { const p = rel(e); self.setState({ x: p.x, y: p.y, inside: true }); },
+leave: () => { self.stopHold(); self.setState({ inside: false, frame: null }); },
+enter: (e) => {
+const b = box(e); const pad = 10;
+self.setState({ frame: { x: b.x - pad, y: b.y - pad, w: b.w + pad * 2, h: b.h + pad * 2 } });
+},
+exit: () => { self.stopHold(); self.setState({ frame: null }); },
+hold: (e) => { if (e.button !== 0) return; self.startHold(box(e)); },
+release: () => self.stopHold(),
+burst: (e) => { if (e.button !== 0) return; const p = rel(e); self.addBurst(p.x, p.y, ''); }
+};
+}
+}
+</script>
+</body>
+</html>

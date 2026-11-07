@@ -1,0 +1,11 @@
+/* Experience timeline — copied from design-reference/about.html, the ".tl" rules. */
+.tl{position:relative;list-style:none;margin:8px 0 0;padding:0 0 0 48px}
+.tl::before{content:"";position:absolute;left:14px;top:10px;bottom:10px;width:4px;background-image:repeating-linear-gradient(180deg,#36502F 0 12px,transparent 12px 20px)}
+.tl li{position:relative;padding-bottom:44px}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-42px;top:4px;width:20px;height:20px;background:#E4ECD6;box-shadow:0 0 0 4px #36502F}
+.tl li.now::before{background:#146EF5;box-shadow:0 0 0 4px #0B3F8F}
+.tl time{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.tl h3{margin:8px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:24px;font-weight:500;color:#1F2A2E}
+.tl .where{display:block;margin-top:4px;font-size:16px;color:#4A6070}
+.tl p{margin:10px 0 0;max-width:620px;font-size:17px;line-height:1.6;color:#2A3B45}

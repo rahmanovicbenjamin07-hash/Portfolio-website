@@ -1,0 +1,21 @@
+/* 01 — On mobile. Copied from design-reference/case-study.html (.cap, .phones, .phone-col, .phone, .speaker, .pscreen
+   + this section's line of the 560px block). .wrap / .sec / .h2 / .px-label are shared (src/styles/pages.css, pixel.css). */
+.cap{margin:16px 4px 0;font-size:16px;line-height:1.5;color:#2A3B45}
+.cap b{font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:500;color:#1F2A2E}
+.phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;margin-top:48px;align-items:start}
+.phone-col:nth-child(2){margin-top:56px}
+.phone{--ink:#1C2B19;max-width:300px;margin:0 auto;padding:14px 12px 18px;background:#2C4426;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.18)}
+.speaker{display:block;width:56px;height:6px;margin:0 auto 10px;background:#1C2B19}
+.pscreen{display:grid;place-items:center;aspect-ratio:9/19.5;padding:12px;text-align:center;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;line-height:1.5;color:#4A5E44}
+.phone-col .cap{max-width:300px;margin:20px auto 0;text-align:center}
+
+/* Real screenshot: fills the whole screen edge to edge, top-aligned. Absolutely positioned so the image can't
+   stretch the 9/19.5 screen; a phone is the same size with its placeholder or with its image. */
+.pscreen{position:relative;overflow:hidden}
+.pscreen img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+
+@media (max-width:560px){
+.phones{grid-template-columns:minmax(0,1fr);gap:48px}
+.phone-col:nth-child(2){margin-top:0}
+.phone{max-width:240px}
+}

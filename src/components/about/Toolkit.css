@@ -1,0 +1,8 @@
+/* Toolkit chips — copied from design-reference/about.html: ".tools", ".chips", ".chip".
+   (.chip.add, the "[+ add yours]" chip, isn't used: the list is final.) */
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:44px}
+.tools h3{margin:0 0 18px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500;color:#1F2A2E}
+.chips{display:flex;flex-wrap:wrap;gap:16px}
+.chip{--ink:#36502F;padding:8px 14px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:17px;font-weight:500;color:#1F2A2E;background:#E4ECD6;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink)}
+
+@media (max-width:760px){.tools{grid-template-columns:minmax(0,1fr);gap:28px}}

@@ -4,3 +4,6 @@ dist-ssr
 test-results
 playwright-report
 *.local
+
+# Source kits (zips unpacked into the repo root). Their files are copied into public/ and design-reference/.
+/*-kit/

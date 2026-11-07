@@ -1,0 +1,45 @@
+/* About hero — copied from design-reference/about.html: ".ab-hero", ".ab-lead", ".photo-card", ".photo",
+   ".pixme" (about page block) and the "about v2: meadow hero" block. .px-label/.btn are global (src/styles/pixel.css),
+   .wrap/.stats/.stat are in src/styles/pages.css. */
+
+.pixel-page:has(.ab-hw){color:#1F2A2E}
+
+/* ---------- meadow ---------- */
+.ab-hw{position:relative;overflow:hidden;background:#C1EEF7;padding-bottom:120px}
+.ab-bg{position:absolute;inset:0;pointer-events:none}
+.ab-land{position:absolute;left:50%;bottom:0;width:max(100%,1440px);aspect-ratio:256/144;transform:translateX(-50%);background:url(/pixel/terrain-clean.png) center/100% 100% no-repeat;image-rendering:pixelated}
+.ab-cloud{position:absolute;left:0;background-repeat:no-repeat;background-size:100% 100%;image-rendering:pixelated;animation:abdrift linear infinite}
+.abc1{top:150px;width:200px;height:65px;background-image:url(/pixel/cloud-1.png);animation-duration:95s;animation-delay:-40s}
+.abc2{top:80px;width:140px;height:50px;background-image:url(/pixel/cloud-2.png);animation-duration:125s;animation-delay:-90s}
+@keyframes abdrift{from{left:-220px}to{left:100%}}
+.ab-grass{position:absolute;left:0;bottom:0;width:100%;aspect-ratio:256/30;background:url(/pixel/grass.png) no-repeat 0 0/400% 100%;image-rendering:pixelated;animation:abgrass 2.4s step-end infinite}
+@keyframes abgrass{0%{background-position:0% 0}25%{background-position:33.333% 0}50%{background-position:66.667% 0}75%{background-position:100% 0}}
+.ab-dis{position:absolute;left:0;bottom:-1px;width:100%;aspect-ratio:256/10;background:url(/pixel/dissolve.png) no-repeat center/100% 100%;image-rendering:pixelated}
+.ab-front{position:relative;z-index:1}
+.ab-hw .stats{margin-top:56px}
+
+/* ---------- intro panel + photo ---------- */
+.ab-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:72px;align-items:center;padding-top:64px;padding-bottom:40px}
+.ab-card{--ink:#36502F;padding:36px 40px 40px;background:rgba(255,255,255,.93);box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
+.ab-lead{margin:24px 0 0;max-width:560px;font-size:19px;line-height:1.6;color:#2A3B45}
+.photo-card{--ink:#36502F;position:relative;max-width:440px;margin-left:auto;padding:14px;background:#ffffff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 14px 0 0 rgba(20,46,30,.16)}
+.photo{display:grid;place-items:center;aspect-ratio:4/5;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#4A5E44;text-align:center}
+/* The real photo fills the 4:5 box (the reference has a placeholder here). The image carries the 4:5 ratio itself:
+   with height:100% the tall file (688 × 1568) would stretch the box, and taken out of flow the card (sized to its
+   content, max 440px) would collapse. */
+.photo img{grid-area:1/1;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 20%}
+.pixme{--ink:#36502F;position:absolute;left:-36px;bottom:40px;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;background:#E4ECD6;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 8px 0 0 rgba(20,46,30,.16)}
+.pixme img{display:block;width:56px;height:56px;image-rendering:pixelated;box-shadow:0 0 0 3px #36502F}
+.pixme span{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:16px;font-weight:500;color:#1F2A2E;white-space:nowrap}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){.ab-hero{grid-template-columns:minmax(0,1fr);gap:48px}.photo-card{margin:0 auto}}
+@media (max-width:860px){
+.ab-card{padding:28px 24px 30px}
+/* The reference hides the nav links from 860px down: the phone menu takes over (rules in Nav.css), as on project pages. */
+.ab-hw .nav .links{display:none}
+.ab-hw .nav .nav-menu-btn{display:inline-flex}
+.ab-hw .nav-menu:not([hidden]){display:block}
+}
+@media (max-width:760px){.ab-hero{padding-top:32px}.ab-hw .stats{margin-top:40px}.photo-card{margin:0 0 0 20px}.pixme{left:-20px}}
+@media (prefers-reduced-motion:reduce){.ab-cloud,.ab-grass{animation:none}}

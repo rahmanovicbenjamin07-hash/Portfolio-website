@@ -1,0 +1,10 @@
+/* "Working with me" cards — copied from design-reference/about.html: ".expect", ".ex-card", ".ex-ic". */
+.expect{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px;margin-top:44px}
+.ex-card{--ink:#36502F;padding:26px 26px 28px;background:#ffffff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.16)}
+.ex-ic{--ink:#36502F;display:grid;place-items:center;width:64px;height:64px;background:#F4F7EE;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink)}
+.ex-ic svg{width:44px;height:auto;display:block}
+.ex-card h3{margin:22px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500;line-height:1.2;color:#1F2A2E}
+.ex-card p{margin:10px 0 0;font-size:16px;line-height:1.55;color:#2A3B45}
+
+@media (max-width:960px){.expect{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.expect{grid-template-columns:minmax(0,1fr)}}

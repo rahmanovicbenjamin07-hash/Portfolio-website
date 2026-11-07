@@ -1,0 +1,12 @@
+/* Services section — copied from design-reference/home.html ("services section"). */
+.clist{margin-top:44px;background-image:repeating-linear-gradient(90deg,#36502F 0 12px,transparent 12px 20px);background-size:100% 4px;background-repeat:no-repeat;background-position:top}
+.crow{display:grid;grid-template-columns:90px minmax(0,1.25fr) minmax(0,1fr) 72px;gap:32px;align-items:center;padding:40px 20px 44px;text-decoration:none;color:#1F2A2E;background-image:repeating-linear-gradient(90deg,#36502F 0 12px,transparent 12px 20px);background-size:100% 4px;background-repeat:no-repeat;background-position:bottom;transition:background-color .12s steps(2,end)}
+.crow:hover{background-color:#EEF3E5;color:#1F2A2E}
+.crow:focus-visible{outline:3px solid #146EF5;outline-offset:4px}
+.cnum{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:18px;color:#4A5E44}
+.ctitle{font-family:'Inter Tight',Inter,sans-serif;font-size:clamp(32px,3.6vw,56px);font-weight:500;letter-spacing:-0.025em;line-height:1.02;transition:transform .14s steps(2,end)}
+.crow:hover .ctitle{transform:translateX(8px)}
+.cdesc{font-size:16px;line-height:1.55;color:#2A3B45}
+.cic{justify-self:end;width:56px;height:auto;display:block;opacity:0;transform:translateY(8px);transition:opacity .16s steps(2,end),transform .16s steps(2,end)}
+.crow:hover .cic,.crow:focus-visible .cic{opacity:1;transform:none}
+@media (max-width:860px){.crow{grid-template-columns:56px minmax(0,1fr);gap:12px 20px}.cdesc{grid-column:2}.cic{display:none}}
