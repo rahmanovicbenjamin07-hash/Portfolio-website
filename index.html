@@ -7,12 +7,17 @@
          written in here at build time by scripts/prerender.mjs. -->
     <!--app-head-->
 
-    <!-- Favicon matching the browser theme: white-fav (white circle, dark BR) in light mode, dark-fav
-         (black circle, white BR) in dark mode. Files in public/images are cached for a year (_headers):
-         give a replaced icon a new file name. -->
-    <link rel="icon" href="/images/white-fav.png" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" />
-    <link rel="icon" href="/images/dark-fav.png" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#0B0B0C" />
+    <!-- Favicons, home-screen icon and web app manifest (pixel logo icon, public/) -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#146EF5">
+
+    <!-- Pixel redesign fonts (design-reference/home.html). Pixelify Sans 600: the logo (components/Logo.tsx). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Inter+Tight:wght@500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Pixelify+Sans:wght@400;500;600&amp;display=swap" />
   </head>
   <body>
     <div id="root"><!--app-html--></div>

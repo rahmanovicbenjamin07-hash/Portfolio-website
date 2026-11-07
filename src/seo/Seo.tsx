@@ -13,7 +13,9 @@ type Props = {
 
 // React 19 hoists <title>, <meta> and <link> into <head>. At build time scripts/prerender.mjs
 // writes them into each page's static HTML, and hydration reuses those tags.
+// Every page shares the same image (OG_IMAGE in ./site).
 export default function Seo({ title, description, ogTitle = title, ogDescription = description, path, noindex }: Props) {
+  const img = { ...OG_IMAGE, type: 'image/png' }
   return (
     <>
       <title>{title}</title>
@@ -28,16 +30,16 @@ export default function Seo({ title, description, ogTitle = title, ogDescription
       <meta property="og:title" content={ogTitle} />
       <meta property="og:description" content={ogDescription} />
       {path !== undefined && <meta property="og:url" content={SITE_URL + path} />}
-      <meta property="og:image" content={OG_IMAGE.url} />
-      <meta property="og:image:type" content="image/png" />
-      <meta property="og:image:width" content={String(OG_IMAGE.width)} />
-      <meta property="og:image:height" content={String(OG_IMAGE.height)} />
-      <meta property="og:image:alt" content={OG_IMAGE.alt} />
+      <meta property="og:image" content={img.url} />
+      {img.type && <meta property="og:image:type" content={img.type} />}
+      {img.width && <meta property="og:image:width" content={String(img.width)} />}
+      {img.height && <meta property="og:image:height" content={String(img.height)} />}
+      <meta property="og:image:alt" content={img.alt} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={ogTitle} />
       <meta name="twitter:description" content={ogDescription} />
-      <meta name="twitter:image" content={OG_IMAGE.url} />
-      <meta name="twitter:image:alt" content={OG_IMAGE.alt} />
+      <meta name="twitter:image" content={img.url} />
+      <meta name="twitter:image:alt" content={img.alt} />
     </>
   )
 }
