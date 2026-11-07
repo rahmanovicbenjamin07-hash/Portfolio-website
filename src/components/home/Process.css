@@ -1,0 +1,75 @@
+/* ---------- process section ---------- */
+/* .pxbox and .px are global (src/styles/pixel.css, Agent 1) */
+.cgrid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:start;margin-top:52px}
+.dlg{position:relative;padding:24px 24px 44px;display:flex;flex-direction:column;gap:14px}
+.line{display:flex;align-items:flex-start;gap:14px;opacity:0;transform:translateY(6px);transition:opacity .25s steps(2,end),transform .25s steps(2,end)}
+.line.on{opacity:1;transform:none}
+.line.me{flex-direction:row-reverse}
+.pt{--ink:#36502F;flex:none;width:44px;height:44px;background:#F4F7EE;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink);overflow:hidden}
+.pt img,.pt svg{display:block;width:100%;height:100%;image-rendering:pixelated}
+.pt svg{width:80%;height:auto;margin:6px auto 0}
+.bubble{--ink:#36502F;max-width:78%;padding:9px 14px 11px;background:#F4F7EE;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink)}
+.me .bubble{--ink:#1C2B19;background:#36502F;color:#F1F5E8}
+.stp{display:block;margin-bottom:3px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.me .stp{color:#B9CCA8}
+.say{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:19px;line-height:1.35}
+/* Replay button, bottom right of the conversation once it has played (Process.tsx). Scoped to .dlg. */
+.dlg .replay{position:absolute;z-index:3;right:14px;bottom:8px;display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;cursor:pointer;animation:pop .3s steps(3,end) both}
+.dlg .replay svg{display:block;width:20px;height:20px}
+.dlg .replay:focus-visible{outline:3px solid #146EF5;outline-offset:2px}
+/* Pause / play: a transparent button over the whole conversation (Process.tsx). Paused: a light dark-green overlay
+   and the pixel pause icon in a small sage box, centred. The replay button (z-index 3) stays clickable above it. */
+.dlg .dlg-pause{position:absolute;z-index:2;inset:0;display:grid;place-items:center;padding:0;border:0;background:transparent;cursor:pointer}
+.dlg .dlg-pause.is-paused{background:rgba(28,43,25,.32)}
+.dlg .dlg-pause:focus-visible{outline:3px solid #146EF5;outline-offset:4px}
+.dlg-paused-ic{--ink:#36502F;display:grid;place-items:center;width:72px;height:72px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.22);animation:pop .3s steps(3,end) both}
+.dlg-paused-ic svg{display:block;width:28px;height:35px}
+.screen{padding:14px}
+.sbar{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;background:#36502F}
+.sbar i{display:block;width:8px;height:8px}
+.sbar i:nth-child(1){background:#E0705C}.sbar i:nth-child(2){background:#E8C547}.sbar i:nth-child(3){background:#7CC46B}
+.sart{position:relative;display:grid;place-items:center;aspect-ratio:4/3;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+.sart .art{width:48%;height:auto;display:block;animation:pop .45s steps(4,end) both}
+.sart .loopbig{position:absolute;top:12%;right:12%;width:26%;height:auto;color:#146EF5;animation:pop .45s steps(4,end) both}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.scap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 4px 4px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:20px;font-weight:500;color:#1F2A2E}
+.dots{display:flex;gap:6px}
+.dots{flex:none}
+/* Each dot is a button that shows its step on the screen (Process.tsx). Same 10px square; ::before widens the tap
+   area to 16 x 24px without overlapping the next dot (6px gap = 3px each side). */
+.dots button{position:relative;display:block;width:10px;height:10px;padding:0;border:0;background:#C9D6BB;cursor:pointer}
+.dots button::before{content:'';position:absolute;inset:-7px -3px}
+.dots button.on{background:#36502F}
+.dots button:focus-visible{outline:3px solid #146EF5;outline-offset:2px}
+@media (max-width:960px){.cgrid{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.line{opacity:1;transform:none}.sart .art,.sart .loopbig{animation:none}.dlg .replay,.dlg .dlg-pause{display:none}}
+/* ---------- sky band ---------- */
+.p-sky{position:relative;overflow:hidden}
+.p-skyc{position:relative;z-index:1}
+.p-skybg{position:absolute;inset:0;pointer-events:none;--u:5px}
+.p-cloud{left:0;animation:pdrift linear infinite}
+.pc1{width:calc(40 * var(--u));height:calc(13 * var(--u));top:120px;background-image:url(/pixel/cloud-1.png);animation-duration:90s;animation-delay:-35s}
+.pc2{width:calc(28 * var(--u));height:calc(10 * var(--u));top:56px;background-image:url(/pixel/cloud-2.png);animation-duration:120s;animation-delay:-80s}
+.pc3{width:calc(18 * var(--u));height:calc(7 * var(--u));top:470px;background-image:url(/pixel/cloud-3.png);animation-duration:70s;animation-delay:-12s}
+.pc4{width:calc(28 * var(--u));height:calc(10 * var(--u));top:700px;background-image:url(/pixel/cloud-2.png);animation-duration:140s;animation-delay:-100s}
+@keyframes pdrift{from{left:-220px}to{left:100%}}
+.p-bird{width:calc(11 * var(--u));height:calc(9 * var(--u));background-image:url(/pixel/bird.png);background-size:200% 100%;animation:pflap .4s step-end infinite}
+.pb1{top:84px;right:20%}
+.pb2{top:118px;right:16%;animation-duration:.46s;animation-delay:-.2s}
+@keyframes pflap{0%{background-position:0% 0}50%{background-position:100% 0}}
+.p-land{left:50%;bottom:0;width:max(100%,1440px);height:auto;aspect-ratio:256/144;transform:translateX(-50%);background-image:url(/pixel/terrain-clean.png)}
+.p-grass{left:0;bottom:0;width:100%;height:auto;aspect-ratio:256/30;background-image:url(/pixel/grass.png);background-size:400% 100%;animation:psway 2.4s step-end infinite}
+@keyframes psway{0%{background-position:0% 0}25%{background-position:33.333% 0}50%{background-position:66.667% 0}75%{background-position:100% 0}}
+.p-dis{left:0;width:100%;height:auto;aspect-ratio:256/10;background-image:url(/pixel/dissolve.png)}
+.p-dis-b{bottom:-1px}
+.p-dis-t{top:-1px;transform:scaleY(-1)}
+@media (prefers-reduced-motion:reduce){.p-skybg *{animation:none !important}}
+/* paused while the section is off screen (set by Process.tsx) */
+#process[data-paused] .p-skybg *,#process[data-paused] .sart .art,#process[data-paused] .sart .loopbig{animation-play-state:paused}
+/* from the shared @media (max-width:760px) block */
+@media (max-width:760px){
+.p-sky{padding-top:110px !important}
+}
+/* phones: portrait stays 44px, the bubble takes the rest of the row and long words wrap */
+.bubble{min-width:0;overflow-wrap:break-word}
+@media (max-width:480px){.bubble{flex:1 1 0;max-width:none}}

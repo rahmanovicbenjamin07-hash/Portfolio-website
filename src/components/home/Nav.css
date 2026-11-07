@@ -1,0 +1,36 @@
+/* Nav — copied from design-reference/home.html ("copy + nav" block). */
+
+/* Side padding: the reference clamp, then content held inside a centred 1440px frame on wider screens. */
+.nav{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;padding-inline:max(clamp(20px, 6vw, 112px), calc((100% - 1440px) / 2 + 112px))}
+.links{--ink:#36502F;display:flex;align-items:center;gap:2px;padding:4px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 8px 0 0 rgba(20,46,30,.18)}
+.links a{padding:8px 14px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:16px;font-weight:500;text-decoration:none;color:#1F2A2E}
+.links a:hover{background:#D3E1C2;color:#1F2A2E}
+/* Current page (.links a.on in design-reference/case-study.html) */
+.links a.on,.nav-menu a.on{background:#D3E1C2}
+
+/* "page" variant (About and other pages): same look, static in normal flow instead of over the hero.
+   position:relative keeps z-index 5 and anchors the phone dropdown, so it still opens over the content below. */
+.nav.nav-page{position:relative}
+
+/* "Let's talk" + the phone menu button */
+/* flex:none + nowrap: on phones the name wraps to two lines instead of "Let's talk" breaking */
+.nav-actions{display:flex;flex:none;align-items:center;gap:16px}
+.nav-actions .btn{white-space:nowrap}
+
+/* ---------- phone menu (below 760px only) ---------- */
+/* Menu button: the sage .btn, 44 x 44 touch target, three pixel bars. */
+.nav .nav-menu-btn{display:none;width:44px;height:44px;min-height:44px;padding:0;border:0;cursor:pointer}
+.nav .nav-menu-btn svg{width:16px;height:14px}
+.nav .nav-menu-btn[aria-expanded="true"]{--fill:#D3E1C2}
+/* Dropdown panel: sage fill with the 4px pixel border of .links. */
+.nav-menu{--ink:#36502F;display:none;position:absolute;top:calc(100% - 8px);right:clamp(20px,6vw,112px);width:min(260px,calc(100% - 2 * clamp(20px,6vw,112px)));box-sizing:border-box;padding:4px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 8px 0 0 rgba(20,46,30,.18)}
+.nav-menu nav{display:flex;flex-direction:column;gap:2px}
+.nav-menu a{display:flex;align-items:center;min-height:48px;padding:0 16px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:20px;font-weight:500;text-decoration:none;color:#1F2A2E}
+.nav-menu a:hover,.nav-menu a:focus-visible{background:#D3E1C2;color:#1F2A2E}
+.nav-menu a:focus-visible{outline:3px solid #146EF5;outline-offset:-3px}
+
+@media (max-width:760px){
+.nav .links{display:none}
+.nav .nav-menu-btn{display:inline-flex}
+.nav-menu:not([hidden]){display:block}
+}

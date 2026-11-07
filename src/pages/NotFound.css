@@ -1,0 +1,45 @@
+/* Pixel 404 page (NotFound.tsx). The meadow scene reuses the home hero's building blocks (terrain, drifting clouds,
+   swaying grass sprite) with the same 256-unit grid: --u = 1/256 of the terrain width. .px, .pxbox, .px-label and
+   the .btn family are global (src/styles/pixel.css). Keyframe names are prefixed so they can't clash with Hero.css. */
+
+.nf{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;background:#C1EEF7}
+
+/* Scene: terrain anchored to the bottom, at least 1440px wide, centred */
+.nf-scene{position:absolute;left:50%;bottom:0;width:max(100%,1440px);aspect-ratio:256/144;transform:translateX(-50%);container-type:inline-size;--u:calc(100cqw / 256);pointer-events:none}
+.nf-scene img,.nf-scene .px{image-rendering:pixelated;image-rendering:crisp-edges}
+.nf-terrain{position:absolute;inset:0;display:block;width:100%;height:100%}
+
+/* clouds drift slowly to the right (same sizes and speeds as the hero's c1 / c2) */
+.nf-cloud{top:0;left:0;animation:nfdrift linear infinite}
+.nf-c1{width:calc(40 * var(--u));height:calc(13 * var(--u));top:calc(28 * var(--u));background-image:url(/pixel/cloud-1.png);animation-duration:120s;animation-delay:-70s}
+.nf-c2{width:calc(28 * var(--u));height:calc(10 * var(--u));top:calc(10 * var(--u));background-image:url(/pixel/cloud-2.png);animation-duration:160s;animation-delay:-20s}
+@keyframes nfdrift{from{transform:translateX(calc(-45 * var(--u)))}to{transform:translateX(100cqw)}}
+
+/* foreground grass + flowers sway (4-frame sprite sheet, as in the hero) */
+.nf-grass{left:0;bottom:0;width:100%;height:calc(30 * var(--u));background-image:url(/pixel/grass.png);background-size:400% 100%;animation:nfsway 2.4s step-end infinite}
+@keyframes nfsway{0%{background-position:0% 0}25%{background-position:33.333% 0}50%{background-position:66.667% 0}75%{background-position:100% 0}}
+
+/* Nav (variant "page") and panel sit above the scene */
+.nf > .nav{z-index:2}
+.nf-main{position:relative;z-index:1;flex:1;display:grid;place-items:center;padding:32px 0 96px;padding-inline:var(--pad-x)}
+
+/* White pixel panel */
+.nf-panel.pxbox{width:100%;max-width:560px;box-sizing:border-box;padding:40px 44px 44px;background:#ffffff;text-align:left}
+.nf-title{margin:18px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:clamp(56px,7vw,88px);font-weight:500;line-height:1;letter-spacing:-0.01em;color:#0E1B26}
+.nf-text{margin:16px 0 0;font-family:Inter,system-ui,sans-serif;font-size:18px;line-height:1.6;color:#2A3B45}
+.nf-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:36px}
+.nf .btn{white-space:nowrap}
+.nf .btn svg{display:block;flex:none;width:24px;height:21px}
+
+/* "Press start": the arrow blinks like the reference's .next arrow (blink 1s steps(1,end), 50% opacity 0) */
+.nf-start svg{animation:nfblink 1s steps(1,end) infinite}
+@keyframes nfblink{50%{opacity:0}}
+
+@media (max-width:760px){
+.nf-main{padding:24px 0 72px;padding-inline:var(--pad-x)}
+.nf-panel.pxbox{padding:28px 24px 32px}
+.nf-text{font-size:17px}
+.nf-actions{gap:20px}
+}
+
+@media (prefers-reduced-motion:reduce){.nf-scene *,.nf-start svg{animation:none !important}}

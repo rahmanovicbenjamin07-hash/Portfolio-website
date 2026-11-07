@@ -2,7 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import './styles/fonts'
 import './styles/global.css'
+import './styles/pixel.css'
 import App from './App'
+import { resolveRoute } from './routes'
 import { startSmoothScroll } from './smoothScroll'
 import { startCursor } from './cursor'
 
@@ -18,4 +20,5 @@ if (container.firstElementChild) hydrateRoot(container, app)
 else createRoot(container).render(app)
 
 startSmoothScroll()
-startCursor()
+// The old circle cursor stays on the other pages; the pixel home page (.pixel-page) has PixelCursor instead.
+if (!resolveRoute(window.location.pathname).ownCursor) startCursor()

@@ -1,0 +1,130 @@
+/* Hero — copied from design-reference/home.html. .px and the .btn family are global (src/styles/pixel.css). */
+
+/* ---------- hero frame ---------- */
+.hero{position:relative;aspect-ratio:16/9;min-height:640px;overflow:hidden;background:#C1EEF7}
+.stage{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;right:0;bottom:0;height:100%;aspect-ratio:16/9;container-type:inline-size;--u:calc(100cqw / 256)}
+.scene img,.scene .px{image-rendering:pixelated;image-rendering:crisp-edges}
+.layer{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* clouds drift slowly to the right and pass behind the tree */
+.cloud{top:0;left:0;animation:drift linear infinite}
+.c1{width:calc(40 * var(--u));height:calc(13 * var(--u));top:calc(28 * var(--u));background-image:url(/pixel/cloud-1.png);animation-duration:120s;animation-delay:-70s}
+.c2{width:calc(28 * var(--u));height:calc(10 * var(--u));top:calc(10 * var(--u));background-image:url(/pixel/cloud-2.png);animation-duration:160s;animation-delay:-20s}
+.c3{width:calc(18 * var(--u));height:calc(7 * var(--u));top:calc(50 * var(--u));background-image:url(/pixel/cloud-3.png);animation-duration:90s;animation-delay:-55s}
+@keyframes drift{from{transform:translateX(calc(-45 * var(--u)))}to{transform:translateX(100cqw)}}
+
+/* birds flap while flying across the scene, right to left (the sprite faces left), bobbing a little on the way.
+   One 30s cycle: 18s crossing (0–60%), then 12s off screen before the pair comes back.
+   --x / --y is each bird's resting spot from the reference (in scene pixels): where they sit when motion is reduced
+   (animation:none drops the translate/transform). In flight they use --lane instead of --y, a strip of open sky above
+   the headline, so they don't disappear behind the intro panel on the left. The negative fly delays start the pair
+   mid-crossing at page load, at their resting x.
+   flap / fly / bob animate different properties (background-position / translate / transform), so they combine. */
+.bird{left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(11 * var(--u));height:calc(9 * var(--u));background-image:url(/pixel/bird.png);background-size:200% 100%;animation:flap .4s step-end infinite,fly 30s linear infinite,bob 3s ease-in-out infinite}
+.b1{--x:108;--y:56;--lane:2;animation-delay:0s,-9.8s,0s}
+.b2{--x:124;--y:64;--lane:7;animation-duration:.46s,30s,3.4s;animation-delay:-.2s,-8.8s,-1.5s}
+@keyframes flap{0%{background-position:0% 0}50%{background-position:100% 0}}
+/* from just past the right edge (256) to just past the left edge (-15; the bird is 11 wide), in the sky lane */
+@keyframes fly{0%{translate:calc((256 - var(--x)) * var(--u)) calc((var(--lane) - var(--y)) * var(--u))}60%,100%{translate:calc((-15 - var(--x)) * var(--u)) calc((var(--lane) - var(--y)) * var(--u))}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(calc(-3 * var(--u)))}}
+
+/* leaves fall from the canopy */
+.leaf{width:calc(4 * var(--u));height:calc(5 * var(--u));opacity:0;animation:fall linear infinite}
+.l1{left:calc(162 * var(--u));top:calc(30 * var(--u));background-image:url(/pixel/leaf-1.png);animation-duration:11s;animation-delay:-2s}
+.l2{left:calc(180 * var(--u));top:calc(20 * var(--u));background-image:url(/pixel/leaf-2.png);animation-duration:14s;animation-delay:-9s}
+.l3{left:calc(198 * var(--u));top:calc(38 * var(--u));width:calc(5 * var(--u));height:calc(4 * var(--u));background-image:url(/pixel/leaf-3.png);animation-duration:12s;animation-delay:-5s}
+.l4{left:calc(216 * var(--u));top:calc(24 * var(--u));background-image:url(/pixel/leaf-4.png);animation-duration:16s;animation-delay:-12s}
+.l5{left:calc(234 * var(--u));top:calc(32 * var(--u));background-image:url(/pixel/leaf-1.png);animation-duration:13s;animation-delay:-7s}
+.l6{left:calc(150 * var(--u));top:calc(16 * var(--u));background-image:url(/pixel/leaf-2.png);animation-duration:15s;animation-delay:-1s}
+@keyframes fall{
+0%{transform:translate(0,0);opacity:0}
+6%{opacity:1}
+25%{transform:translate(calc(4 * var(--u)),calc(24 * var(--u)))}
+50%{transform:translate(calc(-3 * var(--u)),calc(50 * var(--u)))}
+75%{transform:translate(calc(4 * var(--u)),calc(76 * var(--u)))}
+92%{opacity:1}
+100%{transform:translate(0,calc(100 * var(--u)));opacity:0}}
+
+/* coffee steam */
+.steam{left:calc(185 * var(--u));top:calc(111 * var(--u));width:calc(9 * var(--u));height:calc(14 * var(--u));background-image:url(/pixel/steam.png);background-size:300% 100%;animation:steam .54s step-end infinite}
+@keyframes steam{0%{background-position:0% 0}33.33%{background-position:50% 0}66.66%{background-position:100% 0}}
+
+/* bunny peeks out of the grass, blinks, hides */
+.bunny{left:calc(110 * var(--u));bottom:0;width:calc(12 * var(--u));height:calc(11 * var(--u));background-image:url(/pixel/bunny.png);background-size:200% 100%;transform:translateY(100%);animation:peek 10s steps(3,end) infinite,blink 10s step-end infinite}
+@keyframes peek{0%,38%{transform:translateY(100%)}43%,80%{transform:translateY(0)}85%,100%{transform:translateY(100%)}}
+@keyframes blink{0%{background-position:0% 0}55%{background-position:100% 0}57%{background-position:0% 0}68%{background-position:100% 0}70%{background-position:0% 0}}
+
+/* foreground grass + flowers sway */
+.grass{left:0;bottom:0;width:100%;height:calc(30 * var(--u));background-image:url(/pixel/grass.png);background-size:400% 100%;animation:sway 2.4s step-end infinite}
+@keyframes sway{0%{background-position:0% 0}25%{background-position:33.333% 0}50%{background-position:66.667% 0}75%{background-position:100% 0}}
+
+/* pixel dissolve into the page */
+.dissolve{left:0;bottom:-1px;width:100%;height:calc(10 * var(--u));background-image:url(/pixel/dissolve.png)}
+
+/* ---------- live task feed: pixel game dialog box ---------- */
+.tasks{--b:max(3px,var(--u));--ink:#36502F;position:absolute;left:calc(142 * var(--u));top:calc(68 * var(--u));width:16em;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:clamp(11px,calc(2.4 * var(--u)),15px);z-index:2;padding:.6em .6em .55em;background:#E4ECD6;box-shadow:0 calc(-1 * var(--b)) 0 0 var(--ink),0 var(--b) 0 0 var(--ink),calc(-1 * var(--b)) 0 0 0 var(--ink),var(--b) 0 0 0 var(--ink),0 calc(2 * var(--b)) 0 0 rgba(20,46,30,.28);animation:panelIn .5s steps(4,end) .4s both}
+@keyframes panelIn{from{opacity:0;transform:translateY(calc(3 * var(--u)))}to{opacity:1;transform:none}}
+.tail{position:absolute;left:78%;bottom:calc(-4 * var(--b));width:calc(7 * var(--b));height:calc(4 * var(--b));display:block}
+.feed-head{display:flex;align-items:center;gap:.5em;padding:0 .2em .45em;font-size:.78em;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.live{width:.55em;height:.55em;background:#2E9E4F;animation:sq 1s steps(1,end) infinite}
+@keyframes sq{50%{opacity:.25}}
+.rows{display:flex;flex-direction:column;gap:.3em;height:calc(3 * 2.2em + 2 * .3em);overflow:hidden}
+.row{position:relative;flex:none;height:2.2em;display:flex;align-items:center;gap:.55em;padding:0 .5em;color:#1F2A2E;animation-duration:.45s;animation-timing-function:steps(4,end);animation-fill-mode:both;overflow:hidden}
+.row.r0{background:#D3E1C2}
+.row.r1{opacity:.9}
+.row.r2{opacity:.7} /* was .5: text at 2.9:1; .7 keeps it faded and readable (4.5:1+) */
+.p-a .row{animation-name:pushA}
+.p-b .row{animation-name:pushB}
+.p-a .row.r0{animation-name:inA}
+.p-b .row.r0{animation-name:inB}
+@keyframes pushA{from{transform:translateY(calc(-100% - .3em))}to{transform:none}}
+@keyframes pushB{from{transform:translateY(calc(-100% - .3em))}to{transform:none}}
+@keyframes inA{from{opacity:0;transform:translateY(-50%)}to{opacity:1;transform:none}}
+@keyframes inB{from{opacity:0;transform:translateY(-50%)}to{opacity:1;transform:none}}
+.ic{width:1.05em;height:1.05em;flex:none;display:block}
+.ld rect{fill:#146EF5;animation:ld 0.9s steps(1,end) infinite}
+.ld rect:nth-child(2){animation-delay:.3s}
+.ld rect:nth-child(3){animation-delay:.6s}
+@keyframes ld{0%{opacity:1}33%{opacity:.2}}
+.tname{font-weight:500;white-space:nowrap}
+.tstate{margin-left:auto;font-size:.82em;color:#0958CF;white-space:nowrap}
+.bar{position:absolute;left:.5em;bottom:.22em;height:.22em;width:calc(100% - 1em);background:repeating-linear-gradient(90deg,#146EF5 0 .55em,transparent .55em .7em);clip-path:inset(0 100% 0 0);animation-duration:2.8s;animation-timing-function:steps(10,end);animation-fill-mode:both}
+.p-a .bar{animation-name:barA}
+.p-b .bar{animation-name:barB}
+@keyframes barA{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes barB{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* off screen: Hero.tsx adds .hero-paused via an IntersectionObserver */
+.hero-paused .scene *,.hero-paused .tasks,.hero-paused .tasks *{animation-play-state:paused !important}
+
+/* ---------- copy (nav rules live in Nav.css) ---------- */
+.copy{position:absolute;z-index:4;left:max(clamp(20px, 6vw, 112px), calc((100% - 1440px) / 2 + 112px));top:clamp(120px,20%,220px);max-width:600px}
+.hero-sub{color:#2A3B45}
+
+/* desktop: the scene fills the width, anchored to the bottom, with 100px of plain sky above it (the hero background).
+   The hero stops growing at 910px, so on very wide screens only sky is cropped at the top. Everything in the scene is
+   sized in cqw (--u), so it scales with it. */
+@media (min-width:1025px){
+.hero{aspect-ratio:auto;height:min(calc(56.25vw + 100px),910px);min-height:0}
+.scene{left:0;right:0;width:100%;height:auto;aspect-ratio:16 / 9;bottom:0;top:auto}
+}
+
+@media (max-width:1024px){
+.hero{aspect-ratio:auto;height:900px;min-height:0}
+.copy{left:0;right:0;top:0;padding:96px clamp(20px,6vw,112px) 44px;max-width:none;background:linear-gradient(180deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.82) 70%,rgba(255,255,255,0) 100%)}
+.copy > *{max-width:560px}
+}
+@media (max-width:760px){
+.hero{height:760px}
+.copy{padding:84px 20px 36px}
+.copy h1{font-size:30px !important}
+.copy .hero-sub{display:none}
+.copy .btn{min-height:42px;padding:0 16px;font-size:15px}
+.scene{right:-84px}
+.tasks{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+.scene *,.tasks,.tasks *{animation:none !important}
+.bunny{transform:translateY(100%)}
+}

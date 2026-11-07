@@ -1,0 +1,33 @@
+/* PixelText.tsx */
+
+/* ---------- trigger "load": block build ----------
+   Each character is a cell: the real letter keeps the exact width and line breaks (inline spans, not inline-block, so
+   the text wraps and kerns like plain text: no layout shift). data-f on the cell is the frame, switched from JS:
+   none = hidden, "b" = block, "l" = letter. No transitions. */
+.pxt-c{position:relative}
+.pxt-r{color:transparent}
+.pxt-c[data-f="l"] .pxt-r{color:inherit}
+.pxt-b{display:none}
+/* Character-cell block: full advance width, cap height, standing on the baseline (--pxt-desc is the font's descent,
+   measured in JS). Square corners, flat colour. */
+.pxt-c[data-f="b"] .pxt-b{display:block;position:absolute;left:0;right:0;bottom:var(--pxt-desc,.24em);height:.7em;height:1cap;background:#146EF5;border-radius:0}
+
+/* ---------- trigger "hover": button wipe ----------
+   Any .btn whose label is a PixelText hover span: a fill wipes in from the left in 4 hard steps (160ms), the label
+   (and arrow) turn white at step 2 (80ms), the arrow moves 4px right in 2 steps. Leaving reverses it with the same
+   steps. On hover (mouse/trackpad screens only, not touch) and on keyboard focus. Reduced motion: global.css turns
+   every transition off, so the end state just appears. */
+.btn:has(.pxt-hover){--wipe:#146EF5;position:relative;isolation:isolate;transition:transform .14s steps(2,end),box-shadow .14s steps(2,end),color 0s linear 80ms}
+/* the primary button is already #146EF5: wipe in its darker ink instead */
+.btn-primary:has(.pxt-hover){--wipe:#0B3F8F}
+.btn:has(.pxt-hover)::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--wipe);transform:scaleX(0);transform-origin:left center;transition:transform .16s steps(4,end);pointer-events:none}
+.btn:has(.pxt-hover) svg{transition:transform .16s steps(2,end),fill 0s linear 80ms}
+
+@media (hover:hover){
+.btn:has(.pxt-hover):hover{color:#ffffff}
+.btn:has(.pxt-hover):hover::before{transform:scaleX(1)}
+.btn:has(.pxt-hover):hover svg{transform:translateX(4px);fill:#ffffff}
+}
+.btn:has(.pxt-hover):focus-visible{color:#ffffff}
+.btn:has(.pxt-hover):focus-visible::before{transform:scaleX(1)}
+.btn:has(.pxt-hover):focus-visible svg{transform:translateX(4px);fill:#ffffff}

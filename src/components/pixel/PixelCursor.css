@@ -1,0 +1,72 @@
+/* Minecraft-style cursor (PixelCursor.tsx). Values copied from design-reference/cursor-demo.html; the demo's
+   section-relative position:absolute layer is page-wide here: one position:fixed layer in viewport coordinates. */
+
+/* Native cursor off on the whole page while the pixel cursor runs; text fields keep the text cursor */
+.pixel-page.px-cursor-on,
+.pixel-page.px-cursor-on *{cursor:none}
+.pixel-page.px-cursor-on :is(input,textarea,select,[contenteditable]){cursor:text}
+
+/* Frame, cracks and particles */
+.cx-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:9999}
+
+/* crosshair — its own fixed node, not inside .cx-layer: a fixed layer with a z-index is an isolated group, and
+   mix-blend-mode inside it would only blend with the (empty) layer instead of inverting the page behind it.
+   Moved with transform from JS; the negative margins centre it on the pointer. */
+.cx-cross{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;pointer-events:none;z-index:9999;mix-blend-mode:difference;will-change:transform}
+.cx-cross::before,.cx-cross::after{content:"";position:absolute;background:#ffffff}
+.cx-cross::before{left:9px;top:0;width:4px;height:22px}
+.cx-cross::after{left:0;top:9px;width:22px;height:4px}
+
+/* selection frame
+   .cx-frame-pos is positioned from JS (fixed at 0,0 + translate3d, width/height), so the demo's appear (cxin) and
+   shake (cxshake) animations on the inner .cx-frame, which animate transform, can't override the position.
+   The steps(3) snap is the demo's left/top/width/height transition moved to transform/width/height. JS turns it off
+   for every write that isn't the pointer moving to a different target (resize, the target moving or resizing).
+   While scrolling, JS hides the frame altogether (hidden attribute) and shows it again once scrolling stops. */
+.cx-frame-pos{position:fixed;left:0;top:0;pointer-events:none;z-index:19;will-change:transform;transition:transform .12s steps(3,end),width .12s steps(3,end),height .12s steps(3,end)}
+.cx-frame{position:absolute;inset:0;pointer-events:none;animation:cxin .18s steps(3,end) both}
+@keyframes cxin{from{opacity:0;transform:scale(1.12)}to{opacity:1;transform:none}}
+.cx-frame i{position:absolute;width:16px;height:16px;border:0 solid #1C2B19}
+.cx-frame i:nth-child(1){left:0;top:0;border-left-width:4px;border-top-width:4px}
+.cx-frame i:nth-child(2){right:0;top:0;border-right-width:4px;border-top-width:4px}
+.cx-frame i:nth-child(3){left:0;bottom:0;border-left-width:4px;border-bottom-width:4px}
+.cx-frame i:nth-child(4){right:0;bottom:0;border-right-width:4px;border-bottom-width:4px}
+
+/* block-break particles */
+.cx-burst{position:absolute;width:0;height:0;pointer-events:none;z-index:21}
+.cx-burst i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;animation:cxp .5s steps(5,end) forwards}
+.cx-burst i:nth-child(1){background:#7CC46B;--dx:-26px;--dy:-30px}
+.cx-burst i:nth-child(2){background:#4C8A2E;--dx:22px;--dy:-34px}
+.cx-burst i:nth-child(3){background:#8B5A2B;--dx:-34px;--dy:-10px}
+.cx-burst i:nth-child(4){background:#C08A54;--dx:30px;--dy:-14px}
+.cx-burst i:nth-child(5){background:#5A3A22;--dx:-12px;--dy:-40px}
+.cx-burst i:nth-child(6){background:#7CC46B;--dx:12px;--dy:-24px}
+@keyframes cxp{0%{transform:translate(0,0);opacity:1}55%{transform:translate(calc(var(--dx) * var(--k,1)),calc(var(--dy) * var(--k,1)));opacity:1}100%{transform:translate(calc(var(--dx) * var(--k,1) * 1.3),calc(var(--dy) * var(--k,1) * -0.2 + 26px));opacity:0}}
+.cx-burst i:nth-child(7){background:#C08A54;--dx:-40px;--dy:-24px}
+.cx-burst i:nth-child(8){background:#4C8A2E;--dx:38px;--dy:-26px}
+.cx-burst i:nth-child(9){background:#8B5A2B;--dx:-18px;--dy:-48px}
+.cx-burst i:nth-child(10){background:#7CC46B;--dx:20px;--dy:-46px}
+.cx-burst i:nth-child(11){background:#5A3A22;--dx:-46px;--dy:-4px}
+.cx-burst i:nth-child(12){background:#C08A54;--dx:44px;--dy:-6px}
+.cx-burst i:nth-child(n+7){display:none}
+.cx-burst.mini{--k:.45}
+.cx-burst.mini i{width:6px;height:6px;animation-duration:.35s}
+.cx-burst.mini i:nth-child(n+4){display:none}
+.cx-burst.big{--k:1.7}
+.cx-burst.big i{width:10px;height:10px;left:-5px;top:-5px;animation-duration:.7s}
+.cx-burst.big i:nth-child(n+7){display:block}
+
+/* hold-to-break cracks */
+.cx-crack{position:absolute;pointer-events:none;z-index:18;background-repeat:repeat;background-size:48px 48px;image-rendering:pixelated}
+.cx-crack.s1{background-image:url(/pixel/crack-1.png)}
+.cx-crack.s2{background-image:url(/pixel/crack-2.png)}
+.cx-crack.s3{background-image:url(/pixel/crack-3.png)}
+.cx-crack.s4{background-image:url(/pixel/crack-4.png)}
+.cx-crack.s5{background-image:url(/pixel/crack-5.png)}
+.cx-crack.s6{background-image:url(/pixel/crack-6.png)}
+.cx-crack.s7{background-image:url(/pixel/crack-7.png)}
+.cx-frame.holding{animation:cxshake .12s steps(2,end) infinite}
+@keyframes cxshake{0%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,0)}}
+
+/* Safety net: the component already renders nothing with reduced motion */
+@media (prefers-reduced-motion:reduce){.cx-layer,.cx-cross{display:none}}
