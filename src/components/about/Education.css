@@ -1,0 +1,16 @@
+/* Certificate cards — copied from design-reference/about.html: ".edu", ".edu-card", ".edu-ic".
+   .edu-card / .edu-ic share their rules with .ex-card / .ex-ic (WorkingWithMe.css) in the reference. */
+/* --edu-cols is set by Education.tsx (number of cards, max 3); the phone rule below still makes it one column. */
+.edu{display:grid;grid-template-columns:repeat(var(--edu-cols,3),minmax(0,1fr));gap:36px;margin-top:44px}
+.edu-card{--ink:#36502F;padding:26px 26px 28px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.16)}
+.edu-ic{--ink:#36502F;display:grid;place-items:center;width:64px;height:64px;background:#F4F7EE;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink)}
+.edu-ic svg{width:42px;height:auto;display:block}
+.edu-card time{display:block;margin-top:22px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.edu-card h3{margin:8px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500;line-height:1.2;color:#1F2A2E}
+/* A card without a year: the title takes the year's 22px gap under the icon (as .ex-card h3 does). */
+.edu-ic + h3{margin-top:22px}
+.edu-card > span:not(.edu-ic){display:block;margin-top:6px;font-size:16px;color:#4A6070}
+.edu-card a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.edu-card a:hover{color:#146EF5}
+
+@media (max-width:860px){.edu{grid-template-columns:minmax(0,1fr)}}

@@ -2,8 +2,9 @@ import { createElement, type ComponentType } from 'react'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import CaseStudy from './pages/CaseStudy'
+import About from './pages/About'
 import { PROJECTS } from './data/projects'
-import { HOME_JSON_LD, caseStudyJsonLd } from './seo/jsonLd'
+import { ABOUT_JSON_LD, HOME_JSON_LD, caseStudyJsonLd } from './seo/jsonLd'
 
 export type Route = {
   path: string
@@ -21,6 +22,8 @@ export type Route = {
 // Add new pages here: each one is prerendered and (if sitemap is true) listed in sitemap.xml.
 export const ROUTES: Route[] = [
   { path: '/', file: 'index.html', Page: Home, sitemap: true, jsonLd: HOME_JSON_LD, ownCursor: true },
+  // Cloudflare serves about.html at /about.
+  { path: '/about', file: 'about.html', Page: About, sitemap: true, jsonLd: ABOUT_JSON_LD, ownCursor: true },
   // Project pages, /work/:slug: one template (pages/CaseStudy.tsx), one prerendered route per entry in
   // src/data/projects.ts, each one indexed and in the sitemap. Cloudflare serves work/x.html at /work/x.
   // Old project URLs redirect to /#work (public/_redirects).
