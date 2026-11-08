@@ -141,12 +141,15 @@
 .copy{position:absolute;z-index:4;left:max(clamp(20px, 6vw, 112px), calc((100% - 1440px) / 2 + 112px));top:clamp(120px,20%,220px);max-width:600px}
 .hero-sub{color:#2A3B45}
 
-/* desktop: the scene fills the width, anchored to the bottom, with 100px of plain sky above it (the hero background).
-   The hero stops growing at 910px, so on very wide screens only sky is cropped at the top. Everything in the scene is
-   sized in cqw (--u), so it scales with it. */
+/* desktop: the scene fills the width and the hero is exactly the scene's height (16:9 of its width), so there is no
+   plain sky above the tree. Above ~1630px wide the hero stops growing at its 1630px height (917px), so it never gets
+   taller than the screen: the scene keeps filling the width, anchored to the bottom (character, grass and dissolve stay),
+   and only the top of the sky/canopy is cropped. A max-height cap rather than a breakpoint, so the hero and the scene
+   always come from the same width and no gap can open at the switch (whatever the scrollbar width).
+   Everything in the scene is sized in cqw (--u), so it scales with it. */
 @media (min-width:1025px){
-.hero{aspect-ratio:auto;height:min(calc(56.25vw + 100px),910px);min-height:0}
-.scene{left:0;right:0;width:100%;height:auto;aspect-ratio:16 / 9;bottom:0;top:auto}
+.hero{width:100%;aspect-ratio:16 / 9;height:auto;min-height:0;max-height:calc(1630px * 9 / 16)}
+.scene{left:0;right:0;top:auto;bottom:0;width:100%;height:auto;aspect-ratio:16 / 9}
 }
 
 @media (max-width:1024px){
@@ -158,6 +161,7 @@
 .hero{height:760px}
 .copy{padding:84px 20px 36px}
 .copy h1{font-size:30px !important}
+.copy h1 br{display:none} /* no forced break before "and React." on phones; "Webflow and React." stays together (Hero.tsx) */
 .copy .hero-sub{display:none}
 .copy .btn{min-height:42px;padding:0 16px;font-size:15px}
 .scene{right:-84px}
