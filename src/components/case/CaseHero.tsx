@@ -1,93 +1,72 @@
-import type { ReactNode } from 'react'
 import type { Project } from '../../types/project'
 import PixelArrow from '../pixel/PixelArrow'
-import { caseImageSize } from './caseImages'
-import { liveLabel } from './liveLabel'
-// The sky scene's classes (.p-skybg, .p-cloud, .p-land, …) live with the home Process section.
-import '../home/Process.css'
-import './CaseHero.css'
+import CaseSky from './CaseSky'
+import CaseShowcase from './CaseShowcase'
+import PixelIcon from './PixelIcon'
 
-// Project page hero, copied from design-reference/case-study/case-study.html (section.chero): breadcrumb,
-// "Case study · year", h1, blue subtitle, intro, the two buttons, the facts row (.cmeta), the sky scene from the
-// home Process section (.ch-sky) and the mockup in the pixel frame (.shot). The page puts the site Nav above it (src/pages/CaseStudy.tsx).
-
-export default function CaseHero({ project, hasNext }: { project: Project; hasNext: boolean }) {
-  // Facts row: each cell only when the project has that fact.
-  const facts: { label: string; value: ReactNode }[] = []
-  facts.push({ label: 'Role', value: project.role })
-  if (project.with) {
-    const w = project.with
-    facts.push({
-      label: 'With',
-      value: w.url ? (
-        <a href={w.url} target="_blank" rel="noopener">
-          {w.name}
-        </a>
-      ) : (
-        w.name
-      ),
-    })
-  }
-  if (project.platform) facts.push({ label: 'Platform', value: project.platform })
-  if (project.builtWith) facts.push({ label: 'Built with', value: project.builtWith })
-
+// Hero + "How it looks", one sky section (design-reference/case-study/*.html: section.sky.chero).
+// The site Nav sits above it on the same sky (src/pages/CaseStudy.tsx).
+export default function CaseHero({ project }: { project: Project }) {
+  const { eyebrow, title, intro, liveLink, projectFile, tags } = project
   return (
-    <section className="chero" aria-labelledby="cs-title">
-        <p className="crumb">
-          <a href="/">Home</a> / <a href="/#work">Work</a> / {project.name}
-        </p>
-        <div className="chead">
+    <section className="cs-sky cs-hero" aria-labelledby="cs-title">
+      <CaseSky variant="hero" />
+      <div className="cs-skyc">
+        <div className="cs-hgrid">
           <div>
+            <a className="cs-back" href="/#work">
+              <PixelArrow className="cs-back-ar" />
+              All work
+            </a>
             <p className="px-label">
-              <i></i>Case study · {project.year}
+              <i></i>
+              {eyebrow}
             </p>
-            <h1 id="cs-title">{project.name}</h1>
-            {project.subtitle && <p className="sub">{project.subtitle}</p>}
-            <p className="lead">{project.lead ?? project.summary}</p>
-          </div>
-          {(project.liveUrl || hasNext) && (
-            <div className="cacts">
-              {project.liveUrl && (
-                <a className="btn btn-primary lg" href={project.liveUrl} target="_blank" rel="noopener">
-                  Visit {liveLabel(project)} <PixelArrow />
-                </a>
-              )}
-              {hasNext && (
-                <a className="btn lg" href="#next">
-                  Next project
-                </a>
-              )}
+            <h1 id="cs-title">
+              {title.lead}
+              <span>{title.accent}</span>
+            </h1>
+            <p className="cs-pxw cs-intro">{intro}</p>
+            <div className="cs-hacts">
+              <a className="btn btn-primary lg" href={liveLink.url} target="_blank" rel="noopener">
+                {liveLink.label} <PixelArrow />
+              </a>
+              <a className="btn lg" href="#how">
+                How we built it
+              </a>
             </div>
-          )}
-        </div>
-        {facts.length > 0 && (
-          <dl className="cmeta">
-            {facts.map((f) => (
-              <div key={f.label} className="mcell">
-                <dt>{f.label}</dt>
-                <dd>{f.value}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
-        {/* The home Process section's sky scene (owner's request): drifting clouds, the pixel landscape with
-            swaying grass, and the dissolve into the white band below the shot. Same classes as Process.tsx.
-            No birds here (owner's request: they didn't look good on the case study). */}
-        <div className="p-skybg ch-sky" aria-hidden="true">
-          <div className="px p-cloud pc1"></div>
-          <div className="px p-cloud pc2"></div>
-          <div className="px p-cloud pc3"></div>
-          <div className="px p-cloud pc4"></div>
-          <div className="px p-land"></div>
-          <div className="px p-grass"></div>
-          <div className="px p-dis p-dis-b"></div>
-        </div>
-        {project.heroImage && (
-          <div className="shot">
-            {/* Above the fold on most screens: load it first. */}
-            <img src={project.heroImage} alt={project.heroAlt ?? ''} {...caseImageSize(project.heroImage)} fetchPriority="high" decoding="async" />
           </div>
-        )}
+
+          <aside className="pxbox cs-pfile" aria-label="Project file">
+            <p className="px-label">
+              <i></i>Project file
+            </p>
+            <dl>
+              {projectFile.map((row) => (
+                <div className="cs-prow" key={row.label}>
+                  {/* dt is display:contents, so the box and the label are the row's first two grid cells */}
+                  <dt>
+                    <span className="cs-cbx">
+                      <PixelIcon name="check" className="cs-ck" />
+                    </span>
+                    <span>{row.label}</span>
+                  </dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="cs-tags">
+              {tags.map((t) => (
+                <span className="cs-tag" key={t}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </aside>
+        </div>
+
+        <CaseShowcase showcase={project.showcase} />
+      </div>
     </section>
   )
 }
