@@ -1,0 +1,32 @@
+/* Result + Next project — copied from design-reference/case-study/case-study.html (the result + next block:
+   .res, .rbox, .next, .nl; the reference's .ph placeholder is now .nshot, the next mockup). */
+.res{display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:48px;align-items:stretch;margin-top:44px}
+.rbox{--ink:#0B3F8F;padding:36px 40px;background:#146EF5;color:#fff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.18)}
+.rbox p{margin:0;font-family:'Inter Tight',Inter,sans-serif;font-size:30px;line-height:1.3;font-weight:500}
+.rbox .btn{margin-top:28px}
+.next{--ink:#36502F;display:block;padding:14px;background:#E4ECD6;text-decoration:none;color:inherit;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16);transition:transform .14s steps(2,end)}
+.next:hover{transform:translateY(-4px)}
+/* The mockup in the same pixel frame as the hero's (.chero .shot in CaseHero.css); margin-bottom clears its 14px drop. */
+.next .nshot{--ink:#36502F;margin:4px 4px 18px;padding:14px;background:#fff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 14px 0 0 rgba(20,46,30,.16)}
+.next .nshot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.next .nl{display:flex;align-items:center;justify-content:space-between;padding:16px 8px 4px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:20px;font-weight:500;color:#1F2A2E}
+.next .nl small{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.next .nl svg{display:block;flex:none;width:22px;height:20px;color:#146EF5}
+.next:hover .nl{color:#1F2A2E}
+
+/* No result: the Next project card alone, at the width it has next to the result box. */
+.res.res-solo{grid-template-columns:minmax(0,520px)}
+
+@media (prefers-reduced-motion:reduce){.next{transition:none}.next:hover{transform:none}}
+@media (max-width:1024px){
+.res,.res.res-solo{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px} /* solo: the card keeps the width it has next to the result box */
+.rbox{padding:30px 32px}
+.rbox p{font-size:24px}
+}
+@media (max-width:760px){
+.res,.res.res-solo{grid-template-columns:minmax(0,1fr);gap:36px;margin-top:32px}
+.rbox{padding:26px 22px 28px}
+.rbox p{font-size:21px}
+.next .nshot{padding:8px}
+.next .nl{font-size:18px}
+}

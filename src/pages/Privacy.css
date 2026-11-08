@@ -1,0 +1,39 @@
+/* Privacy policy page (pages/Privacy.tsx). */
+
+/* Sky strip behind the Nav, the same colour as .pv-head below it. */
+.pv-top{background:#C1EEF7}
+
+.pv-head{padding:72px 112px 64px;background:#C1EEF7;border-bottom:4px solid #36502F}
+.pv-head h1{margin:16px 0 0;font-family:'Inter Tight',Inter,sans-serif;font-size:56px;line-height:1.05;font-weight:500;letter-spacing:-.025em;color:#0E1B26}
+.pv-head h1 span{color:#146EF5}
+.pv-head p{margin:18px 0 0;max-width:640px;font-size:18px;line-height:1.55;color:#2A3B45}
+.pv-head .pv-meta{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#3D5361}
+.pv-body{display:grid;grid-template-columns:280px minmax(0,760px);gap:80px;padding:80px 112px 120px;background:#fff}
+.pv-toc{--ink:#36502F;align-self:start;position:sticky;top:24px;padding:20px 22px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.16)}
+.pv-toc b{display:block;margin-bottom:10px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:14px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.pv-toc a{display:block;padding:6px 0;font-size:15px;color:#1F2A2E;text-decoration:none}
+.pv-toc a:hover{color:#146EF5}
+.pv-doc{font-family:Inter,system-ui,sans-serif}
+.pv-doc h2{margin:56px 0 0;scroll-margin-top:24px;font-family:'Inter Tight',Inter,sans-serif;font-size:28px;font-weight:500;letter-spacing:-.01em;color:#0E1B26}
+.pv-doc h2:first-child{margin-top:0}
+.pv-doc h2 em{font-style:normal;margin-right:12px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:18px;color:#146EF5}
+.pv-doc p,.pv-doc li{font-size:17px;line-height:1.65;color:#2A3B45}
+.pv-doc ul{padding-left:22px}
+.pv-doc a{color:#146EF5;overflow-wrap:anywhere}
+
+/* responsive */
+@media (max-width:1024px){
+  .pv-head{padding:64px 48px 56px}
+  .pv-body{grid-template-columns:220px minmax(0,1fr);gap:48px;padding:64px 48px 96px}
+}
+@media (max-width:760px){
+  .pv-head{padding:48px 20px 40px}
+  .pv-head h1{font-size:38px}
+  .pv-head p{font-size:16px}
+  .pv-body{grid-template-columns:1fr;gap:40px;padding:40px 20px 72px}
+  .pv-toc{position:static}
+  .pv-doc h2{margin-top:44px;font-size:24px}
+  .pv-doc p,.pv-doc li{font-size:16px}
+}
+/* No html{scroll-behavior:smooth} here: CSS is bundled site-wide, and Lenis (src/smoothScroll.ts) already glides
+   same-page anchor links like the table of contents, and skips the glide under reduced motion. */

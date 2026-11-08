@@ -56,15 +56,15 @@
 .cx-burst.big i{width:10px;height:10px;left:-5px;top:-5px;animation-duration:.7s}
 .cx-burst.big i:nth-child(n+7){display:block}
 
-/* hold-to-break cracks */
+/* hold-to-break cracks. Stage classes are prefixed (cx-s1 … cx-s7): a bare .s5 is a case-study card (CaseBuild.css). */
 .cx-crack{position:absolute;pointer-events:none;z-index:18;background-repeat:repeat;background-size:48px 48px;image-rendering:pixelated}
-.cx-crack.s1{background-image:url(/pixel/crack-1.png)}
-.cx-crack.s2{background-image:url(/pixel/crack-2.png)}
-.cx-crack.s3{background-image:url(/pixel/crack-3.png)}
-.cx-crack.s4{background-image:url(/pixel/crack-4.png)}
-.cx-crack.s5{background-image:url(/pixel/crack-5.png)}
-.cx-crack.s6{background-image:url(/pixel/crack-6.png)}
-.cx-crack.s7{background-image:url(/pixel/crack-7.png)}
+.cx-crack.cx-s1{background-image:url(/pixel/crack-1.png)}
+.cx-crack.cx-s2{background-image:url(/pixel/crack-2.png)}
+.cx-crack.cx-s3{background-image:url(/pixel/crack-3.png)}
+.cx-crack.cx-s4{background-image:url(/pixel/crack-4.png)}
+.cx-crack.cx-s5{background-image:url(/pixel/crack-5.png)}
+.cx-crack.cx-s6{background-image:url(/pixel/crack-6.png)}
+.cx-crack.cx-s7{background-image:url(/pixel/crack-7.png)}
 .cx-frame.holding{animation:cxshake .12s steps(2,end) infinite}
 @keyframes cxshake{0%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,0)}}
 

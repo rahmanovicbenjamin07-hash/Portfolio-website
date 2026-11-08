@@ -33,6 +33,10 @@ body:has(.pixel-page){margin:0;background:#ffffff}
 .btn-primary{--ink:#0B3F8F;--fill:#146EF5;--fg:#ffffff}
 .btn-dark{--ink:#1C2B19;--fill:#36502F;--fg:#F1F5E8}
 .btn-sm{min-height:40px;padding:0 16px;font-size:15px}
+/* buttons: bob after 5 s of hover */
+.btn:hover{animation:idlebob .8s steps(2,end) 5s infinite}
+@keyframes idlebob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(-7px)}}
+@media (prefers-reduced-motion:reduce){.btn:hover{animation:none}}
 
 
 /* Text panel: the nav link pill's look (Nav.css .links fill and ink) with a thicker 6px pixel border and the drop

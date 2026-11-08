@@ -15,6 +15,10 @@ import './PixelCursor.css'
 // Never calls preventDefault: clicks, links and text selection behave as before.
 
 const TARGET = 'a, button, [role="button"], [data-cursor-target]'
+// Clickable but not a cursor target: no selection frame, no hold-to-crack (e.g. the hero's invisible tree hit areas).
+const IGNORE = '[data-cursor-ignore]'
+// Keeps the selection frame but skips the hold-to-crack (e.g. the hero's dog).
+const NO_HOLD = '[data-cursor-no-hold]'
 const DEVICE_QUERY = '(hover: hover) and (pointer: fine)'
 const REDUCED_QUERY = '(prefers-reduced-motion: reduce)'
 const PAD = 10
@@ -90,7 +94,7 @@ export default function PixelCursor() {
     const targetOf = (el: EventTarget | null): Element | null => {
       if (!(el instanceof Element)) return null
       const t = el.closest(TARGET)
-      return t && root.contains(t) ? t : null
+      return t && !t.matches(IGNORE) && root.contains(t) ? t : null
     }
 
     const schedule = () => {
@@ -161,8 +165,12 @@ export default function PixelCursor() {
         const r = drawn.getBoundingClientRect()
         if (drifted(r)) place(r)
       }
-      // Keep checking every frame while the frame is on screen
-      if (drawn && !pos.hidden) schedule()
+      if (holdTarget) {
+        const r = holdTarget.getBoundingClientRect()
+        if (crackDrifted(r)) placeCrack(r)
+      }
+      // Keep checking every frame while the frame is on screen or a hold is running
+      if ((drawn && !pos.hidden) || holdTarget) schedule()
     }
 
     // --- particles ---
@@ -181,6 +189,19 @@ export default function PixelCursor() {
     }
 
     // --- hold to break ---
+    // Cracks cover the held target's box. Re-placed from tick whenever the target moves or resizes mid-hold.
+    const placeCrack = (r: DOMRect) => {
+      holdRect = r
+      crack.style.left = `${r.left}px`
+      crack.style.top = `${r.top}px`
+      crack.style.width = `${r.width}px`
+      crack.style.height = `${r.height}px`
+    }
+    const crackDrifted = (r: DOMRect) => {
+      const h = holdRect!
+      return Math.abs(r.left - h.left) > 0.5 || Math.abs(r.top - h.top) > 0.5 || Math.abs(r.width - h.width) > 0.5 || Math.abs(r.height - h.height) > 0.5
+    }
+
     const stopHold = () => {
       window.clearInterval(holdTimer)
       holdTimer = 0
@@ -196,14 +217,11 @@ export default function PixelCursor() {
       stopHold()
       const r = t.getBoundingClientRect()
       holdTarget = t
-      holdRect = r
       stage = 1
-      crack.className = 'cx-crack s1'
-      crack.style.left = `${r.left}px`
-      crack.style.top = `${r.top}px`
-      crack.style.width = `${r.width}px`
-      crack.style.height = `${r.height}px`
+      crack.className = 'cx-crack cx-s1'
+      placeCrack(r)
       crack.hidden = false
+      schedule() // tick keeps the cracks on the target while it moves (a .btn drops 6px on :active)
       frame.classList.add('holding')
       holdTimer = window.setInterval(() => {
         if (stage >= STAGES) {
@@ -213,7 +231,7 @@ export default function PixelCursor() {
           return
         }
         stage += 1
-        crack.className = `cx-crack s${stage}`
+        crack.className = `cx-crack cx-s${stage}`
         burst(x, y, 'mini')
       }, STAGE_MS)
     }
@@ -249,7 +267,7 @@ export default function PixelCursor() {
       y = e.clientY
       burst(x, y, '')
       const t = targetOf(e.target)
-      if (t) startHold(t)
+      if (t && !t.matches(NO_HOLD)) startHold(t)
     }
 
     const onLeaveWindow = () => {
@@ -292,7 +310,7 @@ export default function PixelCursor() {
       } catch {
         keyboard = false
       }
-      focused = keyboard && el.matches(TARGET) && root.contains(el) ? el : null
+      focused = keyboard && el.matches(TARGET) && !el.matches(IGNORE) && root.contains(el) ? el : null
       if (focused) source = 'focus'
       requestFrame(false)
     }
@@ -346,7 +364,7 @@ export default function PixelCursor() {
   return (
     <>
       <div ref={layerRef} className="cx-layer" aria-hidden="true">
-        <span ref={crackRef} className="cx-crack s1" hidden />
+        <span ref={crackRef} className="cx-crack cx-s1" hidden />
         <span ref={posRef} className="cx-frame-pos" hidden>
           <span ref={frameRef} className="cx-frame">
             <i></i>

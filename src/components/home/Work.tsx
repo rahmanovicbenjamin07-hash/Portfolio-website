@@ -1,75 +1,81 @@
-import type { CSSProperties } from "react";
 import PixelArrow from "../pixel/PixelArrow";
-import work from "../../data/work";
-import "./Work.css";
 import PixelText from "../PixelText";
+import site from "../../data/site";
+import work, { WORK_HEADER } from "../../data/work";
+import "./Work.css";
 
-// Section 01 — Selected work. Markup copied from design-reference/home.html (<section id="work">).
-// Card content lives in src/data/work.ts.
+// Section 01 — Selected work: three project cards, each a laptop + phones mockup on the pixel grass scene.
+// Content lives in src/data/work.ts. Keep id="work": the hero's "See my work" button scrolls here.
 
-const titleStyle: CSSProperties = {
-  margin: "16px 0 0",
-  maxWidth: 760,
-  fontFamily: "'Inter Tight', Inter, sans-serif",
-  fontSize: "clamp(32px, 3.3vw, 48px)",
-  lineHeight: 1.08,
-  fontWeight: 500,
-  letterSpacing: "-0.02em",
-  color: "#0E1B26",
-};
-
-// The home page shows three cards: the featured one (work.ts, featured: true) across the full width, then two side by
-// side; one column from 1024px down (Work.css).
-const HOME_CARDS = 3;
+const external = /^https?:\/\//.test(site.letsTalkUrl);
 
 export default function Work() {
   return (
-    <section id="work" className="work" aria-labelledby="work-title">
-      <p className="px-label">
-        <i></i>01 — Selected work
-      </p>
-      <h2 id="work-title" style={titleStyle}>
-        Selected work <span style={{ color: "#4A6070" }}>— websites I designed and built.</span>
-      </h2>
-      <div className="work-grid">
-        {work.slice(0, HOME_CARDS).map((project) => (
-          <a
-            key={project.href}
-            href={project.href}
-            className={project.featured ? "card featured" : "card"}
-            aria-label={`Case study: ${project.name}`}
-          >
-            <div className="shot">
-              {project.image ? (
-                <img
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  width={project.image.width}
-                  height={project.image.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                project.placeholder
-              )}
+    <section id="work" className="ws" aria-labelledby="work-title">
+      <div className="ws-head">
+        <div>
+          <p className="px-label">
+            <i></i>
+            {WORK_HEADER.label}
+          </p>
+          <h2 id="work-title">
+            {WORK_HEADER.title} <span>{WORK_HEADER.accent}</span>
+          </h2>
+          <p className="ws-intro">{WORK_HEADER.intro}</p>
+        </div>
+        <a href={site.letsTalkUrl} className="btn btn-dark" {...(external ? { target: "_blank", rel: "noopener" } : {})}>
+          <PixelText text={WORK_HEADER.button} trigger="hover" /> <PixelArrow color="#ffffff" />
+        </a>
+      </div>
+      <div className="ws-grid">
+        {work.map((p) => (
+          <article key={p.slug} className="ws-card">
+            <div className="ws-bar">
+              <i></i>
+              <i></i>
+              <i></i>
+              <span>{p.file}</span>
             </div>
-            <div className="card-foot">
-              <span className="card-name">{project.name}</span>
-              <span className="arrow">
-                <PixelArrow color="#E4ECD6" />
+            <div className="ws-shot">
+              <span className={p.badge === "App" ? "ws-badge app" : "ws-badge"}>{p.badge}</span>
+              <img
+                src={`/images/work/${p.slug}/mockup-transparent.webp`}
+                alt={`${p.name} on a laptop and phones`}
+                width={2400}
+                height={1500}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="ws-body">
+              {p.meta && <span className="ws-meta">{p.meta}</span>}
+              <h3>
+                {/* The card's link: its ::after covers the whole card, so hovering the card frames this heading. */}
+                <a className="ws-link" href={`/work/${p.slug}`}>
+                  {p.name}
+                </a>
+              </h3>
+              <p>{p.summary}</p>
+              <span className="ws-role">
+                Role: <b>{p.role}</b>
               </span>
+              <div className="ws-tags">
+                {p.tags.map((t) => (
+                  <span key={t} className="ws-tag">
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <div className="ws-foot">
+                {/* Sits above the card link (z-index), so hovering it frames the button instead of the heading. */}
+                <a className="btn ws-cta" href={`/work/${p.slug}`} aria-label={`${p.name} case study`}>
+                  <PixelText text="Case study" trigger="hover" /> <PixelArrow />
+                </a>
+              </div>
             </div>
-          </a>
+          </article>
         ))}
       </div>
-      {/* No all-work page yet: the button only appears once there are more projects than the home page shows. */}
-      {work.length > HOME_CARDS && (
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 64 }}>
-          <a href="#all-work" className="btn">
-            <PixelText text="See all work" trigger="hover" /> <PixelArrow color="#36502F" />
-          </a>
-        </div>
-      )}
     </section>
   );
 }

@@ -1,0 +1,10 @@
+/* Features — copied from design-reference/case-study/case-study.html (the owner features block: .feats, .feat, .ic). */
+.feats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:44px}
+.feat{--ink:#36502F;padding:26px 24px 28px;background:#fff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.16)}
+.feat .ic{display:grid;place-items:center;width:64px;height:64px;background:#E4ECD6;box-shadow:0 0 0 3px #36502F}
+.feat .ic svg{display:block;width:40px;height:40px}
+.feat h3{margin:20px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500;color:#1F2A2E}
+.feat p{margin:8px 0 0;font-size:16px;line-height:1.5;color:#2A3B45}
+
+@media (max-width:1024px){.feats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.feats{grid-template-columns:minmax(0,1fr);gap:28px;margin-top:32px}}

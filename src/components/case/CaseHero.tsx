@@ -1,87 +1,93 @@
 import type { ReactNode } from 'react'
 import type { Project } from '../../types/project'
-import Nav from '../home/Nav'
 import PixelArrow from '../pixel/PixelArrow'
-import { imageSize } from '../../data/imageSizes'
+import { caseImageSize } from './caseImages'
+import { liveLabel } from './liveLabel'
+// The sky scene's classes (.p-skybg, .p-cloud, .p-land, …) live with the home Process section.
+import '../home/Process.css'
 import './CaseHero.css'
 
-// Project page hero, copied from design-reference/case-study.html (section.cs-hero + the .shot-lift frame below it):
-// meadow background, the page nav with Work active, the white panel with the facts row, then the main screenshot in
-// the pixel browser frame, lifted over the bottom of the meadow. .wrap comes from src/styles/pages.css.
-export default function CaseHero({ project }: { project: Project }) {
-  const facts: { label: string; value: ReactNode }[] = [
-    { label: 'Client', value: project.client },
-    { label: 'Year', value: project.year },
-    { label: 'My role', value: project.role },
-    { label: 'Tools', value: project.tools },
-  ]
-  // Optional: who the project was made with, as a fifth fact ("With" / name linked to their site).
-  if (project.partner) {
+// Project page hero, copied from design-reference/case-study/case-study.html (section.chero): breadcrumb,
+// "Case study · year", h1, blue subtitle, intro, the two buttons, the facts row (.cmeta), the sky scene from the
+// home Process section (.ch-sky) and the mockup in the pixel frame (.shot). The page puts the site Nav above it (src/pages/CaseStudy.tsx).
+
+export default function CaseHero({ project, hasNext }: { project: Project; hasNext: boolean }) {
+  // Facts row: each cell only when the project has that fact.
+  const facts: { label: string; value: ReactNode }[] = []
+  facts.push({ label: 'Role', value: project.role })
+  if (project.with) {
+    const w = project.with
     facts.push({
       label: 'With',
-      value: (
-        <a href={project.partner.url} target="_blank" rel="noopener">
-          {project.partner.name}
+      value: w.url ? (
+        <a href={w.url} target="_blank" rel="noopener">
+          {w.name}
         </a>
+      ) : (
+        w.name
       ),
     })
   }
+  if (project.platform) facts.push({ label: 'Platform', value: project.platform })
+  if (project.builtWith) facts.push({ label: 'Built with', value: project.builtWith })
 
   return (
-    <>
-      <section className="cs-hero" aria-labelledby="cs-title">
-        <div className="cs-bg" aria-hidden="true">
-          <div className="cs-land"></div>
-          <div className="cs-cloud csc1"></div>
-          <div className="cs-cloud csc2"></div>
-          <div className="cs-grass"></div>
-          <div className="cs-dis"></div>
-        </div>
-        <div className="cs-content">
-          <Nav variant="page" current="work" />
-          <div className="wrap" style={{ paddingTop: 40 }}>
-            <div className="cs-card">
-              <a href="/#work" className="back">
-                <PixelArrow color="#4A5E44" /> All work
-              </a>
-              <p className="px-label" style={{ marginTop: 36 }}>
-                <i></i>Case study
-              </p>
-              <h1
-                id="cs-title"
-                style={{ margin: '16px 0 0', maxWidth: 900, fontFamily: "'Inter Tight', Inter, sans-serif", fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 1.02, fontWeight: 500, letterSpacing: '-0.03em', color: '#0E1B26' }}
-              >
-                {project.name} <span style={{ color: '#4A6070' }}>— {project.summary}</span>
-              </h1>
-              <dl className={facts.length > 4 ? 'facts facts-5' : 'facts'} style={{ marginBottom: 0 }}>
-                {facts.map((f) => (
-                  <div key={f.label}>
-                    <dt>{f.label}</dt>
-                    <dd>{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
+    <section className="chero" aria-labelledby="cs-title">
+        <p className="crumb">
+          <a href="/">Home</a> / <a href="/#work">Work</a> / {project.name}
+        </p>
+        <div className="chead">
+          <div>
+            <p className="px-label">
+              <i></i>Case study · {project.year}
+            </p>
+            <h1 id="cs-title">{project.name}</h1>
+            {project.subtitle && <p className="sub">{project.subtitle}</p>}
+            <p className="lead">{project.lead ?? project.summary}</p>
+          </div>
+          {(project.liveUrl || hasNext) && (
+            <div className="cacts">
+              {project.liveUrl && (
+                <a className="btn btn-primary lg" href={project.liveUrl} target="_blank" rel="noopener">
+                  Visit {liveLabel(project)} <PixelArrow />
+                </a>
+              )}
+              {hasNext && (
+                <a className="btn lg" href="#next">
+                  Next project
+                </a>
+              )}
             </div>
-          </div>
+          )}
         </div>
-      </section>
-      <div className="wrap">
-        <div className="frame shot-lift">
-          <div className="browser" aria-hidden="true">
-            <i></i>
-            <i></i>
-            <i></i>
-          </div>
+        {facts.length > 0 && (
+          <dl className="cmeta">
+            {facts.map((f) => (
+              <div key={f.label} className="mcell">
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+        {/* The home Process section's sky scene (owner's request): drifting clouds, the pixel landscape with
+            swaying grass, and the dissolve into the white band below the shot. Same classes as Process.tsx.
+            No birds here (owner's request: they didn't look good on the case study). */}
+        <div className="p-skybg ch-sky" aria-hidden="true">
+          <div className="px p-cloud pc1"></div>
+          <div className="px p-cloud pc2"></div>
+          <div className="px p-cloud pc3"></div>
+          <div className="px p-cloud pc4"></div>
+          <div className="px p-land"></div>
+          <div className="px p-grass"></div>
+          <div className="px p-dis p-dis-b"></div>
+        </div>
+        {project.heroImage && (
           <div className="shot">
-            {project.image ? (
-              // Above the fold on most screens: load it first.
-              <img className="cs-shot-img" src={project.image} alt={project.imageAlt ?? ''} {...imageSize(project.image)} fetchPriority="high" decoding="async" />
-            ) : (
-              'Hero screenshot · 1600 × 900'
-            )}
+            {/* Above the fold on most screens: load it first. */}
+            <img src={project.heroImage} alt={project.heroAlt ?? ''} {...caseImageSize(project.heroImage)} fetchPriority="high" decoding="async" />
           </div>
-        </div>
-      </div>
-    </>
+        )}
+    </section>
   )
 }

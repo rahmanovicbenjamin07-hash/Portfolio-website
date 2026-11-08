@@ -21,10 +21,49 @@
 .cd-over h3{margin:0 0 14px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:22px;font-weight:500;line-height:1.2}
 .cd-over h3 span{color:#B9CCA8}
 .cd-cta{display:flex;width:100%;box-sizing:border-box}
-.cd-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:20px 0;padding-inline:var(--pad-x);background:#1C2B19;color:#D9E5CB;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.04em}
 @media (max-width:960px){.cd-grid{grid-template-columns:minmax(0,1fr);gap:48px}.cd-right{justify-content:center}}
 @media (max-width:760px){
 .cd{padding-top:88px}
 .cd-right{padding:16px}
 .cd-over h3{font-size:19px}
 }
+
+/* ---------- holographic tilt (driven by useHoloCard.ts) ---------- */
+.cd-right{position:relative;perspective:1100px}
+.cd-card{
+  --spec:hsl(0 100% 62%) 0%,hsl(45 100% 58%) 6%,hsl(110 90% 55%) 12%,hsl(185 100% 55%) 18%,hsl(235 100% 66%) 24%,hsl(290 100% 64%) 30%,hsl(345 100% 62%) 36%,hsl(360 100% 62%) 42%;
+  position:relative;
+  transform:translate3d(var(--tx,0),var(--ty,0),0) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+}
+.cd-card.is-holo{will-change:transform}
+/* Frame: the white border turns into pale foil (white wash over the spectrum, thinner as --holo rises) */
+.cd-card.is-holo{
+  background:
+    linear-gradient(rgb(255 255 255 / calc(1 - var(--holo,0) * .5)),rgb(255 255 255 / calc(1 - var(--holo,0) * .5))),
+    repeating-linear-gradient(115deg,var(--spec));
+  background-size:100% 100%,260% 260%;
+  background-position:0 0,var(--mx,50%) var(--my,50%);
+}
+.cd-over{z-index:3}
+.cd-holo,.cd-glare{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0}
+/* Rainbow foil over the art: spectrum bands that slide with the pointer, cycled by --hue */
+.cd-holo{
+  opacity:calc(var(--holo,0) * .9);
+  mix-blend-mode:color-dodge;
+  background:
+    repeating-linear-gradient(-55deg,#0000 0 3px,rgba(255,255,255,.08) 3px 4px),
+    repeating-linear-gradient(115deg,var(--spec));
+  background-size:100% 100%,240% 240%;
+  background-position:0 0,var(--mx,50%) var(--my,50%);
+  filter:hue-rotate(var(--hue,0deg)) saturate(1.5) brightness(.85) contrast(1.4);
+  -webkit-mask-image:radial-gradient(farthest-corner circle at var(--mx,50%) var(--my,50%),#000 0%,rgba(0,0,0,.7) 40%,rgba(0,0,0,.35) 100%);
+  mask-image:radial-gradient(farthest-corner circle at var(--mx,50%) var(--my,50%),#000 0%,rgba(0,0,0,.7) 40%,rgba(0,0,0,.35) 100%);
+}
+/* Glare: light spot under the pointer, darker toward the far edge */
+.cd-glare{
+  z-index:2;
+  opacity:calc(var(--holo,0) * .8);
+  mix-blend-mode:overlay;
+  background:radial-gradient(farthest-corner circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.85) 0%,rgba(255,255,255,.2) 25%,rgba(0,0,0,.4) 95%);
+}
+@media (prefers-reduced-motion:reduce){.cd-card{transform:none}.cd-holo,.cd-glare{display:none}}

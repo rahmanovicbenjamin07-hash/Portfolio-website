@@ -1,57 +1,48 @@
-/* Project page hero — copied from design-reference/case-study.html (".cs-hero", ".cs-card", ".facts", ".back",
-   the browser frame and ".shot-lift"). .px-label is global (src/styles/pixel.css), .wrap is in src/styles/pages.css.
-   .frame / .browser / .shot are also used by CaseNext; the rules are identical to the reference, so a copy there is harmless. */
+/* Project page hero — copied from design-reference/case-study/case-study.html (the hero block: .chero, .crumb,
+   .chead, .cacts, .cmeta, .mcell, .shot; its .meadow strip is now the home Process sky scene, .ch-sky). The 112px side padding is var(--cx) (src/pages/CaseStudy.css),
+   which is 112px at 1440px. .px-label is global (src/styles/pixel.css). */
 
-/* ---------- case study hero on the meadow ---------- */
-.cs-hero{position:relative;overflow:hidden;background:#C1EEF7;padding-bottom:320px}
-.cs-bg{position:absolute;inset:0;pointer-events:none}
-.cs-land{position:absolute;left:50%;bottom:0;width:max(100%,1440px);aspect-ratio:256/144;transform:translateX(-50%);background:url(/pixel/terrain-clean.png) center/100% 100% no-repeat;image-rendering:pixelated}
-.cs-cloud{position:absolute;left:0;background-repeat:no-repeat;background-size:100% 100%;image-rendering:pixelated;animation:csdrift linear infinite}
-.csc1{top:150px;width:200px;height:65px;background-image:url(/pixel/cloud-1.png);animation-duration:95s;animation-delay:-40s}
-.csc2{top:70px;width:140px;height:50px;background-image:url(/pixel/cloud-2.png);animation-duration:125s;animation-delay:-90s}
-@keyframes csdrift{from{left:-220px}to{left:100%}}
-.cs-grass{position:absolute;left:0;bottom:0;width:100%;aspect-ratio:256/30;background:url(/pixel/grass.png) no-repeat 0 0/400% 100%;image-rendering:pixelated;animation:csgrass 2.4s step-end infinite}
-@keyframes csgrass{0%{background-position:0% 0}25%{background-position:33.333% 0}50%{background-position:66.667% 0}75%{background-position:100% 0}}
-.cs-dis{position:absolute;left:0;bottom:-1px;width:100%;aspect-ratio:256/10;background:url(/pixel/dissolve.png) no-repeat center/100% 100%;image-rendering:pixelated}
-.cs-content{position:relative;z-index:1}
+.chero{position:relative;padding:56px var(--cx) 40px;background:#C1EEF7;overflow:hidden}
+.crumb{margin:0;font-family:'JetBrains Mono',monospace;font-size:13px;color:#3D5361}
+.crumb a{color:#3D5361}
+.chead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:end;margin-top:28px}
+.chead h1{margin:14px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:96px;line-height:.95;font-weight:600;color:#0E1B26}
+.chead .sub{margin:14px 0 0;font-family:'Inter Tight',Inter,sans-serif;font-size:36px;line-height:1.15;font-weight:500;letter-spacing:-.02em;color:#146EF5}
+.chead .lead{margin:18px 0 0;max-width:620px;font-size:18px;line-height:1.6;color:#2A3B45}
+.cacts{display:flex;gap:22px}
+.cmeta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin:40px 0 0;font-family:Inter,system-ui,sans-serif;font-size:16px;color:#1F2A2E}
+.mcell{--ink:#36502F;padding:16px 20px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink)}
+.mcell dt{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.mcell dd{margin:6px 0 0;font-size:16px;color:#1F2A2E}
+.mcell a{color:#146EF5}
+.chero .shot{--ink:#36502F;position:relative;z-index:2;margin-top:56px;padding:14px;background:#fff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 14px 0 0 rgba(20,46,30,.16)}
+.chero .shot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+/* Sky scene behind the hero: the home Process section's (.p-skybg & co. in components/home/Process.css). It stops
+   where the white band starts, so its grass and dissolve meet the white under the shot. The hero's text sits above
+   it (z-index 1); the shot is z-index 2. */
+.chero .ch-sky{bottom:120px;z-index:0}
+.chero > .crumb,.chero > .chead,.chero > .cmeta{position:relative;z-index:1}
+.chero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:#fff;z-index:1}
 
-/* ---------- white panel ---------- */
-/* Full content width, same as the screenshot frame below (owner's request; the reference had max-width:1000px). */
-.cs-card{--ink:#36502F;padding:32px 36px 30px;background:rgba(255,255,255,.93);box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
-.cs-card .px-label{margin-top:28px !important}
-.cs-card .facts{margin-top:32px}
-.back{display:inline-flex;align-items:center;gap:8px;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:16px;font-weight:500;text-decoration:none;color:#4A5E44}
-.back svg{width:16px;height:14px;transform:scaleX(-1)}
-.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:40px;padding-top:24px;background-image:repeating-linear-gradient(90deg,#36502F 0 8px,transparent 8px 14px);background-size:100% 3px;background-repeat:no-repeat}
-.facts dt{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:14px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
-.facts dd{margin:6px 0 0;font-size:17px;color:#1F2A2E}
-/* A project with a partner has five facts: five columns on desktop (two-column rule below still applies on phones). */
-.facts-5{grid-template-columns:repeat(5,minmax(0,1fr))}
-.facts dd a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+/* The home Work cards' global ".shot" / ".shot img" (src/components/home/Work.css: checkered 16:10 box, absolutely
+   positioned image) would otherwise apply here too: undo them, back to the reference's plain frame. */
+.chero .shot{display:block;aspect-ratio:auto;overflow:visible;background-image:none}
+.chero .shot img{position:static;inset:auto}
 
-/* ---------- main screenshot in the pixel browser frame ---------- */
-.frame{--ink:#36502F;padding:14px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
-.browser{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;background:#36502F}
-.browser i{display:block;width:8px;height:8px}
-.browser i:nth-child(1){background:#E0705C}.browser i:nth-child(2){background:#E8C547}.browser i:nth-child(3){background:#7CC46B}
-/* Scoped to the lifted frame: a bare .shot here would also restyle the home Work cards (16/10, Work.css). */
-.shot-lift .shot{display:grid;place-items:center;aspect-ratio:16/9;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#4A5E44}
-.shot-lift{position:relative;z-index:2;margin-top:-230px}
-/* The project image fills the 16:9 screen, cropped from the top. */
-.cs-shot-img{grid-area:1/1;display:block;width:100%;height:100%;object-fit:cover;object-position:top}
-
-/* ---------- responsive ---------- */
-@media (max-width:860px){
-.facts,.facts-5{grid-template-columns:repeat(2,minmax(0,1fr))}
-.cs-card{padding:26px 24px 24px}
-.shot-lift{margin-top:-160px}
-/* The reference hides the nav links from 860px down on this page: the phone menu takes over (rules in Nav.css). */
-.cs-hero .nav .links{display:none}
-.cs-hero .nav .nav-menu-btn{display:inline-flex}
-.cs-hero .nav-menu:not([hidden]){display:block}
+/* ---------- responsive (the reference is desktop only) ---------- */
+@media (max-width:1024px){
+.chead{grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+.cmeta{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
-.cs-hero{padding-bottom:240px}
-.cs-card{padding:22px 18px 20px}
+.chero{padding-top:40px}
+.chead h1{font-size:44px;line-height:1}
+.chead .sub{font-size:24px}
+.chead .lead{font-size:17px}
+.cacts{flex-wrap:wrap;gap:20px}
+.cmeta{gap:16px;margin-top:32px}
+.mcell{padding:14px 16px}
+.chero .shot{margin-top:40px;padding:8px}
+.chero .ch-sky{bottom:72px}
+.chero::after{height:72px}
 }
-@media (prefers-reduced-motion:reduce){.cs-cloud,.cs-grass{animation:none}}

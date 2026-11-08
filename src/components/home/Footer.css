@@ -1,0 +1,8 @@
+/* Footer strip (components/home/Footer.tsx). */
+.cd-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:20px 0;padding-inline:var(--pad-x);background:#1C2B19;color:#D9E5CB;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.04em}
+/* Legal links, then ©. Wraps under each other on narrow screens. */
+.cd-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px}
+.cd-foot nav{display:flex;flex-wrap:wrap;gap:8px 24px}
+.cd-foot a{color:#D9E5CB;text-decoration:underline;text-decoration-color:rgba(217,229,203,.4);text-underline-offset:3px}
+.cd-foot a:hover{color:#FFFFFF;text-decoration-color:currentColor}
+.cd-foot a:focus-visible{outline:3px solid #146EF5;outline-offset:3px}

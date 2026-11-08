@@ -1,4 +1,4 @@
-/* About hero — copied from design-reference/about.html: ".ab-hero", ".ab-lead", ".photo-card", ".photo",
+/* About hero — copied from design-reference/about.html (now the approved design-reference/about/about.html): ".ab-hero", ".ab-lead", ".photo-card", ".photo",
    ".pixme" (about page block) and the "about v2: meadow hero" block. .px-label/.btn are global (src/styles/pixel.css),
    .wrap/.stats/.stat are in src/styles/pages.css. */
 
@@ -24,10 +24,6 @@
 .ab-lead{margin:24px 0 0;max-width:560px;font-size:19px;line-height:1.6;color:#2A3B45}
 .photo-card{--ink:#36502F;position:relative;max-width:440px;margin-left:auto;padding:14px;background:#ffffff;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 14px 0 0 rgba(20,46,30,.16)}
 .photo{display:grid;place-items:center;aspect-ratio:4/5;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#4A5E44;text-align:center}
-/* The real photo fills the 4:5 box (the reference has a placeholder here). The image carries the 4:5 ratio itself:
-   with height:100% the tall file (688 × 1568) would stretch the box, and taken out of flow the card (sized to its
-   content, max 440px) would collapse. */
-.photo img{grid-area:1/1;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 20%}
 .pixme{--ink:#36502F;position:absolute;left:-36px;bottom:40px;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;background:#E4ECD6;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 8px 0 0 rgba(20,46,30,.16)}
 .pixme img{display:block;width:56px;height:56px;image-rendering:pixelated;box-shadow:0 0 0 3px #36502F}
 .pixme span{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:16px;font-weight:500;color:#1F2A2E;white-space:nowrap}
@@ -43,3 +39,59 @@
 }
 @media (max-width:760px){.ab-hero{padding-top:32px}.ab-hw .stats{margin-top:40px}.photo-card{margin:0 0 0 20px}.pixme{left:-20px}}
 @media (prefers-reduced-motion:reduce){.ab-cloud,.ab-grass{animation:none}}
+
+/* ======== Copied from the approved about.html (design-reference/about/about.html), after its responsive rules as there. ======== */
+/* ---- about: role rotator ---- */
+.role{margin:14px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:18px;font-weight:500;color:#4A5E44}
+.role span{display:inline-block;padding:2px 10px;background:#146EF5;color:#fff}
+.role span.ra,.role span.rb{animation:rolein .5s steps(8,end)}
+.role span.rb{animation-name:rolein2}
+@keyframes rolein{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes rolein2{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+/* ---- about: dynamite photo reveal ---- */
+.photo-card{width:100%}
+.photo{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#C1EEF7}
+.photo .me{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08)}
+.photo.open .me{opacity:1;transform:none;transition:opacity .4s steps(4,end),transform .4s steps(4,end)}
+.photo.shake{animation:pshake .4s steps(6,end)}
+@keyframes pshake{20%{transform:translate(-6px,3px)}40%{transform:translate(6px,-3px)}60%{transform:translate(-4px,2px)}80%{transform:translate(4px,-2px)}}
+.tnt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:0;border:0;cursor:pointer;
+  background-color:#C1EEF7;background-image:linear-gradient(#B3E4EE 2px,transparent 2px),linear-gradient(90deg,#B3E4EE 2px,transparent 2px);background-size:24px 24px;user-select:none;-webkit-user-select:none;touch-action:none}
+.dyn{position:relative;display:block;width:176px;height:264px;filter:drop-shadow(10px 12px 0 rgba(28,43,25,.28));animation:tntbob 1.2s steps(2,end) infinite}
+.dyn-in{position:absolute;inset:0;display:block}
+.dyn svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.dyn .flash{position:absolute;left:37.5%;width:25%;top:33.3%;height:62.5%;background:#fff;opacity:0}
+.dyn .spark{position:absolute;width:33px;height:33px;margin:-11px 0 0 -11px;animation:spk .12s steps(2,end) infinite}
+.dyn .spark svg{position:absolute;inset:0;width:100%;height:100%}
+@keyframes tntbob{50%{transform:translateY(-6px)}}
+@keyframes spk{0%{transform:scale(1) rotate(0)}100%{transform:scale(1.35) rotate(45deg)}}
+@keyframes dynshake{0%{transform:translate(calc(var(--a) * -1),0) rotate(calc(var(--r) * -1))}100%{transform:translate(var(--a),0) rotate(var(--r))}}
+/* renamed from "blink": Home's Hero.css has its own @keyframes blink (the bunny) and the two would override each other */
+@keyframes dynblink{50%{opacity:.85}}
+.dyn.lv1{--a:2px;--r:1deg;animation:dynshake .16s steps(2,end) infinite}
+.dyn.lv2{--a:4px;--r:2deg;animation:dynshake .1s steps(2,end) infinite}
+.dyn.lv2 .flash{animation:dynblink .4s steps(1,end) infinite}
+.dyn.lv2 .spark{width:44px;height:44px;margin:-16px 0 0 -16px}
+.dyn.lv3{--a:7px;--r:4deg;animation:dynshake .06s steps(2,end) infinite}
+.dyn.lv3 .dyn-in{transform:scale(1.08)}
+.dyn.lv3 .flash{animation:dynblink .14s steps(1,end) infinite}
+.dyn.lv3 .spark{width:55px;height:55px;margin:-22px 0 0 -22px}
+.tnt-hint{--ink:#36502F;padding:8px 14px;background:#E4ECD6;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:17px;font-weight:500;color:#1F2A2E;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink)}
+.tnt:focus-visible{outline:4px solid #146EF5;outline-offset:-4px}
+@media (prefers-reduced-motion:reduce){.dyn,.dyn .spark,.dyn .flash{animation:none!important}}
+/* Blast: Minecraft-style pixel smoke filling the whole card. 190 grey squares (DynamitePhoto.tsx SMOKE), each a 4px
+   checker of two greys, placed across the card in %, spread out from the middle to the edges, swell, drift up and fade.
+   .photo's position:relative + overflow:hidden make .boom cover exactly the card. */
+.boom{position:absolute;inset:0;z-index:3;pointer-events:none}
+.boom i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  background:conic-gradient(var(--c1) 25%,var(--c2) 0 50%,var(--c1) 0 75%,var(--c2) 0) 0 0/4px 4px;opacity:0;
+  animation:puff var(--du) steps(12,end) var(--de) forwards}
+@keyframes puff{0%{opacity:1;transform:translate(0,0) scale(.2)}25%{opacity:1;transform:translate(calc(var(--tx) * .4),calc(var(--ty) * .4)) scale(var(--sc))}65%{opacity:1}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(calc(var(--sc) * 1.15))}}
+.found{--ink:#1C2B19;position:absolute;left:50%;top:18px;z-index:4;transform:translateX(-50%);padding:8px 14px;white-space:nowrap;background:#36502F;color:#FFE14D;
+  font-family:'Pixelify Sans',system-ui,sans-serif;font-size:15px;letter-spacing:.04em;box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink);animation:found 3.4s steps(3,end) forwards}
+@keyframes found{0%{opacity:0;transform:translate(-50%,-10px)}10%{opacity:1;transform:translate(-50%,0)}85%{opacity:1}100%{opacity:0}}
+/* ---- about: stats + timeline (stats part; the timeline part is in Experience.css) ---- */
+.ab-hw .stat b{font-variant-numeric:tabular-nums}
+/* Not in the reference: its width:100% above plus the 760px margin-left:20px (and the card's 14px padding) push the
+   card ~25px past the right edge on phones. Below 760px the card fills its column instead (still max 440px). */
+@media (max-width:760px){.photo-card{width:auto}}

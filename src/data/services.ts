@@ -1,5 +1,5 @@
 // Home page "What I do" list (src/components/home/Services.tsx).
-// `icon` picks one of the pixel icons drawn in Services.tsx; it is also the row's link anchor (#design, #webflow, #react).
+// `icon` picks one of the pixel icons drawn in Services.tsx (and is the row's React key).
 
 export type ServiceIcon = "design" | "webflow" | "react";
 

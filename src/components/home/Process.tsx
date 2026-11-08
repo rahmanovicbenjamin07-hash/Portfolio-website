@@ -194,7 +194,7 @@ export default function Process() {
             color: '#0E1B26',
           }}
         >
-          Process <span style={{ color: '#4A6070' }}>— five steps from first call to launch.</span>
+          Process <span style={{ color: '#146EF5' }}>— five steps from first call to launch.</span>
         </h2>
         <div className="cgrid">
           <div className="pxbox dlg" aria-label="How a project goes, as a conversation">

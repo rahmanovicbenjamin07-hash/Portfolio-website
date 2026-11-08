@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Nav from './Nav'
+import site from '../../data/site'
 import './Hero.css'
 import PixelText, { pixelTextDuration } from '../PixelText'
 
@@ -9,22 +10,33 @@ const HERO_LINE_2 = 'in Webflow\nand React.'
 const HERO_DELAY = 200
 
 // "Now working on" feed: the top row is running, the two below are done. Every 2800 ms the list moves one task down.
+// The full process, in order: plan → design → build → test → optimize → launch. `verb` replaces "Running" on the live row.
+// Keep names ≤ 16 characters and verbs ≤ 9 so the row never overflows the 16em box.
 const TASKS = [
-  'Wireframes',
-  'Homepage design',
-  'Design system',
-  'Webflow build',
-  'CMS collections',
-  'Interactions',
-  'React components',
-  'API integration',
-  'SEO optimization',
-  'Page speed 100',
-  'Responsive QA',
-  'Deploy',
+  { name: 'Sitemap', verb: 'Planning' },
+  { name: 'Wireframes', verb: 'Sketching' },
+  { name: 'Homepage design', verb: 'Designing' },
+  { name: 'Design system', verb: 'Designing' },
+  { name: 'Mobile layouts', verb: 'Designing' },
+  { name: 'Prototype', verb: 'Linking' },
+  { name: 'Webflow build', verb: 'Building' },
+  { name: 'CMS collections', verb: 'Building' },
+  { name: 'Interactions', verb: 'Animating' },
+  { name: 'React components', verb: 'Coding' },
+  { name: 'API integration', verb: 'Coding' },
+  { name: 'Unit tests', verb: 'Testing' },
+  { name: 'Responsive QA', verb: 'Testing' },
+  { name: 'Cross-browser QA', verb: 'Testing' },
+  { name: 'Accessibility', verb: 'Auditing' },
+  { name: 'SEO optimization', verb: 'Tuning' },
+  { name: 'Meta + schema', verb: 'Tagging' },
+  { name: 'Page speed 100', verb: 'Tuning' },
+  { name: 'Analytics', verb: 'Tracking' },
+  { name: 'Final QA', verb: 'Checking' },
+  { name: 'Deploy', verb: 'Shipping' },
 ]
 
-// Pixel arrow on the "See my work" button (same 8 × 7 grid as the reference markup).
+// Pixel arrow on the "Let's talk" button (same 8 × 7 grid as the reference markup).
 const ARROW = ['....X...', '....XX..', 'XXXXXXX.', 'XXXXXXXX', 'XXXXXXX.', '....XX..', '....X...']
 
 // The timer only runs while the hero is on screen.
@@ -54,19 +66,118 @@ function useOnScreen<T extends Element>() {
   return [ref, onScreen] as const
 }
 
+// The six falling leaves already in the scene (.l1 – .l6).
+const LEAVES = [1, 2, 3, 4, 5, 6]
+
+// At most 5 leaf batches (12 leaves each) fall at the same time. A batch is cleared 3.5 s after its click: the
+// slowest leaf takes 3.4 s, so it has always landed (and faded out) by then, and the slot frees up quickly.
+const MAX_BATCHES = 5
+const BATCH_MS = 3500
+
+type Drop = { id: number; batch: number; x: number; y: number; img: string; duration: number }
+type Pop = { id: number; x: number; y: number }
+
+// Scene interactions (design-reference/steps/01-hero-interactions.md, v2): drop leaves from the crown, pop a falling leaf,
+// wake the dog. The tree itself never moves. Positions are in scene units (hero-bg.png is 256 wide, --u = scene width / 256).
+// Every timer is cleared on unmount.
+function useSceneInteractions() {
+  const sceneRef = useRef<HTMLDivElement>(null)
+  const timers = useRef(new Set<number>())
+  const nextId = useRef(0)
+  const batchesRef = useRef(0) // leaf batches currently falling
+  const dogAwakeRef = useRef(false)
+  const [drops, setDrops] = useState<Drop[]>([])
+  const [pops, setPops] = useState<Pop[]>([])
+  const [gone, setGone] = useState<ReadonlySet<number>>(new Set())
+  const [dogAwake, setDogAwake] = useState(false)
+
+  useEffect(() => {
+    const pending = timers.current
+    return () => {
+      pending.forEach((t) => clearTimeout(t))
+      pending.clear()
+    }
+  }, [])
+
+  const later = useCallback((fn: () => void, ms: number) => {
+    const t = window.setTimeout(() => {
+      timers.current.delete(t)
+      fn()
+    }, ms)
+    timers.current.add(t)
+  }, [])
+
+  // 12 leaves fall from the crown on every click. Up to MAX_BATCHES batches can fall at once; a click past that is
+  // ignored until the oldest batch has landed and is cleared.
+  const dropLeaves = useCallback(() => {
+    if (batchesRef.current >= MAX_BATCHES) return
+    batchesRef.current++
+    const batch = nextId.current++
+    const batchDrops: Drop[] = Array.from({ length: 12 }, (_, k) => ({
+      id: nextId.current++,
+      batch,
+      x: 140 + Math.random() * 100,
+      y: 14 + Math.random() * 34,
+      img: `/pixel/leaf-${(k % 4) + 1}.png`,
+      // All 12 start falling at once (no delay, so none waits in the air); each falls at its own speed, 2–3.4 s,
+      // so every one has landed before the batch is cleared.
+      duration: 2 + Math.random() * 1.4,
+    }))
+    setDrops((d) => [...d, ...batchDrops])
+    later(() => {
+      batchesRef.current--
+      setDrops((d) => d.filter((drop) => drop.batch !== batch))
+    }, BATCH_MS)
+  }, [later])
+
+  const popLeaf = useCallback(
+    (i: number, el: HTMLElement) => {
+      const scene = sceneRef.current
+      if (scene) {
+        const s = scene.getBoundingClientRect()
+        const r = el.getBoundingClientRect()
+        const pop = { id: nextId.current++, x: r.left + r.width / 2 - s.left, y: r.top + r.height / 2 - s.top }
+        setPops((p) => [...p, pop])
+        later(() => setPops((p) => p.filter((q) => q.id !== pop.id)), 650)
+      }
+      setGone((g) => new Set(g).add(i))
+      later(() => setGone((g) => {
+        const next = new Set(g)
+        next.delete(i)
+        return next
+      }), 5000)
+      dropLeaves()
+    },
+    [later, dropLeaves],
+  )
+
+  const wakeDog = useCallback(() => {
+    if (dogAwakeRef.current) return
+    dogAwakeRef.current = true
+    setDogAwake(true)
+    later(() => {
+      dogAwakeRef.current = false
+      setDogAwake(false)
+    }, 3600)
+  }, [later])
+
+  return { sceneRef, drops, pops, gone, dogAwake, dropLeaves, popLeaf, wakeDog }
+}
+
 export default function Hero() {
   const [heroRef, onScreen] = useOnScreen<HTMLElement>()
+  const { sceneRef, drops, pops, gone, dogAwake, dropLeaves, popLeaf, wakeDog } = useSceneInteractions()
   const tick = useTick(onScreen)
   const n = TASKS.length
   // p-a / p-b swap the keyframe names, so the push-in animation restarts on every tick.
   const phase = tick % 2 ? 'p-a' : 'p-b'
-  const rows = [0, 1, 2].map((i) => ({ name: TASKS[(((tick - i) % n) + n) % n], running: i === 0 }))
+  const rows = [0, 1, 2].map((i) => ({ ...TASKS[(((tick - i) % n) + n) % n], running: i === 0 }))
 
   return (
     // hero-paused (off screen) freezes every CSS loop in the scene and the feed; see Hero.css.
     <section ref={heroRef} className={onScreen ? 'hero' : 'hero hero-paused'}>
       <div className="stage">
-        <div className="scene">
+        <div className="scene" ref={sceneRef}>
           {/* Above the fold: no lazy loading. 256 × 144 is the file's pixel size (scaled up, image-rendering: pixelated). */}
           <img
             className="layer"
@@ -81,16 +192,45 @@ export default function Hero() {
           <img className="layer" src="/pixel/canopy.png" alt="" aria-hidden="true" width={256} height={144} />
           <div className="px bird b1" aria-hidden="true"></div>
           <div className="px bird b2" aria-hidden="true"></div>
-          <div className="px leaf l1" aria-hidden="true"></div>
-          <div className="px leaf l2" aria-hidden="true"></div>
-          <div className="px leaf l3" aria-hidden="true"></div>
-          <div className="px leaf l4" aria-hidden="true"></div>
-          <div className="px leaf l5" aria-hidden="true"></div>
-          <div className="px leaf l6" aria-hidden="true"></div>
+          {LEAVES.map((i) => (
+            <div
+              key={i}
+              className={`px leaf l${i}${gone.has(i) ? ' gone' : ''}`}
+              aria-hidden="true"
+              onClick={(e) => popLeaf(i, e.currentTarget)}
+            ></div>
+          ))}
           <div className="px steam" aria-hidden="true"></div>
           <div className="px bunny" aria-hidden="true"></div>
           <div className="px grass" aria-hidden="true"></div>
           <div className="px dissolve" aria-hidden="true"></div>
+          {/* Interactions: hit areas, the dog's Zzz / wake-up, dropped leaves and leaf bursts. */}
+          {/* data-cursor-ignore: the pixel cursor draws no frame / crack here, the click only drops leaves. */}
+          <button type="button" className="tree-hit" aria-label="Drop some leaves" data-cursor-ignore onClick={dropLeaves}></button>
+          <button type="button" className="trunk-hit" aria-label="Drop some leaves" data-cursor-ignore onClick={dropLeaves}></button>
+          {/* data-cursor-no-hold: the corner frame stays on hover, but holding doesn't crack / break the dog. */}
+          <button type="button" className="dog-hit" aria-label="Wake up the dog" data-cursor-no-hold onClick={wakeDog}></button>
+          {dogAwake ? (
+            <>
+              <span className="dog-awake" aria-hidden="true"></span>
+              <span className="dog-bang" aria-hidden="true">!</span>
+              <span className="dog-woof" aria-hidden="true">Woof!</span>
+            </>
+          ) : (
+            <span className="zzz" aria-hidden="true"><i>z</i><i>z</i><i>Z</i></span>
+          )}
+          {drops.map((d) => (
+            <span
+              key={d.id}
+              className="px leaf drop"
+              style={{ left: `calc(${d.x} * var(--u))`, top: `calc(${d.y} * var(--u))`, backgroundImage: `url(${d.img})`, animationDuration: `${d.duration}s` }}
+            ></span>
+          ))}
+          {pops.map((p) => (
+            <span key={p.id} className="leaf-pop" style={{ left: `${p.x}px`, top: `${p.y}px` }}>
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+          ))}
           <div className="tasks" aria-label="What I am working on">
             <div className="feed-head">
               <span className="live"></span>
@@ -136,7 +276,7 @@ export default function Hero() {
                     </svg>
                   )}
                   <span className="tname">{row.name}</span>
-                  {row.running && <span className="tstate">Running</span>}
+                  {row.running && <span className="tstate">{row.verb}</span>}
                   {row.running && <span className="bar"></span>}
                 </div>
               ))}
@@ -160,15 +300,16 @@ export default function Hero() {
           Webflow and React developer for agencies and teams. From the first sketch to a fast, launched site.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, marginTop: 32 }}>
-          <a href="#work" className="btn btn-primary">
-            <PixelText text="See my work" trigger="hover" />{' '}
+          {/* Main call to action: book a call (site.letsTalkUrl, same link as the nav's "Let's talk"). */}
+          <a href={site.letsTalkUrl} className="btn btn-primary" {...(/^https?:\/\//.test(site.letsTalkUrl) ? { target: '_blank', rel: 'noopener' } : {})}>
+            <PixelText text="Let's talk" trigger="hover" />{' '}
             <svg viewBox="0 0 8 7" shapeRendering="crispEdges" fill="#ffffff" aria-hidden="true">
               {ARROW.flatMap((line, y) =>
                 [...line].map((c, x) => (c === 'X' ? <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1"></rect> : null)),
               )}
             </svg>
           </a>
-          <a href="/about" className="btn"><PixelText text="About me" trigger="hover" /></a>
+          <a href="#work" className="btn"><PixelText text="See my work" trigger="hover" /></a>
         </div>
       </div>
     </section>

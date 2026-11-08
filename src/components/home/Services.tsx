@@ -219,16 +219,17 @@ export default function Services() {
         <i></i>02 — What I do
       </p>
       <h2 id="services-title" style={titleStyle}>
-        Services <span style={{ color: "#4A6070" }}>— design, Webflow and React, end to end.</span>
+        Services <span style={{ color: "#146EF5" }}>— design, Webflow and React, end to end.</span>
       </h2>
       <div className="clist">
         {services.map((service) => (
-          <a key={service.icon} id={service.icon} className="crow" href={`#${service.icon}`}>
+          // Plain rows, not links: clicking one should do nothing (it used to jump to its own #anchor).
+          <div key={service.icon} className="crow">
             <span className="cnum">{service.number}</span>
             <span className="ctitle">{service.title}</span>
             <span className="cdesc">{service.description}</span>
             {ICONS[service.icon]}
-          </a>
+          </div>
         ))}
       </div>
     </section>

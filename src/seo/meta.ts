@@ -18,6 +18,12 @@ export const ABOUT_META: PageMeta = {
   description: `About ${NAME}, a web designer and Webflow & React developer who works with agencies and teams, from the first sketch to a fast, launched site.`,
 }
 
+// The Privacy policy page (src/pages/Privacy.tsx). Shorter than 150 characters on purpose (wording given by the owner).
+export const PRIVACY_META: PageMeta = {
+  title: `Privacy policy · ${NAME}`,
+  description: `How this site handles your data: what's collected when you visit, book a call or email me, and your rights.`,
+}
+
 export const NOT_FOUND_META: PageMeta = {
   title: `Page not found — ${NAME}`,
   description: `This page has wandered off the map. Head back to the home page to see the Webflow and React work and case studies of ${NAME}, web designer.`,

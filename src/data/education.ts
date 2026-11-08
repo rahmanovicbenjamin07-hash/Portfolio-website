@@ -1,11 +1,13 @@
-// About page, "02 — Certificates" cards (src/components/about/Education.tsx).
-// `year` is optional: a card without one has no year line. `url` links the provider (new tab).
+import { MEDAL_BLUE, MEDAL_GREEN, type Sprite } from '../components/about/sprites'
 
-export type Certificate = { title: string; provider: string; url?: string; year?: string }
+// About page, "02 — Certificates" cards (src/components/about/Education.tsx). Text and medals from the approved
+// design-reference/about/about.html. `url` makes the card a link to the provider (new tab).
+
+export type Certificate = { title: string; provider: string; medal: Sprite; url?: string }
 
 const certificates: Certificate[] = [
-  { title: 'Webflow Specialization', provider: 'Cysecor', url: 'https://cysecor.com/' },
-  { title: 'The Webflow Way', provider: 'Webflow' },
+  { title: 'Webflow Specialization', provider: 'Cysecor', medal: MEDAL_BLUE, url: 'https://cysecor.com/' },
+  { title: 'The Webflow Way', provider: 'Webflow', medal: MEDAL_GREEN },
 ]
 
 export default certificates

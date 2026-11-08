@@ -1,32 +1,27 @@
-import type { Project } from "../../types/project";
-import "./CaseOverview.css";
+import type { Project } from '../../types/project'
+import SectionHead from './SectionHead'
+import './CaseOverview.css'
 
-// Section 02 — Overview. Markup copied from design-reference/case-study.html (<section aria-labelledby="ov-title">).
-// TODO(agent 1): .wrap / .sec / .h2 come from src/styles/pages.css, imported by the page (not here).
-
-export default function CaseOverview({ project }: { project: Project }) {
+// Overview: three short cards (Challenge, Goal, Result). Copied from design-reference/case-study/case-study.html
+// (.ov / .ovc, the Result card .rz in blue).
+export default function CaseOverview({ num, overview }: { num: string; overview: NonNullable<Project['overview']> }) {
   return (
     <section className="wrap sec" aria-labelledby="ov-title">
-      <p className="px-label">
-        <i></i>02 — Overview
-      </p>
-      <h2 id="ov-title" className="h2">
-        Where it started, <span>where we went and what changed.</span>
-      </h2>
-      <div className="three">
-        <div>
-          <h3>The challenge</h3>
-          <p>{project.challenge}</p>
+      <SectionHead id="ov-title" num={num} label="Overview" title="The short version" accent="in three lines." />
+      <div className="ov">
+        <div className="ovc">
+          <b>Challenge</b>
+          <p>{overview.challenge}</p>
         </div>
-        <div>
-          <h3>The goal</h3>
-          <p>{project.goal}</p>
+        <div className="ovc">
+          <b>Goal</b>
+          <p>{overview.goal}</p>
         </div>
-        <div>
-          <h3>The result</h3>
-          <p>{project.result}</p>
+        <div className="ovc rz">
+          <b>Result</b>
+          <p>{overview.result}</p>
         </div>
       </div>
     </section>
-  );
+  )
 }

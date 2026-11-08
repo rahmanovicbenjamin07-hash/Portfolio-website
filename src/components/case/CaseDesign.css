@@ -1,0 +1,30 @@
+/* Design — copied from design-reference/case-study/case-study.html (the design block: .dgrid, .dcard, .sws, .typ, .line). */
+.dgrid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:28px;margin-top:44px}
+.dcard{--ink:#36502F;padding:26px 28px 28px;background:#E4ECD6;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,46,30,.16)}
+.dcard h3{margin:0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:14px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#4A5E44}
+.sws{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:18px}
+.sws span{display:block}
+.sws i{display:block;aspect-ratio:1;box-shadow:0 0 0 3px #36502F}
+.sws small{display:block;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#2A3B45}
+.typ b{display:block;margin-top:16px;font-family:Inter,sans-serif;font-size:44px;font-weight:700;letter-spacing:-.02em;color:#141414}
+.typ span{display:block;margin-top:6px;font-size:15px;color:#2A3B45}
+.dgrid .line{background:#141414;--ink:#1C2B19}
+.dgrid .line h3{color:#bdb8aa}
+.dgrid .line b{display:block;margin-top:18px;font-family:Inter,sans-serif;font-size:34px;line-height:1.15;font-weight:700;color:#f2efe6}
+.dgrid .line span{display:block;margin-top:8px;font-size:15px;color:rgba(242,239,230,.6)}
+/* The home Process chat's global ".line" (src/components/home/Process.css: hidden until revealed, flex row) would
+   otherwise hide this card: undo it. Scoped to .dgrid for that reason. */
+.dgrid .line{display:block;opacity:1;transform:none;transition:none}
+
+@media (max-width:1024px){
+.dgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dgrid > :first-child{grid-column:1 / -1}
+}
+@media (max-width:760px){
+.dgrid{grid-template-columns:minmax(0,1fr);gap:28px;margin-top:32px}
+.dcard{padding:22px 20px 24px}
+.sws{gap:10px}
+.sws small{font-size:10px}
+.typ b{font-size:40px}
+.dgrid .line b{font-size:30px}
+}

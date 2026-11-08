@@ -62,6 +62,45 @@
 /* pixel dissolve into the page */
 .dissolve{left:0;bottom:-1px;width:100%;height:calc(10 * var(--u));background-image:url(/pixel/dissolve.png)}
 
+/* ---------- interactions: drop leaves, pop a leaf, wake the dog (design-reference/steps/01-hero-interactions.md, v2) ---------- */
+.leaf{pointer-events:auto;cursor:pointer;z-index:3}
+.leaf::before{content:"";position:absolute;inset:calc(-3 * var(--u))} /* bigger click area */
+.leaf.gone{visibility:hidden}
+.tree-hit,.trunk-hit,.dog-hit{position:absolute;z-index:2;padding:0;border:0;background:transparent;cursor:pointer}
+.tree-hit{left:calc(124 * var(--u));top:0;width:calc(132 * var(--u));height:calc(44 * var(--u))}
+.trunk-hit{left:calc(224 * var(--u));top:calc(44 * var(--u));width:calc(22 * var(--u));height:calc(66 * var(--u))}
+.dog-hit{left:calc(204 * var(--u));top:calc(116 * var(--u));width:calc(36 * var(--u));height:calc(21 * var(--u));z-index:5}
+.tree-hit:focus-visible,.trunk-hit:focus-visible,.dog-hit:focus-visible{outline:3px solid #146EF5;outline-offset:2px}
+
+.drop{opacity:1;animation:dropfall 2.6s steps(26,end) forwards;z-index:3;pointer-events:none}
+@keyframes dropfall{0%{transform:none;opacity:1}30%{transform:translate(calc(3 * var(--u)),calc(22 * var(--u)))}60%{transform:translate(calc(-3 * var(--u)),calc(46 * var(--u)))}90%{opacity:1}100%{transform:translate(calc(2 * var(--u)),calc(70 * var(--u)));opacity:0}}
+
+.leaf-pop{position:absolute;z-index:6;width:0;height:0;pointer-events:none}
+.leaf-pop i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;background:#7DBA3A;animation:lp .55s steps(5,end) forwards}
+.leaf-pop i:nth-child(2n){background:#4E8F2A}.leaf-pop i:nth-child(3n){background:#B5DD5A}
+.leaf-pop i:nth-child(1){--tx:-26px;--ty:-22px}.leaf-pop i:nth-child(2){--tx:24px;--ty:-26px}.leaf-pop i:nth-child(3){--tx:30px;--ty:6px}
+.leaf-pop i:nth-child(4){--tx:-30px;--ty:10px}.leaf-pop i:nth-child(5){--tx:4px;--ty:-34px}.leaf-pop i:nth-child(6){--tx:-6px;--ty:28px}
+@keyframes lp{to{transform:translate(var(--tx),var(--ty));opacity:0}}
+
+.zzz{position:absolute;z-index:4;left:calc(224 * var(--u));top:calc(112 * var(--u));pointer-events:none;font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:600;color:#F1F5E8;text-shadow:2px 0 #36502F,-2px 0 #36502F,0 2px #36502F,0 -2px #36502F}
+.zzz i{position:absolute;left:0;top:0;font-style:normal;font-size:calc(3.2 * var(--u));opacity:0;animation:zz 3.6s steps(9,end) infinite}
+.zzz i:nth-child(2){animation-delay:1.2s;font-size:calc(3.8 * var(--u))}.zzz i:nth-child(3){animation-delay:2.4s;font-size:calc(4.4 * var(--u))}
+@keyframes zz{0%{opacity:0;transform:none}15%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(calc(-5 * var(--u)),calc(-12 * var(--u)))}}
+
+.dog-awake{position:absolute;z-index:4;left:calc(203 * var(--u));top:calc(115 * var(--u));width:calc(38 * var(--u));height:calc(22 * var(--u));background:url(/pixel/dog-awake.png) 0 0/100% 100% no-repeat;image-rendering:pixelated;pointer-events:none}
+.dog-bang{position:absolute;z-index:5;left:calc(206 * var(--u));top:calc(109 * var(--u));font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:700;font-size:calc(6 * var(--u));line-height:1;color:#E55B4D;text-shadow:3px 0 #1C2B19,-3px 0 #1C2B19,0 3px #1C2B19,0 -3px #1C2B19;pointer-events:none;animation:bang .9s steps(3,end) forwards}
+@keyframes bang{0%{transform:translateY(calc(3 * var(--u)));opacity:0}30%{transform:none;opacity:1}80%{opacity:1}100%{opacity:0}}
+.dog-woof{--ink:#36502F;position:absolute;z-index:5;left:calc(213 * var(--u));top:calc(110 * var(--u));padding:.35em .6em;background:#E4ECD6;font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:600;font-size:clamp(13px,calc(3.2 * var(--u)),18px);color:#1F2A2E;pointer-events:none;
+  box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink);opacity:0;animation:woof 2.6s steps(2,end) .7s forwards}
+@keyframes woof{0%{opacity:0;transform:translateY(6px)}10%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+
+@media (prefers-reduced-motion:reduce){
+  .drop,.leaf-pop i,.zzz i,.dog-bang,.dog-woof{animation:none}
+  .drop,.leaf-pop{display:none}
+  .zzz i:first-child{opacity:1}
+  .dog-woof{opacity:1}
+}
+
 /* ---------- live task feed: pixel game dialog box ---------- */
 .tasks{--b:max(3px,var(--u));--ink:#36502F;position:absolute;left:calc(142 * var(--u));top:calc(68 * var(--u));width:16em;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:clamp(11px,calc(2.4 * var(--u)),15px);z-index:2;padding:.6em .6em .55em;background:#E4ECD6;box-shadow:0 calc(-1 * var(--b)) 0 0 var(--ink),0 var(--b) 0 0 var(--ink),calc(-1 * var(--b)) 0 0 0 var(--ink),var(--b) 0 0 0 var(--ink),0 calc(2 * var(--b)) 0 0 rgba(20,46,30,.28);animation:panelIn .5s steps(4,end) .4s both}
 @keyframes panelIn{from{opacity:0;transform:translateY(calc(3 * var(--u)))}to{opacity:1;transform:none}}

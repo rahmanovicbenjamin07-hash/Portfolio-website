@@ -28,3 +28,53 @@
 .aby{overflow-wrap:break-word;text-wrap:pretty}
 /* hidden cards start 24px to the right (translateX above); clip that so phones don't scroll sideways (TODO from pixel.css) */
 #testimonials{overflow-x:clip}
+
+/* ---------- trophy burst: light rays + confetti, played once when a card unlocks (.ach.on) ---------- */
+.trophy{position:relative;overflow:visible}
+.trophy svg{position:relative;z-index:2}
+.rays{position:absolute;left:50%;top:50%;z-index:0;width:150px;height:150px;margin:-75px 0 0 -75px;pointer-events:none;opacity:0;
+  background:repeating-conic-gradient(from 0deg,rgba(255,214,90,.55) 0 12deg,transparent 12deg 30deg);
+  -webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%)}
+.ach.on .rays{animation:rays 1.8s steps(12,end) forwards}
+@keyframes rays{0%{opacity:0;transform:rotate(0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:rotate(90deg) scale(1.1)}}
+.conf{position:absolute;left:50%;top:50%;z-index:1;width:0;height:0;pointer-events:none}
+.conf i{position:absolute;width:8px;height:8px;opacity:0}
+.ach.on .conf i{animation:conf 1.1s steps(8,end) forwards}
+.conf i:nth-child(1){background:#E55B4D;--tx:-58px;--ty:-50px}.conf i:nth-child(2){background:#FFB23E;--tx:-20px;--ty:-70px}
+.conf i:nth-child(3){background:#FFE14D;--tx:24px;--ty:-66px}.conf i:nth-child(4){background:#5ED16A;--tx:58px;--ty:-44px}
+.conf i:nth-child(5){background:#3FA9F5;--tx:70px;--ty:-6px}.conf i:nth-child(6){background:#8C6CF0;--tx:56px;--ty:34px}
+.conf i:nth-child(7){background:#FF7CC8;--tx:18px;--ty:58px}.conf i:nth-child(8){background:#E55B4D;--tx:-24px;--ty:60px}
+.conf i:nth-child(9){background:#FFE14D;--tx:-60px;--ty:30px}.conf i:nth-child(10){background:#5ED16A;--tx:-72px;--ty:-8px}
+.conf i:nth-child(11){background:#3FA9F5;--tx:-38px;--ty:-80px}.conf i:nth-child(12){background:#FFB23E;--tx:40px;--ty:-82px}
+@keyframes conf{0%{opacity:1;transform:none}70%{opacity:1}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(90deg)}}
+
+/* ---------- cards open the pop-up ---------- */
+.ach{cursor:pointer}
+/* .on in the selector: .ach.on{transform:none} above has the same weight and would otherwise cancel the lift. */
+.ach.on:hover{transform:translateY(-3px)}
+.ach:focus-visible{outline:3px solid #146EF5;outline-offset:8px}
+
+/* ---------- testimonial pop-up (portalled to the .pixel-page wrapper, outside this section) ---------- */
+.tmodal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:40px;background:rgba(14,27,38,.72);animation:tfade .2s steps(2,end)}
+@keyframes tfade{from{opacity:0}}
+/* font-family set here too, so the card keeps Inter even if it ever falls back to <body> (no .pixel-page). */
+.tcard{position:relative;box-sizing:border-box;width:min(860px,100%);max-height:calc(100vh - 80px);overflow:auto;padding:56px 64px 48px;background:#36502F;color:#F1F5E8;--ink:#1C2B19;font-family:Inter,system-ui,sans-serif;animation:tpop .28s steps(3,end)}
+@keyframes tpop{from{transform:scale(.9);opacity:0}}
+.tcard .alab{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:#FFE14D}
+.tcard blockquote{margin:18px 0 0;font-family:'Inter Tight',Inter,sans-serif;font-size:34px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+.tcard .tby{margin:22px 0 0;font-size:17px;color:#C9D8BA}
+.tcard .tby b{color:#F1F5E8}
+.tcard .tnav{display:flex;gap:18px;margin-top:36px}
+.tx{position:absolute;right:18px;top:16px;width:40px;height:40px;border:0;cursor:pointer;background:#E4ECD6;color:#1C2B19;font-size:18px;font-weight:700;box-shadow:0 -3px 0 0 #1C2B19,0 3px 0 0 #1C2B19,-3px 0 0 0 #1C2B19,3px 0 0 0 #1C2B19}
+.tx:focus-visible{outline:3px solid #FFE14D;outline-offset:4px}
+@media (max-width:760px){
+  .tmodal{padding:16px}
+  .tcard{padding:56px 22px 28px}
+  .tcard blockquote{font-size:22px}
+  .tcard .tnav{gap:12px}
+  .tcard .tnav .btn{flex:1;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .tmodal,.tcard,.ach.on .rays,.ach.on .conf i{animation:none}
+  .ach.on:hover{transform:none}
+}

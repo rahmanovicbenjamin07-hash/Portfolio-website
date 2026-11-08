@@ -1,24 +1,7 @@
-// Pixel icons of the About page, transcribed from design-reference/about.html: one character per pixel,
+// Pixel icons of the About page, transcribed from design-reference/about.html (dynamite + medals: the approved about/about.html): one character per pixel,
 // "." = empty, every other character is a colour from the sprite palette. Drawn by PixelSprite.tsx.
 
 export type Sprite = { width: number; height: number; palette: Record<string, string>; rows: string[] }
-
-// Certificate (certificate cards)
-export const CERTIFICATE: Sprite = {
-  width: 12,
-  height: 8,
-  palette: {a: '#36502F', b: '#FFFFFF', c: '#A9B4A0', d: '#E0705C'},
-  rows: [
-    'aaaaaaaaaaaa',
-    'abbbbbbbbbba',
-    'abccccccccba',
-    'abbbbbbbbbba',
-    'abccccccbbba',
-    'abbbbbbbddba',
-    'abbbbbbdddda',
-    'aaaaaaaaddaa',
-  ],
-}
 
 // Chat bubbles (Clear communication)
 export const CHAT: Sprite = {
@@ -118,5 +101,99 @@ export const TROPHY: Sprite = {
     '....cccc....',
     '...cccccc...',
     '...dddddd...',
+  ],
+}
+// Dynamite stick (photo reveal); the 7 fuse pixels are drawn separately in DynamitePhoto.tsx
+export const DYNAMITE: Sprite = {
+  width: 16,
+  height: 24,
+  palette: {a: '#3A0E0A', b: '#8C9988', c: '#55604F', d: '#F2604A', e: '#D8392C', f: '#9E241B', g: '#E2D0A4', h: '#B9A67C', i: '#F1E3C0', j: '#CDBB92'},
+  rows: [
+    '................',
+    '................',
+    '................',
+    '................',
+    '................',
+    '................',
+    '................',
+    '......aaaa......',
+    '.....abbbca.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '.....agggha.....',
+    '.....aiiija.....',
+    '.....aiaaja.....',
+    '.....aiiija.....',
+    '.....agggha.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '.....adeefa.....',
+    '......aaaa......',
+  ],
+}
+
+// Spark at the fuse tip
+export const SPARK: Sprite = {
+  width: 3,
+  height: 3,
+  palette: {a: '#FFB23E', b: '#FFF6C8', c: '#E55B4D'},
+  rows: [
+    '.a.',
+    'aba',
+    '.c.',
+  ],
+}
+
+// Medal, blue (Webflow Specialization)
+export const MEDAL_BLUE: Sprite = {
+  width: 16,
+  height: 16,
+  palette: {a: '#146EF5', b: '#1C2B19', c: '#FFCF4A', d: '#B8860B'},
+  rows: [
+    '...aaa....aaa...',
+    '...aaa....aaa...',
+    '....aaa..aaa....',
+    '....aaa..aaa....',
+    '.....aaaaaa.....',
+    '.....bbbbbb.....',
+    '....bbccccbb....',
+    '...bcccddcccb...',
+    '...bccddddccb...',
+    '..bccddddddccb..',
+    '..bcccddddcccb..',
+    '..bcccdccdcccb..',
+    '...bcdccccdcb...',
+    '...bccccccccb...',
+    '....bbccccbb....',
+    '.....bbbbbb.....',
+  ],
+}
+
+// Medal, green (The Webflow Way)
+export const MEDAL_GREEN: Sprite = {
+  width: 16,
+  height: 16,
+  palette: {a: '#2E9E4F', b: '#1C2B19', c: '#E4ECD6'},
+  rows: [
+    '...aaa....aaa...',
+    '...aaa....aaa...',
+    '....aaa..aaa....',
+    '....aaa..aaa....',
+    '.....aaaaaa.....',
+    '.....bbbbbb.....',
+    '....bbccccbb....',
+    '...bccccccccb...',
+    '...bccccccacb...',
+    '..bccccccaaccb..',
+    '..bccaccaacccb..',
+    '..bcccaaaccccb..',
+    '...bcccaccccb...',
+    '...bccccccccb...',
+    '....bbccccbb....',
+    '.....bbbbbb.....',
   ],
 }

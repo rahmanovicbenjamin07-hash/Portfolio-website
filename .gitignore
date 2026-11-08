@@ -7,3 +7,7 @@ playwright-report
 
 # Source kits (zips unpacked into the repo root). Their files are copied into public/ and design-reference/.
 /*-kit/
+
+# Old dark-theme design and its compare script: kept locally, not in the repo.
+/design/
+/scripts/compare.mjs

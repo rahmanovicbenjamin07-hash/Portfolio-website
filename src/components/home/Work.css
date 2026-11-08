@@ -1,36 +1,55 @@
-/* Work section — copied from design-reference/home.html ("work section"). */
-/* .px-label is global (src/styles/pixel.css, Agent 1). */
-.work{background:#ffffff;padding:96px 0 120px;padding-inline:var(--pad-x)}
-/* Two rows, as in design-reference/home.html: the featured (first) card across the full width, then two cards side by
-   side. One column from 1024px down (tablets portrait and landscape, phones). */
-.work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 36px;margin-top:52px}
-.card.featured{grid-column:1 / -1}
-.featured .shot{aspect-ratio:16/9}
-.featured .card-name{font-size:clamp(26px,2.4vw,36px)}
-.featured .arrow{width:60px;height:60px}
-.featured .arrow svg{width:32px;height:28px}
-.card{--ink:#36502F;display:block;text-decoration:none;color:#1F2A2E;background:#E4ECD6;padding:14px 14px 0;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 12px 0 0 rgba(20,46,30,.16)}
-/* no hover effect on the cards for now (owner's request); this also cancels the site-wide a:hover fade in global.css */
-.card:hover{color:#1F2A2E;opacity:1}
-.card:focus-visible{outline:4px solid #146EF5;outline-offset:10px}
-.shot{display:grid;place-items:center;aspect-ratio:16/10;background-color:#F4F7EE;background-image:linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%),linear-gradient(45deg,#EDF2E4 25%,transparent 25%,transparent 75%,#EDF2E4 75%);background-size:16px 16px;background-position:0 0,8px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#4A5E44}
-.card-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 4px 18px}
-.card-name{font-family:'Pixelify Sans',system-ui,sans-serif;font-weight:500;font-size:24px;line-height:1.15}
-.arrow{flex:none;display:grid;place-items:center;width:48px;height:48px;background:#36502F;clip-path:polygon(4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px),0 4px,4px 4px)}
-.arrow svg{display:block;width:24px;height:21px}
-
-/* Long project names wrap inside the footer; the arrow block (flex:none above) keeps its size and stays in the card. */
-.card-name{min-width:0;overflow-wrap:break-word}
-
-/* Screenshots fill the .shot box. Absolutely positioned so the image can't stretch the box past its aspect-ratio
-   (16/10, 16/9 on the featured card): a card keeps the same height with its checkered placeholder or with its image. */
-.shot{position:relative;overflow:hidden}
-.shot img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:top}
-
+/* Work section (Work.tsx): three project cards, a laptop + phones mockup on the pixel grass scene.
+   Side padding: var(--pad-x) from src/styles/pixel.css, the same rule as Services and Contact.
+   .px-label and .btn / .btn-dark are global (src/styles/pixel.css). */
+.ws{position:relative;padding:120px 0 140px;padding-inline:var(--pad-x);background:#fff;font-family:Inter,system-ui,sans-serif;color:#1F2A2E;overflow:hidden}
+.ws .px-label i{background:#146EF5}
+.ws h2{margin:16px 0 0;font-family:'Inter Tight',Inter,sans-serif;font-size:48px;line-height:1.08;font-weight:500;letter-spacing:-.02em;color:#0E1B26}
+.ws h2 span{color:#146EF5}
+.ws-head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.ws-intro{margin:14px 0 0;max-width:620px;font-size:18px;line-height:1.55;color:#2A3B45}
+.ws .btn-dark{--ink:#000;--fill:#0E1B26;--fg:#fff}
+/* keep "Start a project" on one line when the intro column pushes against it (1024px, 768px) */
+.ws-head > .btn{flex:none;white-space:nowrap}
+.ws-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;margin-top:56px}
+.ws-card{position:relative;display:flex;flex-direction:column;background:#fff;color:inherit;
+  box-shadow:0 -4px 0 0 #0E1B26,0 4px 0 0 #0E1B26,-4px 0 0 0 #0E1B26,4px 0 0 0 #0E1B26,0 12px 0 0 rgba(14,27,38,.18);transition:transform .14s steps(2,end),box-shadow .14s steps(2,end)}
+.ws-card:hover{transform:translateY(-6px);box-shadow:0 -4px 0 0 #0E1B26,0 4px 0 0 #0E1B26,-4px 0 0 0 #0E1B26,4px 0 0 0 #0E1B26,0 18px 0 0 rgba(14,27,38,.22)}
+.ws-card:has(.ws-link:focus-visible){outline:3px solid #146EF5;outline-offset:6px}
+.ws-bar{display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;background:#F1F6FB;box-shadow:inset 0 -4px 0 0 #0E1B26}
+.ws-bar i{display:block;width:10px;height:10px}
+.ws-bar i:nth-child(1){background:#E55B4D}.ws-bar i:nth-child(2){background:#FFCF4A}.ws-bar i:nth-child(3){background:#5ED16A}
+.ws-bar span{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:12px;color:#4A6070}
+.ws-shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:#C1EEF7 url(/pixel/terrain-clean.png) center bottom / cover no-repeat;image-rendering:pixelated}
+.ws-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:auto;transition:transform .3s steps(3,end)}
+.ws-card:hover .ws-shot img{transform:translateY(-6px)}
+.ws-badge{position:absolute;left:12px;top:12px;z-index:2;padding:4px 10px;background:#0E1B26;color:#fff;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:13px;font-weight:500;letter-spacing:.04em}
+.ws-badge.app{background:#146EF5}
+.ws-body{display:flex;flex-direction:column;flex:1;padding:22px 24px;box-shadow:inset 0 4px 0 0 #0E1B26}
+.ws-meta{font-family:'Pixelify Sans',system-ui,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#4A6070}
+.ws-card h3{margin:8px 0 0;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:30px;font-weight:600;color:#0E1B26}
+.ws-link{color:inherit;text-decoration:none}
+.ws-link::after{content:"";position:absolute;inset:0;z-index:1}
+.ws-link:focus-visible{outline:none}
+.ws-card p{margin:10px 0 0;font-size:16px;line-height:1.55;color:#2A3B45}
+.ws-role{margin-top:12px;font-size:14px;color:#4A6070}
+.ws-role b{font-weight:600;color:#1F2A2E}
+.ws-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.ws-tag{padding:5px 10px;background:#EAF2FE;font-family:'Pixelify Sans',system-ui,sans-serif;font-size:14px;font-weight:500;color:#0E1B26;box-shadow:0 -2px 0 0 #146EF5,0 2px 0 0 #146EF5,-2px 0 0 0 #146EF5,2px 0 0 0 #146EF5}
+.ws-foot{display:flex;align-items:center;margin-top:auto;padding-top:26px}
+/* "Case study" button: above the card-wide .ws-link::after (z-index 1), so it is its own hover and click target. */
+.ws-cta{position:relative;z-index:2}
 @media (max-width:1024px){
-.work-grid{grid-template-columns:minmax(0,1fr);gap:40px}
-.card.featured{grid-column:auto}
+  .ws{padding-top:96px;padding-bottom:112px}
+  .ws-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+  .ws-grid > :last-child{grid-column:1 / -1}
 }
 @media (max-width:760px){
-.work{padding-top:64px;padding-bottom:88px}
+  .ws{padding-top:72px;padding-bottom:88px}
+  .ws h2{font-size:34px}
+  .ws-head{flex-direction:column;align-items:flex-start;gap:24px}
+  .ws-grid{grid-template-columns:1fr;gap:28px;margin-top:40px}
+  .ws-grid > :last-child{grid-column:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .ws-card,.ws-card:hover,.ws-card:hover .ws-shot img{transform:none;transition:none}
 }
