@@ -1,79 +1,51 @@
-import type { FeatureIcon } from '../../types/project'
+// Pixel glyphs of the case study page, copied pixel for pixel from the <svg> rects in
+// design-reference/case-study/chairo.html. One character per pixel: "." is empty, a digit picks a colour.
+// The arrow is the site's own components/pixel/PixelArrow.
+type Glyph = { rows: string[]; colors: string[] }
 
-// The 12 × 12 pixel icons of the Features cards, copied pixel for pixel from the reference's <svg> rects
-// (design-reference/case-study/case-study.html). One letter per pixel, "." is empty.
-const COLORS: Record<string, string> = {
-  k: '#1C2B19', // outline
-  b: '#146EF5', // blue
-  l: '#E4ECD6', // light sage
-  r: '#E55B4D', // red
-  g: '#2E9E4F', // green
-}
+const GLYPHS = {
+  // Project file check mark (in the dark green box)
+  check: {
+    rows: ['........', '.......0', '......00', '0....00.', '00..00..', '.0000...', '..00....', '........'],
+    colors: ['#F1F5E8'],
+  },
+  // Desktop | Mobile segmented control
+  desktop: {
+    rows: ['000000000', '0.......0', '0.......0', '0.......0', '000000000', '...000...', '..00000..'],
+    colors: ['currentColor'],
+  },
+  mobile: {
+    rows: ['00000', '0...0', '0...0', '0...0', '0...0', '00000', '00.00'],
+    colors: ['currentColor'],
+  },
+  // Level complete stars
+  star: {
+    rows: [
+      '.....0.....',
+      '....010....',
+      '....010....',
+      '00001110000',
+      '.011111110.',
+      '..0111110..',
+      '..0110110..',
+      '.0110.0110.',
+      '.010...010.',
+      '000.....000',
+    ],
+    colors: ['#1C2B19', '#E8C547'],
+  },
+} satisfies Record<string, Glyph>
 
-const ICONS: Record<FeatureIcon, string[]> = {
-  calendar: [
-    '..kkkkkkkk..',
-    '.kbbbbbbbbk.',
-    'kbkkbbbbkkbk',
-    'kbbbbbbbbbbk',
-    'kllllllllllk',
-    'klklklklkllk',
-    'kllllllllllk',
-    'klklkbbklllk',
-    'klllllbblllk',
-    'klklklklkllk',
-    'kllllllllllk',
-    'kkkkkkkkkkkk',
-  ],
-  'no-show': [
-    '...kkkkkk...',
-    '..krrrrrrk..',
-    '.krrlllllrk.',
-    'krrlllllrrrk',
-    'krllllllrrlk',
-    'krlllllrrllk',
-    'krllllrrrllk',
-    'krlllrrllllk',
-    'krrlrrllllrk',
-    '.krrrrrrrrk.',
-    '..krrrrrrk..',
-    '...kkkkkk...',
-  ],
-  stats: [
-    '............',
-    '........kkk.',
-    '........kgk.',
-    '....kkk.kgk.',
-    '....kgk.kgk.',
-    'kkk.kgk.kgk.',
-    'kgk.kgk.kgk.',
-    'kgk.kgk.kgk.',
-    'kgk.kgk.kgk.',
-    'kgk.kgk.kgk.',
-    'kkkkkkkkkkkk',
-    '............',
-  ],
-  link: [
-    '............',
-    '..kkkk......',
-    '.kbbbbk.....',
-    'kbk..kbk....',
-    'kbk..kbbkk..',
-    '.kbbkbbbbbk.',
-    '..kbbbbkbbk.',
-    '....kkbk..kb',
-    '....kbk..kbk',
-    '.....kbbbbk.',
-    '......kkkk..',
-    '............',
-  ],
-}
+export type PixelIconName = keyof typeof GLYPHS
 
-export default function PixelIcon({ name }: { name: FeatureIcon }) {
+export default function PixelIcon({ name, className }: { name: PixelIconName; className?: string }) {
+  const { rows, colors }: Glyph = GLYPHS[name]
   return (
-    <svg viewBox="0 0 12 12" shapeRendering="crispEdges" aria-hidden="true">
-      {ICONS[name].flatMap((row, y) =>
-        [...row].map((c, x) => (c === '.' ? null : <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={COLORS[c]} />)),
+    <svg className={className} viewBox={`0 0 ${rows[0].length} ${rows.length}`} shapeRendering="crispEdges" aria-hidden="true">
+      {rows.flatMap((row, y) =>
+        [...row].map((c, x) =>
+          c === '.' ? null : <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={colors[Number(c)]} />,
+        ),
       )}
     </svg>
   )

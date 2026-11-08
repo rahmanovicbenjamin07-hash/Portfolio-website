@@ -6,7 +6,9 @@ import PixelText, { pixelTextDuration } from '../PixelText'
 
 // Hero h1 lines (PixelText block build). The first starts 200ms after mount.
 const HERO_LINE_1 = 'I design and build websites'
-const HERO_LINE_2 = 'in Webflow\nand React.'
+// Desktop: "and React." on its own line (\n). Phones: Hero.css hides that line break, and the non-breaking spaces
+// (\u00A0) keep "Webflow and React." together, so the heading never splits inside that phrase.
+const HERO_LINE_2 = 'in Webflow\u00A0\nand\u00A0React.'
 const HERO_DELAY = 200
 
 // "Now working on" feed: the top row is running, the two below are done. Every 2800 ms the list moves one task down.

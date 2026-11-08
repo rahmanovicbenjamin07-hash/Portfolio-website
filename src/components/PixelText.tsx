@@ -104,13 +104,15 @@ function PixelBuild({ text, as = 'span', delay = 0, stagger = STAGGER, frame = F
         if (cell) cell.dataset.f = 'l'
       })
     }
-  }, [cells, delay, stagger, frame])
+    // text: a changed text (e.g. a hot reload while editing) gets new cells, so the build runs again for them
+  }, [cells, delay, stagger, frame, text])
 
   const content = !cells
     ? plain(text)
     : chars.map((c, i) => {
         if (c === '\n') return <br key={i} />
-        if (c === ' ') return ' '
+        // Spaces (and non-breaking spaces) have no block frame: they stay plain text
+        if (c === ' ' || c === ' ') return c
         return (
           <span
             key={i}
