@@ -2,6 +2,8 @@ import type { CaseStudy } from '../types/project'
 
 // Case study page content, one entry per /work/:slug page, in page order. Copied 1:1 from
 // design-reference/case-study/CASES.json: every text and image path on the page comes from here.
+// One change from CASES.json, at the owner's request: WealthQuest's desktop image is hero.avif (the front-facing
+// coin) instead of desktop.webp, in the showcase and in steps 1 and 5.
 // Don't add text that isn't in the source. A new project only needs a new entry here (plus its SEO fields in
 // src/data/projects.ts and its image sizes in src/components/case/caseImages.ts).
 
@@ -291,7 +293,7 @@ export const CASES: CaseStudy[] = [
     "showcase": {
       "windowName": "wealthquest.com",
       "desktop": {
-        "src": "/images/work/wealthquest/desktop.webp",
+        "src": "/images/work/wealthquest/hero.avif",
         "alt": "The WealthQuest website on desktop"
       },
       "mobile": [
@@ -318,7 +320,7 @@ export const CASES: CaseStudy[] = [
       "steps": [
         {
           "kind": "wide",
-          "src": "/images/work/wealthquest/desktop.webp",
+          "src": "/images/work/wealthquest/hero.avif",
           "fileName": "figma-to-webflow.png",
           "alt": "The WealthQuest website on desktop",
           "title": "From the Figma file",
@@ -350,7 +352,7 @@ export const CASES: CaseStudy[] = [
         },
         {
           "kind": "wide",
-          "src": "/images/work/wealthquest/desktop.webp",
+          "src": "/images/work/wealthquest/hero.avif",
           "fileName": "animations.png",
           "alt": "The WealthQuest website on desktop",
           "title": "Custom-coded motion",
